@@ -1,7 +1,14 @@
-
-
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pushswap.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
+/*   Updated: 2021/05/21 17:46:13 by ccommiss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
@@ -32,6 +39,9 @@
 
 #define reset "\e[0m"
 
+#define DEBUG(string) printf(BWHT"*** OPERATION == %s \n"reset, string);
+#define NOTENOUGH(string) printf("* Not enough elems in %s \n", string);
+
 typedef struct s_struct
 {
 	int		*stack_a;
@@ -43,6 +53,19 @@ typedef struct s_struct
 
 void 	print_array(char which_stack, int *stack, int top);
 
+/**
+*	* MOVES
+*
+**/
+
+void 	push_a(t_stacks *s);
+void 	push_b(t_stacks *s);
+void 	rotate_a(t_stacks *s);
+void 	rotate_b(t_stacks *s);
+void 	reverse_rotate_a(t_stacks *s);
+void 	reverse_rotate_b(t_stacks *s);
+void 	swap_a(t_stacks *s);
+void 	swap_b(t_stacks *s);
 
 #endif
 
