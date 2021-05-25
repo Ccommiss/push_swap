@@ -6,7 +6,7 @@
 #    By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/21 15:59:42 by ccommiss          #+#    #+#              #
-#    Updated: 2021/05/22 16:54:02 by ccommiss         ###   ########.fr        #
+#    Updated: 2021/05/25 15:29:14 by ccommiss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS = main.c \
 	print_arrays.c 
 FLAGS = -Wall -Werror -Wextra -fsanitize=address
 OBJS = $(SRCS:.c=.o)
-CC = clang $(FLAGS)
+CC = clang -g $(FLAGS)
 
 
 all : $(NAME)

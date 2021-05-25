@@ -26,6 +26,8 @@ void print_arrays(t_stacks *s)
 	int n;
 	int ref;
 
+	if (s->verbose == FALSE)
+		return ;
 	if (s->n_elem_a >= s->n_elem_b)
 		ref = s->n_elem_a;
 	else

@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/05/22 17:14:00 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/05/25 15:26:40 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 
 typedef struct s_struct
 {
+	int		verbose;
 	int		*stack_a;
 	int		n_elem_a;
 	int		*stack_b;

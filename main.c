@@ -1,49 +1,17 @@
 #include <stdio.h>
 #include "pushswap.h"
 
-void swap_b(t_stacks *s)
-{
-	DEBUG("SWAP B");
-	printf("intervertit les 2 premiers éléments au sommet de la pile B. \nNe fait rien s’il n’y en a qu’un ou aucun.\n");
-	int tmp;
-	if (s->n_elem_b < 1)
-	{
-		NOTENOUGH("B");
-		return;
-	}
-	tmp = s->stack_b[s->n_elem_b];
-	s->stack_b[s->n_elem_b] = s->stack_b[s->n_elem_b - 1];
-	s->stack_b[s->n_elem_b - 1] = tmp;
-	print_arrays(s);
-}
 
-void swap_a(t_stacks *s)
-{
-	DEBUG("SWAP A");
-	printf("intervertit les 2 premiers éléments au sommet de la pile A. \nNe fait rien s’il n’y en a qu’un ou aucun.\n");
-	int tmp;
-
-	if (s->n_elem_a < 1)
-	{
-		NOTENOUGH("A");
-		return;
-	}
-	tmp = s->stack_a[s->n_elem_a];
-	s->stack_a[s->n_elem_a] = s->stack_a[s->n_elem_a - 1];
-	s->stack_a[s->n_elem_a - 1] = tmp;
-	print_arrays(s);
-}
 
 /**
 *
-*	// function push_a
-*	@params t_stacks *s
-* 	lol
+*	function push_a
+*
+*	@param t_stacks *s
+* 
 *	@return none
 *
 **/
-
-
 void 	take_biggest(int *s, int top, int *pivot)
 {
 	int i;
@@ -60,6 +28,14 @@ void 	take_biggest(int *s, int top, int *pivot)
 	printf ("new pivot = %d \n", *pivot);
 }
 
+
+
+void	sort_a();
+
+
+
+
+
 void test(t_stacks *s)
 {
 	int pivot;
@@ -73,18 +49,50 @@ void test(t_stacks *s)
 		pivot += s->stack_a[top];
 		top ++;
 	}
-	pivot = pivot / s->n_elem_a;
-	printf ("Pivot = %d \n", pivot);
+	//pivot = pivot / s->n_elem_a; // mediane des elems
+	if (s->n_elem_a >= 0)
+		pivot = s->stack_a[s->n_elem_a/2];
+	printf (BGRN"Pivot = %d \n"reset, pivot); // on a trouve le pivot 
 
-	while (s->stack_a[s->n_elem_a] < pivot)
+	int sorted = FALSE;
+	while (sorted == FALSE)
 	{
-		printf ("%d \n", s->stack_a[top]);
-		push_b(s);
-		if (s->stack_a[s->n_elem_a] >= pivot)
-			rotate_a(s);
-	}
 
-	take_biggest(s->stack_a, s->n_elem_a, &pivot);
+		if (s->n_elem_a >= 0 && s->stack_a[s->n_elem_a] < pivot)
+		{
+			push_b(s);
+			top = s->n_elem_a;
+		}
+		else 
+		{	int i = s->n_elem_a;
+			while (i >= 0 && s->stack_a[i] >= pivot)
+			{
+				printf ("checking %d : %d", i, s->stack_a[i]);
+				i--;
+			}
+			printf (" i = %d \n", i);
+			if (i >= 0 && s->stack_a[i] < pivot)
+			{
+				print_arrays(s);
+				if (i > s->n_elem_a/2)
+					rotate_a(s);
+				else if (i < s->n_elem_a/2)
+					reverse_rotate_a(s);
+			}
+			else if (i == -1)
+				sorted = TRUE;
+		}			
+	}
+	//while (s->n_elem_a < 2)
+	//	push_a(s);
+	//print_arrays(s);
+	while (s->n_elem_a >= 3)
+		test(s);
+
+	//sort_a(s);	
+	
+
+	//take_biggest(s->stack_a, s->n_elem_a, &pivot);
 }
 
 
@@ -112,7 +120,7 @@ int main(int ac, char **argv)
 	t_stacks s;
 
 	create_stacks(&s, ac);
-	//create stacks
+	s.verbose = FALSE;
 	argv = argv + 1; //pour avoid le a.out
 	ac = ac - 2; //pour eviter le null + on enleve un car on a enleve un a argv
 	while (ac >= 0)
@@ -123,8 +131,8 @@ int main(int ac, char **argv)
 		ac--;
 	}
 
-//	print_arrays(&s);
 test(&s);
+
 printf("coucou\n");
 	char buf[10];
 	while (1)
@@ -167,5 +175,7 @@ printf("coucou\n");
 			print_array('A', s.stack_a, s.n_elem_a);
 		else if (strcmp(buf, "show -b") == 0)
 			print_array('B', s.stack_b, s.n_elem_b);
+		else if (strcmp(buf, "-v") == 0)
+			s.verbose = TRUE;
 	}
 }

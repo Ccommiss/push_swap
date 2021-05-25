@@ -36,3 +36,36 @@ void push_b(t_stacks *s)
 	//la pile a peut etre decrementee
 	print_arrays(s);
 }
+
+void swap_b(t_stacks *s)
+{
+	DEBUG("SWAP B");
+	printf("intervertit les 2 premiers éléments au sommet de la pile B. \nNe fait rien s’il n’y en a qu’un ou aucun.\n");
+	int tmp;
+	if (s->n_elem_b < 1)
+	{
+		NOTENOUGH("B");
+		return;
+	}
+	tmp = s->stack_b[s->n_elem_b];
+	s->stack_b[s->n_elem_b] = s->stack_b[s->n_elem_b - 1];
+	s->stack_b[s->n_elem_b - 1] = tmp;
+	print_arrays(s);
+}
+
+void swap_a(t_stacks *s)
+{
+	DEBUG("SWAP A");
+	printf("intervertit les 2 premiers éléments au sommet de la pile A. \nNe fait rien s’il n’y en a qu’un ou aucun.\n");
+	int tmp;
+
+	if (s->n_elem_a < 1)
+	{
+		NOTENOUGH("A");
+		return;
+	}
+	tmp = s->stack_a[s->n_elem_a];
+	s->stack_a[s->n_elem_a] = s->stack_a[s->n_elem_a - 1];
+	s->stack_a[s->n_elem_a - 1] = tmp;
+	print_arrays(s);
+}
