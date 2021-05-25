@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/05/21 17:46:13 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/05/22 17:14:00 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 #define reset "\e[0m"
 
 #define DEBUG(string) printf(BWHT"*** OPERATION == %s \n"reset, string);
-#define NOTENOUGH(string) printf("* Not enough elems in %s \n", string);
+#define NOTENOUGH(string) printf(YEL"⚠ Not enough elems in %s \n\n"reset, string);
 
 typedef struct s_struct
 {
@@ -50,8 +50,14 @@ typedef struct s_struct
 	int		n_elem_b;
 }		t_stacks;
 
+enum bool {
+	FALSE = 0,
+	TRUE = 1
+};
+
 
 void 	print_array(char which_stack, int *stack, int top);
+void	print_arrays(t_stacks *s);
 
 /**
 *	* MOVES

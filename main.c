@@ -1,37 +1,37 @@
 #include <stdio.h>
 #include "pushswap.h"
 
-
 void swap_b(t_stacks *s)
 {
+	DEBUG("SWAP B");
+	printf("intervertit les 2 premiers éléments au sommet de la pile B. \nNe fait rien s’il n’y en a qu’un ou aucun.\n");
 	int tmp;
-
 	if (s->n_elem_b < 1)
 	{
 		NOTENOUGH("B");
-		return ;
+		return;
 	}
-	tmp = s->stack_b[0];
-	s->stack_b[0] = s->stack_b[1];
-	s->stack_b[1] = tmp;
-	print_array('B', s->stack_b, s->n_elem_b);
-
+	tmp = s->stack_b[s->n_elem_b];
+	s->stack_b[s->n_elem_b] = s->stack_b[s->n_elem_b - 1];
+	s->stack_b[s->n_elem_b - 1] = tmp;
+	print_arrays(s);
 }
-
 
 void swap_a(t_stacks *s)
 {
+	DEBUG("SWAP A");
+	printf("intervertit les 2 premiers éléments au sommet de la pile A. \nNe fait rien s’il n’y en a qu’un ou aucun.\n");
 	int tmp;
 
 	if (s->n_elem_a < 1)
 	{
 		NOTENOUGH("A");
-		return ;
+		return;
 	}
-	tmp = s->stack_a[0];
-	s->stack_a[0] = s->stack_a[1];
-	s->stack_a[1] = tmp;
-	print_array('A', s->stack_a, s->n_elem_a);
+	tmp = s->stack_a[s->n_elem_a];
+	s->stack_a[s->n_elem_a] = s->stack_a[s->n_elem_a - 1];
+	s->stack_a[s->n_elem_a - 1] = tmp;
+	print_arrays(s);
 }
 
 /**
@@ -43,118 +43,89 @@ void swap_a(t_stacks *s)
 *
 **/
 
-void push_a(t_stacks *s)
-{
-	DEBUG("PUSH A");
-	if (s->n_elem_b == -1)
-	{
-		printf ("Cannot push_a (push top B on top of A) \n: stack B has no elem at this point.\n");
-		return;
-	}
-	// -> push haut de la pile A sur haut de la pile B
 
-	s->n_elem_a++; //on prepare le top de la pile B a recevoir en ajoutant +1 dindex
-	s->stack_b[s->n_elem_a] = s->stack_a[s->n_elem_b];
-	s->n_elem_b--;
-	//la pile a peut etre decrementee
-	print_array('A', s->stack_a, s->n_elem_a);
-	print_array('B', s->stack_b, s->n_elem_b);
+void 	take_biggest(int *s, int top, int *pivot)
+{
+	int i;
+
+	i = 0;
+	*pivot = INT32_MIN;
+	while (i < top)
+	{
+		printf("checking %d \n",s[i] );
+		if (s[i] > *pivot)
+			*pivot = s[i];
+		i++;
+	}
+	printf ("new pivot = %d \n", *pivot);
+}
+
+void test(t_stacks *s)
+{
+	int pivot;
+	int top;
+
+	pivot = 0;
+	top = 0;
+
+	while (top < s->n_elem_a )
+	{
+		pivot += s->stack_a[top];
+		top ++;
+	}
+	pivot = pivot / s->n_elem_a;
+	printf ("Pivot = %d \n", pivot);
+
+	while (s->stack_a[s->n_elem_a] < pivot)
+	{
+		printf ("%d \n", s->stack_a[top]);
+		push_b(s);
+		if (s->stack_a[s->n_elem_a] >= pivot)
+			rotate_a(s);
+	}
+
+	take_biggest(s->stack_a, s->n_elem_a, &pivot);
 }
 
 
-void push_b(t_stacks *s)
+int create_stacks(t_stacks *s, int elems)
 {
-	DEBUG("PUSH B");
-	if (s->n_elem_a == -1)
+	s->stack_a = (int *)malloc(sizeof(int) * elems);
+	if (!s->stack_a)
 	{
-		printf ("Cannot push_b (push top A on top of B) \n: stack A has no elem at this point.\n");
-		return;
+		//free_stacks(s);
+		return (FALSE);
 	}
-	// push haut de la pile A sur haut de la pile B
-
-	s->n_elem_b++; //on prepare le top de la pile B a recevoir en ajoutant +1 dindex
-	s->stack_b[s->n_elem_b] = s->stack_a[s->n_elem_a];
-	s->n_elem_a--;
-	//la pile a peut etre decrementee
-	print_array('A', s->stack_a, s->n_elem_a);
-	print_array('B', s->stack_b, s->n_elem_b);
-}
-
-void print_array(char which_stack, int *stack, int top)
-{
-	if (which_stack == 'A')
-		printf(BRED);
-	else
-		printf(BCYN);
-
-	int n;
-	printf("\n__________________\n");
-
-	printf("|| STACK %c :    ||", which_stack);
-	n = -1;
-	while (++n <= top)
+	s->n_elem_a = -1; // top de la list
+	s->stack_b = (int *)malloc(sizeof(int) * elems);
+	if (!s->stack_b)
 	{
-		printf("\n||______________||\n|| [%3d] => %3d || ", n, stack[n]);
-		if (n == top)
-			printf(" <-- top of stack \n||______________||");
+		//free_stacks(s);
+		return (FALSE);
 	}
-	printf("\n" reset);
+	s->n_elem_b = -1; //idem
+	return (TRUE);
 }
-
-
-void print_arrays(t_stacks *s)
-{
-	// if (which_stack == 'A')
-	// 	printf();
-	// else
-	// 	printf(BCYN);
-
-	int n;
-	printf("\n______________________\n");
-
-	printf("%25s	%25s", BRED"|| STACK A :        ||", BCYN"|| STACK B :        ||");
-	n = -1;
-	while (++n <= s->n_elem_a + s->n_elem_b)
-	{
-		printf("%20s	%20s", BRED"\n||__________________||", BCYN"||__________________||\n");
-		printf(BRED"||[%5d] => %5d  ||	", n, s->stack_a[n]);
-		printf(BCYN"||[%5d] => %5d  ||", n, s->stack_b[n]);
-		printf ("\n");
-	//	if (n == top)
-		//	printf(" <-- top of stack \n||______________||");
-	}
-	printf("\n" reset);
-}
-
-
-
-
-
-
-
-
 
 int main(int ac, char **argv)
 {
 	t_stacks s;
 
+	create_stacks(&s, ac);
 	//create stacks
-	s.stack_a = (int *)malloc(sizeof(int) * ac);
-	s.n_elem_a = -1; // top de la list
-	s.stack_b = (int *)malloc(sizeof(int) * ac);
-	s.n_elem_b = -1; //idem
-
 	argv = argv + 1; //pour avoid le a.out
-
-	while (argv[s.n_elem_a + 1] != NULL)
+	ac = ac - 2; //pour eviter le null + on enleve un car on a enleve un a argv
+	while (ac >= 0)
 	{
 		s.n_elem_a++;
-		s.stack_a[s.n_elem_a] = atoi(argv[s.n_elem_a]);
-		printf("%d : %s\n", s.n_elem_a, argv[s.n_elem_a]);
+		s.stack_a[s.n_elem_a] = atoi(argv[ac]);
+		printf("%d : %s\n", s.n_elem_a, argv[ac]);
+		ac--;
 	}
 
-	print_arrays(&s);
-
+//	print_arrays(&s);
+test(&s);
+printf("coucou\n");
 	char buf[10];
 	while (1)
 	{
@@ -162,9 +133,9 @@ int main(int ac, char **argv)
 		if (strcmp(buf, "rra") == 0)
 			reverse_rotate_a(&s);
 		if (strcmp(buf, "rrb") == 0)
-		 	reverse_rotate_b(&s);
+			reverse_rotate_b(&s);
 		else if (strcmp(buf, "ra") == 0)
-		 	rotate_a(&s);
+			rotate_a(&s);
 		else if (strcmp(buf, "rb") == 0)
 			rotate_b(&s);
 		else if (strcmp(buf, "pa") == 0)
@@ -175,7 +146,26 @@ int main(int ac, char **argv)
 			swap_a(&s);
 		else if (strcmp(buf, "sb") == 0)
 			swap_b(&s);
-
+		else if (strcmp(buf, "ss") == 0)
+		{
+			swap_a(&s);
+			swap_b(&s);
+		}
+		else if (strcmp(buf, "rr") == 0)
+		{
+			rotate_a(&s);
+			rotate_b(&s);
+		}
+		else if (strcmp(buf, "rrr") == 0)
+		{
+			reverse_rotate_a(&s);
+			reverse_rotate_b(&s);
+		}
+		else if (strcmp(buf, "show") == 0)
+			print_arrays(&s);
+		else if (strcmp(buf, "show -a") == 0)
+			print_array('A', s.stack_a, s.n_elem_a);
+		else if (strcmp(buf, "show -b") == 0)
+			print_array('B', s.stack_b, s.n_elem_b);
 	}
-	//printf(" %s  %s\n", argv[1], argv[2]);
 }
