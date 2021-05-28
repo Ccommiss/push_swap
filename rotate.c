@@ -29,6 +29,7 @@ void rotate_a(t_stacks *s)
 	}
 	s->stack_a[0] = tmp;
 	print_arrays(s);
+	s->op_count++;
 }
 
 /**
@@ -56,12 +57,12 @@ void rotate_b(t_stacks *s)
 	tmp = s->stack_b[s->n_elem_b]; //on save l'element du top de la stack
 	while (i > 0)
 	{
-		printf(" %d \n", i);
 		s->stack_b[i] = s->stack_b[i - 1];
 		i--;
 	}
 	s->stack_b[0] = tmp;
 	print_arrays(s);
+	s->op_count++;
 }
 
 
@@ -94,6 +95,7 @@ void reverse_rotate_a(t_stacks *s) //le dernier elem devient le premier
 	}
 	s->stack_a[s->n_elem_a] = tmp;
 	print_arrays(s);
+	s->op_count++;
 }
 
 /**
@@ -126,6 +128,7 @@ void reverse_rotate_b(t_stacks *s) //le dernier elem devient le premier
 	}
 	s->stack_b[s->n_elem_b] = tmp;
 	print_arrays(s);
+	s->op_count++;
 }
 
 

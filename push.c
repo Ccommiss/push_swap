@@ -16,6 +16,7 @@ void push_a(t_stacks *s)
 	s->n_elem_b--;
 	//la pile b peut etre decrementee
 	print_arrays(s);
+	s->op_count++;
 }
 
 /**
@@ -42,6 +43,8 @@ void push_b(t_stacks *s)
 	s->n_elem_a--;
 	//la pile a peut etre decrementee
 	print_arrays(s);
+
+	s->op_count++;
 }
 
 void swap_b(t_stacks *s)
@@ -58,6 +61,7 @@ void swap_b(t_stacks *s)
 	s->stack_b[s->n_elem_b] = s->stack_b[s->n_elem_b - 1];
 	s->stack_b[s->n_elem_b - 1] = tmp;
 	print_arrays(s);
+	s->op_count++;
 }
 
 void swap_a(t_stacks *s)
@@ -74,5 +78,7 @@ void swap_a(t_stacks *s)
 	tmp = s->stack_a[s->n_elem_a];
 	s->stack_a[s->n_elem_a] = s->stack_a[s->n_elem_a - 1];
 	s->stack_a[s->n_elem_a - 1] = tmp;
+	
 	print_arrays(s);
+	s->op_count++;
 }

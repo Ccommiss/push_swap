@@ -212,7 +212,13 @@ void	sort_three(t_stacks *s)
 
 	s->high_chunk += s->n_elem_a + 1; //plus un car part de 0
 
-	if (s->n_elem_a < 2)
+	if (s->n_elem_a == 1)
+	{
+		if (s->stack_a[s->n_elem_a] > s->stack_a[0])
+			swap_a(s);
+		return ;
+	}
+	if (s->n_elem_a < 1)
 	{
 		NOTENOUGH("A")
 		return ;
@@ -330,15 +336,24 @@ void 	insert_blocks_on_b(t_stacks *s)
 	 	push_b(s); // on met les gros au dessus de la pile
 		i++;
 	}
-	// i = 0;
-	// while (i < s->high_chunk)
-	// {
-	// 	push_b(s);
-	// 	i++;
-	// }
 }
 
 int is_sorted(t_stacks *s)
+{
+	int i;
+
+	i = 1;
+	while (i <= s->n_elem_a)
+	{
+		if (STACK_A[i] < STACK_A[i - 1])
+			i++;
+		else
+			return FALSE;
+	}
+	return TRUE;
+}
+
+int finish(t_stacks *s)
 {
 	if (s->n_elem_b != -1)
 		return FALSE;
@@ -354,11 +369,12 @@ int is_sorted(t_stacks *s)
 			return FALSE;
 	}
 	return TRUE;
+
 }
 
 int is_reverse_sorted(t_stacks *s)
 {
-	if (s->n_elem_a != -1)
+	if (s->n_elem_a != -1 || !is_sorted(s))
 		return FALSE;
 
 	int i;
@@ -406,9 +422,9 @@ void 	push_all(t_stacks *s)
 
 void boucle_test(t_stacks *s)
 {
-
-//	while (!is_sorted(s))
-//	{
+	s->verbose = TRUE;
+	while (!finish(s))
+	{
 		printf (BRED"TEST\n"reset);
 		test(s);
 		printf (BRED"SORT\n"reset);
@@ -417,7 +433,7 @@ void boucle_test(t_stacks *s)
 		insert_blocks_on_a(s);
 
 
-		if (!is_sorted(s))
+		if (!finish(s))
 		{
 			printf (BRED"B --- TEST\n"reset);
 			test_b(s);
@@ -427,11 +443,45 @@ void boucle_test(t_stacks *s)
 			insert_blocks_on_b(s);
 		}
 		if (is_reverse_sorted(s))
+		{
+			VERBOSE = FALSE;
+			//exit(0);
 			push_all(s);
-		s->verbose = TRUE;
-		print_arrays(s);
-		s->verbose = FALSE;
-//	}
+		}
+		//VERBOSE = FALSE;
+		//VERBOSE = TRUE;
+		//print_arrays(s);
+
+	}
+
+}
+
+void check_errors(t_stacks *s)
+{
+	int *copy;
+	int i;
+	int j;
+	copy = (int *)malloc(sizeof(int) * s->n_elem_a);
+
+	i = 0;
+	j = 0;
+	while (i < s->n_elem_a)
+	{
+		copy[i] = STACK_A[i];
+		j = 0;
+		while (j <= i)
+		{
+			if (j != i && copy[j] == copy[i])
+			{
+				printf("Index [%d] and [%d] : value are the same (%d)", j, i, copy[j]);
+				exit (0);
+			}
+			j++;
+		}
+		i++;
+
+	}
+
 
 }
 
@@ -444,6 +494,7 @@ int main(int ac, char **argv)
 	s.verbose = FALSE;
 	argv = argv + 1; //pour avoid le a.out
 	ac = ac - 2; //pour eviter le null + on enleve un car on a enleve un a argv
+	int tmp =ac;
 	while (ac >= 0)
 	{
 		s.n_elem_a++;
@@ -451,14 +502,8 @@ int main(int ac, char **argv)
 		printf("%d : %s\n", s.n_elem_a, argv[ac]);
 		ac--;
 	}
+	check_errors(&s);
 
-
-	s.verbose =TRUE;
-
-	s.verbose =FALSE;
-
-
-	s.verbose =TRUE;
 	print_arrays(&s);
 	//s.verbose =FALSE;
 
@@ -467,6 +512,7 @@ printf("coucou\n");
 	while (1)
 	{
 		gets(buf);
+		printf("%s\n", buf);
 		if (strcmp(buf, "rra") == 0)
 			reverse_rotate_a(&s);
 		if (strcmp(buf, "rrb") == 0)
@@ -506,50 +552,11 @@ printf("coucou\n");
 			print_array('B', s.stack_b, s.n_elem_b);
 		else if (strcmp(buf, "-v") == 0)
 			s.verbose = TRUE;
-		else if (strcmp(buf, "test") == 0)
-		{
-			test(&s);
-			printf("BEGINNING SORT 3\n");
-			sort_three(&s);
-			insert_blocks_on_a(&s);
-
-
-			test_b(&s);
-			reverse_sort_three(&s);
-			insert_blocks_on_b(&s);
-
-			test(&s);
-			sort_three(&s);
-			// // // printf("coucou\n");
-			insert_blocks_on_a(&s);
-
-			test_b(&s);
-			reverse_sort_three(&s);
-			insert_blocks_on_b(&s);
-
-			test(&s);
-			sort_three(&s);
-			// // // printf("coucou\n");
-			insert_blocks_on_a(&s);
-
-			test_b(&s);
-			reverse_sort_three(&s);
-			insert_blocks_on_b(&s);
-
-			test(&s);
-			sort_three(&s);
-			// // // printf("coucou\n");
-			insert_blocks_on_a(&s);
-
-		}
-		else if (strcmp(buf, "test b") == 0)
-		{
-			test_b(&s);
-			reverse_sort_three(&s);
-		}
 		else if (strcmp(buf, "while") == 0)
 		{
 			boucle_test(&s);
+			print_arrays(&s);
+			printf("ARG = %d // NB OPERATIONS = %d \n", tmp, s.op_count);
 		}
 
 
