@@ -20,7 +20,6 @@ void 	take_biggest(int *s, int top, int *pivot)
 	*pivot = INT32_MIN;
 	while (i <= top)
 	{
-		printf("checking %d \n",s[i] );
 		if (s[i] > *pivot)
 			*pivot = s[i];
 		i++;
@@ -35,7 +34,6 @@ void 	take_smallest(int *s, int top, int *pivot)
 	*pivot = INT32_MAX;
 	while (i <= top)
 	{
-		printf("checking %d \n",s[i] );
 		if (s[i] < *pivot)
 			*pivot = s[i];
 		i++;
@@ -156,6 +154,7 @@ void	reverse_sort_three(t_stacks *s)
 	int min;
 	int max;
 
+	s->low_chunk += s->n_elem_b + 1;
 	if (s->n_elem_b < 2)
 	{
 		NOTENOUGH("B")
@@ -198,7 +197,8 @@ void	reverse_sort_three(t_stacks *s)
 	{
 		swap_b(s);
 	}
-	s->low_chunk += 3;
+	//s->low_chunk += 3;
+
 }
 
 
@@ -209,6 +209,8 @@ void	sort_three(t_stacks *s)
 {
 	int min;
 	int max;
+
+	s->high_chunk += s->n_elem_a + 1; //plus un car part de 0
 
 	if (s->n_elem_a < 2)
 	{
@@ -251,7 +253,8 @@ void	sort_three(t_stacks *s)
 	{
 		reverse_rotate_a(s);
 	}
-	s->high_chunk += 3;
+	//s->high_chunk += 3;
+
 }
 
 
@@ -261,18 +264,24 @@ void 	insert_blocks_on_a(t_stacks *s)
 	int i;
 
 	i = 0;
+	if (s->n_elem_b == -1)
+		return ;
+	//int tmp = 3;
+	int tmp = s->n_elem_a + 1; // test, c le nb elements nvellement tries
+
 	take_biggest(STACK_B, s->n_elem_b, &max);
 	while (STACK_B[s->n_elem_b] != max)
 	{
 		rotate_b(s); //on remonte la pile
 	}
-	while (i < s->high_chunk - 3) // on retranche les tous mneufs
+	printf ("HIGH CHUNK HERE  = %d\n", s->high_chunk);
+	while (i < s->high_chunk - tmp) // on retranche les tous mneufs, avant g mis 3
 	{
 		push_a(s); // on bouge sur A tous les gros elements d'abord
 		i++;
 	}
 	i = 0;
-	while (i < s->high_chunk - 3) // on retranche les tout neufs
+	while (i < s->high_chunk - tmp) // on retranche les tout neufs ; au debut g mis trois, essayer avec n elems
 	{
 		rotate_a(s); // on met les + gros elements deja tries en dessous de la pile
 		i++;
@@ -291,21 +300,24 @@ void 	insert_blocks_on_b(t_stacks *s)
 	int i;
 
 	i = 0;
-	//take_smallest(STACK_A, s->n_elem_a, &min);
-//	int tmp = STACK_A[2]; // le dernier trie
-	while (i < s->high_chunk + s->low_chunk - 3) //on remonte toute la pile
+	if (s->n_elem_a == -1)
+		return ;
+
+	//int tmp = 3;
+	int tmp = s->n_elem_b + 1;
+	while (i < s->high_chunk + s->low_chunk - tmp) //on remonte toute la pile
 	{
 		reverse_rotate_a(s); //on remonte la pile
 		i++;
 	}
 	i = 0;
-	while (i < s->low_chunk - 3) //on push les petits ...
+	while (i < s->low_chunk - tmp) //on push les petits ...
 	{
 		push_b(s);
 	 	i++;
 	}
 	i = 0;
-	while (i < s->low_chunk - 3)// et on les mets en dessous de la pile B
+	while (i < s->low_chunk - tmp)// et on les mets en dessous de la pile B
 	{
 		rotate_b(s);
 		i++;
@@ -326,6 +338,41 @@ void 	insert_blocks_on_b(t_stacks *s)
 	// }
 }
 
+int is_sorted(t_stacks *s)
+{
+	if (s->n_elem_b != -1)
+		return FALSE;
+
+	int i;
+
+	i = 1;
+	while (i <= s->n_elem_a)
+	{
+		if (STACK_A[i] < STACK_A[i - 1])
+			i++;
+		else
+			return FALSE;
+	}
+	return TRUE;
+}
+
+int is_reverse_sorted(t_stacks *s)
+{
+	if (s->n_elem_a != -1)
+		return FALSE;
+
+	int i;
+
+	i = 1;
+	while (i <= s->n_elem_b)
+	{
+		if (STACK_B[i] > STACK_B[i - 1])
+			i++;
+		else
+			return FALSE;
+	}
+	return TRUE;
+}
 
 int create_stacks(t_stacks *s, int elems)
 {
@@ -348,6 +395,47 @@ int create_stacks(t_stacks *s, int elems)
 	return (TRUE);
 }
 
+void 	push_all(t_stacks *s)
+{
+	int i;
+
+	i = 0;
+	while (i <= s->n_elem_b)
+		push_a(s);
+}
+
+void boucle_test(t_stacks *s)
+{
+
+//	while (!is_sorted(s))
+//	{
+		printf (BRED"TEST\n"reset);
+		test(s);
+		printf (BRED"SORT\n"reset);
+		sort_three(s);
+		printf (BRED"INSERT A\n"reset);
+		insert_blocks_on_a(s);
+
+
+		if (!is_sorted(s))
+		{
+			printf (BRED"B --- TEST\n"reset);
+			test_b(s);
+			printf (BRED"B -- REVERSE SORT\n"reset);
+			reverse_sort_three(s);
+			printf (BRED"B -- INSERT\n"reset);
+			insert_blocks_on_b(s);
+		}
+		if (is_reverse_sorted(s))
+			push_all(s);
+		s->verbose = TRUE;
+		print_arrays(s);
+		s->verbose = FALSE;
+//	}
+
+}
+
+
 int main(int ac, char **argv)
 {
 	t_stacks s;
@@ -365,6 +453,9 @@ int main(int ac, char **argv)
 	}
 
 
+	s.verbose =TRUE;
+
+	s.verbose =FALSE;
 
 
 	s.verbose =TRUE;
@@ -420,6 +511,8 @@ printf("coucou\n");
 			test(&s);
 			printf("BEGINNING SORT 3\n");
 			sort_three(&s);
+			insert_blocks_on_a(&s);
+
 
 			test_b(&s);
 			reverse_sort_three(&s);
@@ -447,17 +540,16 @@ printf("coucou\n");
 			sort_three(&s);
 			// // // printf("coucou\n");
 			insert_blocks_on_a(&s);
-
-
-
-
 
 		}
 		else if (strcmp(buf, "test b") == 0)
 		{
 			test_b(&s);
 			reverse_sort_three(&s);
-
+		}
+		else if (strcmp(buf, "while") == 0)
+		{
+			boucle_test(&s);
 		}
 
 
