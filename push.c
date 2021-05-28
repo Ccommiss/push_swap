@@ -18,6 +18,13 @@ void push_a(t_stacks *s)
 	print_arrays(s);
 }
 
+/**
+ *
+ * Prend le premier élément au sommet de A et le met sur B
+ * @params stack *s
+ * @return none
+ *
+ */
 void push_b(t_stacks *s)
 {
 	DEBUG("PUSH B");

@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/05/25 15:26:40 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/05/28 12:14:46 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 
 #define DEBUG(string) printf(BWHT"*** OPERATION == %s \n"reset, string);
 #define NOTENOUGH(string) printf(YEL"⚠ Not enough elems in %s \n\n"reset, string);
+#define STACK_B s->stack_b
+#define STACK_A s->stack_a
 
 typedef struct s_struct
 {
@@ -49,6 +51,9 @@ typedef struct s_struct
 	int		n_elem_a;
 	int		*stack_b;
 	int		n_elem_b;
+	int		high_chunk;
+	int		low_chunk;
+	
 }		t_stacks;
 
 enum bool {
