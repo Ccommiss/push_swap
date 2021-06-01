@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/05/28 16:07:30 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/01 13:49:09 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_struct
 
 	int		op_count;
 
+	int index_min;
+
 }		t_stacks;
 
 enum bool {
@@ -69,8 +71,7 @@ void 	print_array(char which_stack, int *stack, int top);
 void	print_arrays(t_stacks *s);
 
 /**
-*	* MOVES
-*
+*	? MOVES
 **/
 
 void 	push_a(t_stacks *s);
@@ -82,5 +83,32 @@ void 	reverse_rotate_b(t_stacks *s);
 void 	swap_a(t_stacks *s);
 void 	swap_b(t_stacks *s);
 
+
+/**
+*	? Computing functions
+**/
+
+int		calculate_median(int *stack, int n_elems);
+void 	take_smallest(int *s, int top, int *pivot);
+void 	take_biggest(int *s, int top, int *pivot);
+int		find_next(int *stack, int pivot, int top, char id);
+int		find_index(int nb, int *array, int top);
+
+/**
+ * ? Sorting
+ **/
+
+void	sort_three(t_stacks *s);
+void	reverse_sort_three(t_stacks *s);
+void 	insert_blocks_on_a(t_stacks *s);
+void 	insert_blocks_on_b(t_stacks *s);
+void	divide_a(t_stacks *s);
+void	divide_b(t_stacks *s);
+
+
+int		is_sorted(t_stacks *s);
+int		is_reverse_sorted(t_stacks *s);
+int		finish(t_stacks *s);
+int		create_stacks(t_stacks *s, int elems);
 #endif
 

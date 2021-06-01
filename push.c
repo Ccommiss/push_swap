@@ -14,8 +14,10 @@ void push_a(t_stacks *s)
 	s->n_elem_a++; //on prepare le top de la pile B a recevoir en ajoutant +1 dindex
 	s->stack_a[s->n_elem_a] = s->stack_b[s->n_elem_b];
 	s->n_elem_b--;
+	//if (s->n_elem_a >= 1 && STACK_A[s->n_elem_a] > STACK_A[s->n_elem_a - 1])
+	//	swap_a(s); est opti seulement si le reste de la pile est trié !!
 	//la pile b peut etre decrementee
-	print_arrays(s);
+	//print_arrays(s);
 	s->op_count++;
 }
 
@@ -42,7 +44,9 @@ void push_b(t_stacks *s)
 	s->stack_b[s->n_elem_b] = s->stack_a[s->n_elem_a];
 	s->n_elem_a--;
 	//la pile a peut etre decrementee
-	print_arrays(s);
+	//if (s->n_elem_b >= 1 && STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
+	//	swap_b(s); //pas tjrs opti
+	//print_arrays(s);
 
 	s->op_count++;
 }
@@ -78,7 +82,7 @@ void swap_a(t_stacks *s)
 	tmp = s->stack_a[s->n_elem_a];
 	s->stack_a[s->n_elem_a] = s->stack_a[s->n_elem_a - 1];
 	s->stack_a[s->n_elem_a - 1] = tmp;
-	
+
 	print_arrays(s);
 	s->op_count++;
 }
