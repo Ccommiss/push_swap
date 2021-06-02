@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/01 14:37:39 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/02 15:28:09 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <strings.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 //Regular text
 #define BLK "\e[0;30m"
@@ -39,7 +40,8 @@
 
 #define reset "\e[0m"
 
-#define DEBUG(string) printf(BWHT"*** OPERATION == %s \n"reset, string);
+//#define DEBUG(string) printf(BWHT"*** OPERATION == %s \n"reset, string);
+#define DEBUG(string) printf("");
 #define NOTENOUGH(string) printf(YEL"⚠ Not enough elems in %s \n\n"reset, string);
 #define STACK_B s->stack_b
 #define STACK_A s->stack_a
@@ -56,6 +58,14 @@ typedef struct s_struct
 	int		low_chunk;
 
 	int		op_count;
+	int pa;
+	int pb;
+	int sa;
+	int sb;
+	int ra;
+	int rra;
+	int rb;
+	int rrb;
 
 	int index_min;
 

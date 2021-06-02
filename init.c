@@ -19,5 +19,14 @@ int create_stacks(t_stacks *s, int elems)
 	s->low_chunk = 0;
 	s->high_chunk = 0;
 	s->index_min = -1;
+
+	s->pa = 0;
+	s->pb = 0;
+	s->sa = 0;
+	s->sb = 0;
+	s->ra = 0;
+	s->rb = 0;
+	s->rra = 0;
+	s->rrb = 0;
 	return (TRUE);
 }

@@ -3,7 +3,7 @@
 void push_a(t_stacks *s)
 {
 	DEBUG("PUSH A");
-	printf("prend le premier élément au sommet de B et le met sur A.\nNe fait rien si B est vide.\n\n");
+	//printf("prend le premier élément au sommet de B et le met sur A.\nNe fait rien si B est vide.\n\n");
 	if (s->n_elem_b == -1)
 	{
 		//NOTENOUGH("B");
@@ -19,6 +19,7 @@ void push_a(t_stacks *s)
 	//la pile b peut etre decrementee
 	print_arrays(s);
 	s->op_count++;
+	s->pa++;
 }
 
 /**
@@ -31,7 +32,7 @@ void push_a(t_stacks *s)
 void push_b(t_stacks *s)
 {
 	DEBUG("PUSH B");
-	printf("prend le premier élément au sommet de A et le met sur B.\nNe fait rien si A est vide.\n\n");
+	//printf("prend le premier élément au sommet de A et le met sur B.\nNe fait rien si A est vide.\n\n");
 
 	if (s->n_elem_a == -1)
 	{
@@ -49,12 +50,13 @@ void push_b(t_stacks *s)
 	print_arrays(s);
 
 	s->op_count++;
+	s->pb++;
 }
 
 void swap_b(t_stacks *s)
 {
 	DEBUG("SWAP B");
-	printf("intervertit les 2 premiers éléments au sommet de la pile B. \nNe fait rien s’il n’y en a qu’un ou aucun.\n");
+	//printf("intervertit les 2 premiers éléments au sommet de la pile B. \nNe fait rien s’il n’y en a qu’un ou aucun.\n");
 	int tmp;
 	if (s->n_elem_b < 1)
 	{
@@ -66,12 +68,13 @@ void swap_b(t_stacks *s)
 	s->stack_b[s->n_elem_b - 1] = tmp;
 	print_arrays(s);
 	s->op_count++;
+	s->sb++;
 }
 
 void swap_a(t_stacks *s)
 {
 	DEBUG("SWAP A");
-	printf("intervertit les 2 premiers éléments au sommet de la pile A. \nNe fait rien s’il n’y en a qu’un ou aucun.\n");
+	//printf("intervertit les 2 premiers éléments au sommet de la pile A. \nNe fait rien s’il n’y en a qu’un ou aucun.\n");
 	int tmp;
 
 	if (s->n_elem_a < 1)
@@ -85,4 +88,5 @@ void swap_a(t_stacks *s)
 
 	print_arrays(s);
 	s->op_count++;
+	s->sa++;
 }

@@ -11,7 +11,7 @@
 void rotate_a(t_stacks *s)
 {
 	DEBUG("RA");
-	printf ("décale d’une position vers le haut tous les élements de la pile A. \nLe premier élément devient le dernier.\n\n");
+	//printf ("décale d’une position vers le haut tous les élements de la pile A. \nLe premier élément devient le dernier.\n\n");
 	int tmp;
 	int i;
 
@@ -30,6 +30,7 @@ void rotate_a(t_stacks *s)
 	s->stack_a[0] = tmp;
 	print_arrays(s);
 	s->op_count++;
+	s->ra++;
 }
 
 /**
@@ -43,7 +44,7 @@ void rotate_a(t_stacks *s)
 void rotate_b(t_stacks *s)
 {
 	DEBUG("RB");
-	printf ("décale d’une position vers le haut tous les élements de la pile B. \nLe premier élément devient le dernier.\n\n");
+	//printf ("décale d’une position vers le haut tous les élements de la pile B. \nLe premier élément devient le dernier.\n\n");
 
 	int tmp;
 	int i;
@@ -63,6 +64,7 @@ void rotate_b(t_stacks *s)
 	s->stack_b[0] = tmp;
 	print_arrays(s);
 	s->op_count++;
+	s->rb++;
 }
 
 
@@ -77,7 +79,7 @@ void rotate_b(t_stacks *s)
 void reverse_rotate_a(t_stacks *s) //le dernier elem devient le premier
 {
 	DEBUG("RRA");
-	printf ("décale d’une position vers le bas tous les élements dela pile A. \nLe dernier élément devient le premier.\n\n");
+	//printf ("décale d’une position vers le bas tous les élements dela pile A. \nLe dernier élément devient le premier.\n\n");
 	int tmp;
 	int i;
 
@@ -94,8 +96,10 @@ void reverse_rotate_a(t_stacks *s) //le dernier elem devient le premier
 		i++;
 	}
 	s->stack_a[s->n_elem_a] = tmp;
+
 	print_arrays(s);
 	s->op_count++;
+	s->rra++;
 }
 
 /**
@@ -109,7 +113,7 @@ void reverse_rotate_a(t_stacks *s) //le dernier elem devient le premier
 void reverse_rotate_b(t_stacks *s) //le dernier elem devient le premier
 {
 	DEBUG("RRB");
-	printf ("décale d’une position vers le bas tous les élements dela pile B. \nLe dernier élément devient le premier.\n\n");
+	//printf ("décale d’une position vers le bas tous les élements dela pile B. \nLe dernier élément devient le premier.\n\n");
 
 	int tmp;
 	int i;
@@ -129,6 +133,8 @@ void reverse_rotate_b(t_stacks *s) //le dernier elem devient le premier
 	s->stack_b[s->n_elem_b] = tmp;
 	print_arrays(s);
 	s->op_count++;
+		s->rrb++;
+
 }
 
 

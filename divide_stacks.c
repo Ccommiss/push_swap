@@ -37,7 +37,7 @@ void divide_a(t_stacks *s)
 	pivot = calculate_median(STACK_A, s->n_elem_a);
 	next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
 
-	printf (BGRN"Pivot = %d \n"reset, pivot);
+	//printf (BGRN"Pivot = %d \n"reset, pivot);
 	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE && s->n_elem_a >= 3)
 	{
 
@@ -45,13 +45,13 @@ void divide_a(t_stacks *s)
 		{
 			take_smallest(STACK_A, s->n_elem_a, &pivot); //test
 			next = find_index(pivot, STACK_A, s->n_elem_a); //test !!
-			printf (BRED"NEW NEXT = %d \n"reset, next);
+			//printf (BRED"NEW NEXT = %d \n"reset, next);
 		}
 		if(STACK_A[s->n_elem_a] < pivot || (STACK_A[s->n_elem_a] == pivot && s->n_elem_a == 3))
 		{
 			push_b(s);
 			next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
-				printf (BRED"NEW NEXT = %d \n"reset, next);
+				//printf (BRED"NEW NEXT = %d \n"reset, next);
 			print_arrays(s);
 		}
 		else if (next >= s->n_elem_a / 2) // next est en haut de la pile
@@ -73,7 +73,7 @@ void divide_b(t_stacks *s)
 	pivot = calculate_median(STACK_B, s->n_elem_b);
 	next = find_next(STACK_B, pivot, s->n_elem_b, 'B');
 
-	printf (BGRN"Pivot = %d \n"reset, pivot);
+	//printf (BGRN"Pivot = %d \n"reset, pivot);
 	//print_arrays(s);
 
 	while (check_higher_than_pivot(STACK_B, s->n_elem_b, pivot) == TRUE && s->n_elem_b >= 3)

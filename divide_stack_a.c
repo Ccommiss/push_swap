@@ -70,7 +70,6 @@ void		find_3_smallest(t_stacks *s, int **array)
 	//printf ("INDEX MIN = %d \n\n", s->index_min);
 	while (++i <= s->n_elem_a)
 	{
-		printf ("testing %d \n", STACK_A[i]);
 		if (STACK_A[i] < array[0][0] && STACK_A[i] != array[0][1]
 		&& STACK_A[i] != array[0][2] &&
 		(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
@@ -79,7 +78,6 @@ void		find_3_smallest(t_stacks *s, int **array)
 	i = -1;
 	while (++i <= s->n_elem_a)
 	{
-		printf ("testing %d \n", STACK_A[i]);
 		if (STACK_A[i] < array[0][1] && STACK_A[i] != array[0][0] &&
 		(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
 			array[0][1] = STACK_A[i];
@@ -87,7 +85,6 @@ void		find_3_smallest(t_stacks *s, int **array)
 	i = -1;
 	while (++i <= s->n_elem_a)
 	{
-		printf ("testing %d \n", STACK_A[i]);
 		if (STACK_A[i] < array[0][2] && STACK_A[i] != array[0][0] &&
 		STACK_A[i] != array[0][1] &&
 		(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
@@ -109,21 +106,21 @@ int 	choose_move(t_stacks *s, int *array)
 	index2 = find_index(array[1], STACK_A, s->n_elem_a);
 	index3 = find_index(array[2], STACK_A, s->n_elem_a);
 
-	if (index1 < index2 && index1 < index2)
+	if (index1 < index2 && index1 < index2 && index1 != -1)
 		lowest_index = index1;
-	if (index2 < index1 && index2 < index3)
+	if (index2 < index1 && index2 < index3 && index2 != -1)
 		lowest_index = index2;
-	if (index3 < index2 && index3 < index1)
+	if (index3 < index2 && index3 < index1 && index3 != -1)
 		lowest_index = index3;
 
-	if (index1 > index2 && index1 > index2)
+	if (index1 > index2 && index1 > index2 && index1 != -1)
 		highest_index = index1;
-	if (index2 > index1 && index2 > index3)
+	if (index2 > index1 && index2 > index3 && index2 != -1)
 		highest_index = index1;
-	if (index3 > index2 && index3 > index1)
+	if (index3 > index2 && index3 > index1 && index3 != -1)
 		highest_index = index1;
 
-	if (s->n_elem_a - lowest_index > highest_index)
+	if (s->n_elem_a - highest_index > lowest_index)
 		return 2; //reverse rotate
 	else
 		return 1; //rotate
@@ -136,9 +133,8 @@ void divide_stack_a(t_stacks *s)
 	if (unsorted == 1)
 	{
 		rotate_a(s);
-		exit(0);
+		return;
 	}
-
 	if (unsorted < 3)
 	{
 		while (unsorted > 0)
@@ -157,9 +153,7 @@ void divide_stack_a(t_stacks *s)
 	int good_move;
 	good_move = choose_move(s, min_array);
 
-
-	printf ("Lowest values are : %d, %d, %d \n", min_array[0], min_array[1], min_array[2]);
-
+	printf ("# smallest are : %d %d %d ", min_array[0], min_array[1], min_array[2]);
 	while (to_push > 0)
 	{
 
@@ -167,14 +161,16 @@ void divide_stack_a(t_stacks *s)
 		&& STACK_A[s->n_elem_a] != min_array[1]
 		&& STACK_A[s->n_elem_a] != min_array[2])
 		{
-			if (good_move == 1)
+			
+			//if (good_move == 1)
 				rotate_a(s);
-			else
-				reverse_rotate_a(s);
+			// else
+			// 	reverse_rotate_a(s);
 		}
 		else
 		{
 			push_b(s);
+			good_move = choose_move(s, min_array);
 			to_push--;
 		}
 	}

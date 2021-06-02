@@ -42,7 +42,6 @@ int		find_next(int *stack, int pivot, int top, char id) // je crois que cette op
 		}
 		while (j >= 0)
 		{
-			printf("j = %d\n", j);
 			if (stack[j] < pivot)
 				break;
 			j--;
@@ -50,12 +49,12 @@ int		find_next(int *stack, int pivot, int top, char id) // je crois que cette op
 	}
 	if (top - j <= i) //car si j est egal a i, ex 0 - top, vaut mieux prendre le top 
 	{
-	 	printf ("pivot = %d j = %d ; i = %d \n",pivot,  j, i);
+	 	//printf ("pivot = %d j = %d ; i = %d \n",pivot,  j, i);
 		return (j);
 	}
 	else
 	{
-		printf ("pivot = %d j = %d ; i = %d \n",pivot,  j, i);
+		//printf ("pivot = %d j = %d ; i = %d \n",pivot,  j, i);
 		return (i);
 	}
 	return (-1);

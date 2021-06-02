@@ -4,6 +4,31 @@
 
 
 
+void print_stats(t_stacks *s)
+{
+	printf ("\n\nSTATS :\n");
+	printf ("SwapA = %d\n", s->sa);
+	printf ("SwapB = %d\n", s->sb);
+	printf ("PushA = %d\n", s->pa);
+	printf ("PushB = %d\n", s->pb);
+	printf ("RA = %d\n", s->ra);
+	printf ("RB = %d\n", s->rb);
+	printf ("RRA = %d\n", s->rra);
+	printf ("RRB = %d\n", s->rrb);
+
+	printf (BWHT"\n\nTOTAL OPCOUNT => %d\n"reset, s->op_count);
+	printf ("\n\n_____\n");
+	s->sa = 0;
+	s->sb = 0;
+	s->pa = 0;
+	s->pb = 0;
+	s->ra = 0;
+	s->rb = 0;
+	s->rra = 0;
+	s->rrb = 0;
+ 
+}
+
 
 void 	push_all(t_stacks *s)
 {
@@ -16,26 +41,38 @@ void 	push_all(t_stacks *s)
 
 void boucle_test(t_stacks *s)
 {
-	VERBOSE = TRUE;
+	VERBOSE = FALSE;
+	int i = 1;
 	while (!finish(s))
-	{
+	{	
+		
+		printf (BWHT"\n\nTOUR %d \n\n"reset, i);
+		//sleep(3);
 		printf (BRED"TEST\n"reset);
 		divide_a(s);
+		print_stats(s);
 		printf (BRED"SORT\n"reset);
 		sort_three(s);
+		print_stats(s);
 		printf (BRED"INSERT A\n"reset);
 		insert_blocks_on_a(s);
+		print_stats(s);
 
 
 		if (!finish(s))
 		{
 			printf (BRED"B --- TEST\n"reset);
 			divide_b(s);
+			print_stats(s);
 			printf (BRED"B -- REVERSE SORT\n"reset);
 			reverse_sort_three(s);
+			print_stats(s);
 			printf (BRED"B -- INSERT\n"reset);
 			if (!is_reverse_sorted(s))
-				insert_blocks_on_b(s);
+			{
+				insert_blocks_on_b(s); 
+				print_stats(s);
+			}
 			else
 			{
 				VERBOSE = FALSE;
@@ -46,17 +83,12 @@ void boucle_test(t_stacks *s)
 		if (is_reverse_sorted(s)) //tous les elems de B sont tries a lenveers, ceux de A ok ou bien 0 elems dans A
 		{
 			VERBOSE = FALSE;
-			//exit(0);
-			//VERBOSE = TRUE;
-			//exit(0);
 			push_all(s);
-		//	print_arrays(s);
-		//	exit(0);
 		}
-		//VERBOSE = FALSE;
-		//VERBOSE = TRUE;
-		//print_arrays(s);
-
+		VERBOSE = TRUE;
+		print_arrays(s);
+		VERBOSE = FALSE;
+		i++;
 	}
 
 }
@@ -93,12 +125,35 @@ void check_errors(t_stacks *s)
 
 void 	boucle_unepile(t_stacks *s)
 {
-	 VERBOSE = TRUE;
+	 
+	 int i = 0;
 	while (!finish(s))
 	{
+		//  if (s->op_count >= 20)
+		// 	VERBOSE = TRUE;
+		// else 
+			VERBOSE = FALSE;
+		printf (BRED"DIVIDE S A \n"reset);
 	 	divide_stack_a(s);
+		print_stats(s);
+		printf (BRED"REVERSE \n"reset);
 	 	reverse_sort_three(s);
+		print_stats(s);
+		printf (BRED"PUSH BACK \n"reset);
 	 	pushback_on_a(s);
+		print_stats(s);
+		i++; 
+
+	
+		
+		// if (s->op_count >= 20)
+		// {
+		// 	VERBOSE = TRUE;
+		// 	print_arrays(s);
+		// // 	printf("%d \n", s->op_count);
+		// if (s->op_count == 31)
+		//  	exit(0);
+		//  }
 	}
 }
 
@@ -123,7 +178,6 @@ int main(int ac, char **argv)
 	print_arrays(&s);
 	//s.verbose =FALSE;
 
-printf("coucou\n");
 	char buf[10];
 	while (1)
 	{
