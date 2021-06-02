@@ -6,7 +6,7 @@ void push_a(t_stacks *s)
 	printf("prend le premier élément au sommet de B et le met sur A.\nNe fait rien si B est vide.\n\n");
 	if (s->n_elem_b == -1)
 	{
-		NOTENOUGH("B");
+		//NOTENOUGH("B");
 		return;
 	}
 	// -> push haut de la pile A sur haut de la pile B
@@ -17,7 +17,7 @@ void push_a(t_stacks *s)
 	//if (s->n_elem_a >= 1 && STACK_A[s->n_elem_a] > STACK_A[s->n_elem_a - 1])
 	//	swap_a(s); est opti seulement si le reste de la pile est trié !!
 	//la pile b peut etre decrementee
-	//print_arrays(s);
+	print_arrays(s);
 	s->op_count++;
 }
 
@@ -46,7 +46,7 @@ void push_b(t_stacks *s)
 	//la pile a peut etre decrementee
 	//if (s->n_elem_b >= 1 && STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
 	//	swap_b(s); //pas tjrs opti
-	//print_arrays(s);
+	print_arrays(s);
 
 	s->op_count++;
 }
@@ -58,7 +58,7 @@ void swap_b(t_stacks *s)
 	int tmp;
 	if (s->n_elem_b < 1)
 	{
-		NOTENOUGH("B");
+		//NOTENOUGH("B");
 		return;
 	}
 	tmp = s->stack_b[s->n_elem_b];

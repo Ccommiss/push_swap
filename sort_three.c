@@ -11,9 +11,15 @@ void	reverse_sort_three(t_stacks *s)
 	int max;
 
 	s->low_chunk += s->n_elem_b + 1;
-	if (s->n_elem_b < 2)
+	if (s->n_elem_b < 1)
 	{
-		NOTENOUGH("B")
+		//NOTENOUGH("B")
+		return ;
+	}
+	if (s->n_elem_b == 1)
+	{
+		if (STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
+			swap_b(s);
 		return ;
 	}
 	take_biggest(s->stack_b, s->n_elem_b, &max);

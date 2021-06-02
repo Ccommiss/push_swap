@@ -50,7 +50,7 @@ void rotate_b(t_stacks *s)
 
 	if (s->n_elem_b < 1)
 	{
-		NOTENOUGH("B");
+		//NOTENOUGH("B");
 		return ;
 	}
 	i = s->n_elem_b;
@@ -116,7 +116,7 @@ void reverse_rotate_b(t_stacks *s) //le dernier elem devient le premier
 
 	if (s->n_elem_b < 1)
 	{
-		NOTENOUGH("B");
+		//NOTENOUGH("B");
 		return ;
 	}
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/01 13:49:09 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/01 14:37:39 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,12 @@ void 	insert_blocks_on_a(t_stacks *s);
 void 	insert_blocks_on_b(t_stacks *s);
 void	divide_a(t_stacks *s);
 void	divide_b(t_stacks *s);
+
+// OPTION 2
+void 	pushback_on_a(t_stacks *s);
+int calculate_median_stackA(t_stacks *s);
+int check_lower_than_pivot_range(t_stacks *s, int pivot);
+void divide_stack_a(t_stacks *s);
 
 
 int		is_sorted(t_stacks *s);

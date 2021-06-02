@@ -93,16 +93,13 @@ void check_errors(t_stacks *s)
 
 void 	boucle_unepile(t_stacks *s)
 {
+	 VERBOSE = TRUE;
 	while (!finish(s))
 	{
-		printf (BRED"TEST\n"reset);
-		divide_a(s);
-		printf (BRED"SORT\n"reset);
-		sort_three(s);
-		printf (BRED"INSERT A\n"reset);
-		insert_blocks_on_b(s);
+	 	divide_stack_a(s);
+	 	reverse_sort_three(s);
+	 	pushback_on_a(s);
 	}
-
 }
 
 
