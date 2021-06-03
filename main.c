@@ -18,14 +18,14 @@ void print_stats(t_stacks *s)
 
 	printf (BWHT"\n\nTOTAL OPCOUNT => %d\n"reset, s->op_count);
 	printf ("\n\n_____\n");
-	s->sa = 0;
-	s->sb = 0;
-	s->pa = 0;
-	s->pb = 0;
-	s->ra = 0;
-	s->rb = 0;
-	s->rra = 0;
-	s->rrb = 0;
+	// s->sa = 0;
+	// s->sb = 0;
+	// s->pa = 0;
+	// s->pb = 0;
+	// s->ra = 0;
+	// s->rb = 0;
+	// s->rra = 0;
+	// s->rrb = 0;
  
 }
 
@@ -43,6 +43,8 @@ void boucle_test(t_stacks *s)
 {
 	VERBOSE = FALSE;
 	int i = 1;
+
+	s->chunk_size = 5;
 	while (!finish(s))
 	{	
 		
@@ -51,8 +53,13 @@ void boucle_test(t_stacks *s)
 		printf (BRED"TEST\n"reset);
 		divide_a(s);
 		print_stats(s);
+		
 		printf (BRED"SORT\n"reset);
+		if (s->chunk_size == 3)
 		sort_three(s);
+		if (s->chunk_size == 5)
+		sort_five(s);
+		
 		print_stats(s);
 		printf (BRED"INSERT A\n"reset);
 		insert_blocks_on_a(s);
@@ -65,7 +72,10 @@ void boucle_test(t_stacks *s)
 			divide_b(s);
 			print_stats(s);
 			printf (BRED"B -- REVERSE SORT\n"reset);
-			reverse_sort_three(s);
+			if (s->chunk_size == 3)
+				reverse_sort_three(s);
+			if (s->chunk_size == 5)
+				reverse_sort_five(s);
 			print_stats(s);
 			printf (BRED"B -- INSERT\n"reset);
 			if (!is_reverse_sorted(s))
@@ -93,59 +103,42 @@ void boucle_test(t_stacks *s)
 
 }
 
-void check_errors(t_stacks *s)
-{
-	int *copy;
-	int i;
-	int j;
-	copy = (int *)malloc(sizeof(int) * (s->n_elem_a + 1));
-
-	i = 0;
-	j = 0;
-	while (i <= s->n_elem_a)
-	{
-		copy[i] = STACK_A[i];
-		j = 0;
-		while (j <= i)
-		{
-			//printf ("index j = copy[%d] = %d -- copy[%d] = %d", j, copy[j], i, copy[i]);
-			if (j != i && copy[j] == copy[i])
-			{
-				printf("Index [%d] and [%d] : value are the same (%d)", j, i, copy[j]);
-				exit (0);
-			}
-			j++;
-		}
-		i++;
-
-	}
-
-
-}
 
 void 	boucle_unepile(t_stacks *s)
 {
 	 
 	 int i = 0;
+	s->chunk_size = 3;
+	VERBOSE = FALSE;
 	while (!finish(s))
 	{
+		printf(BWHT"TOUR %d\n\n"reset, i);
+		VERBOSE = FALSE;
 		//  if (s->op_count >= 20)
-		// 	VERBOSE = TRUE;
+			//VERBOSE = FALSE;
 		// else 
-			VERBOSE = FALSE;
+			//VERBOSE = FALSE;
 		printf (BRED"DIVIDE S A \n"reset);
 	 	divide_stack_a(s);
+	
 		print_stats(s);
 		printf (BRED"REVERSE \n"reset);
-	 	reverse_sort_three(s);
+		if (s->chunk_size == 3)
+	 		reverse_sort_three(s);
+		if (s->chunk_size == 5)
+	 		reverse_sort_five(s);
 		print_stats(s);
 		printf (BRED"PUSH BACK \n"reset);
 	 	pushback_on_a(s);
 		print_stats(s);
 		i++; 
-
-	
+			
 		
+			print_arrays(s);
+	
+	
+		// if (i == 2)
+		// 	exit(0);
 		// if (s->op_count >= 20)
 		// {
 		// 	VERBOSE = TRUE;
@@ -177,6 +170,7 @@ int main(int ac, char **argv)
 	check_errors(&s);
 	print_arrays(&s);
 	//s.verbose =FALSE;
+	//boucle_unepile(&s); 
 
 	char buf[10];
 	while (1)
@@ -226,13 +220,13 @@ int main(int ac, char **argv)
 		{
 			boucle_test(&s);
 			print_arrays(&s);
-			printf("ARG = %d // NB OPERATIONS = %d \n", tmp, s.op_count);
+			printf("ARG = %d // NB OPERATIONS = %d \n", tmp + 1, s.op_count);
 		}
 		else if (strcmp(buf, "solu2") == 0)
 		{
 			boucle_unepile(&s);
 			print_arrays(&s);
-			printf("ARG = %d // NB OPERATIONS = %d \n", tmp, s.op_count);
+			printf("ARG = %d // NB OPERATIONS = %d \n", tmp + 1, s.op_count);
 		}
 
 

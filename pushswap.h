@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/02 15:28:09 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/03 12:08:11 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 
 #define reset "\e[0m"
 
-//#define DEBUG(string) printf(BWHT"*** OPERATION == %s \n"reset, string);
-#define DEBUG(string) printf("");
+#define DEBUG(string) printf(BWHT"*** OPERATION == %s \n"reset, string);
+//#define DEBUG(string) printf("");
 #define NOTENOUGH(string) printf(YEL"⚠ Not enough elems in %s \n\n"reset, string);
 #define STACK_B s->stack_b
 #define STACK_A s->stack_a
@@ -56,6 +56,8 @@ typedef struct s_struct
 	int		n_elem_b;
 	int		high_chunk;
 	int		low_chunk;
+	
+	int		chunk_size;
 
 	int		op_count;
 	int pa;
@@ -79,6 +81,7 @@ enum bool {
 
 void 	print_array(char which_stack, int *stack, int top);
 void	print_arrays(t_stacks *s);
+void check_errors(t_stacks *s);
 
 /**
 *	? MOVES
@@ -104,21 +107,31 @@ void 	take_biggest(int *s, int top, int *pivot);
 int		find_next(int *stack, int pivot, int top, char id);
 int		find_index(int nb, int *array, int top);
 
+
+
 /**
  * ? Sorting
  **/
 
 void	sort_three(t_stacks *s);
+void	sort_five(t_stacks *s);
 void	reverse_sort_three(t_stacks *s);
+void	reverse_sort_five(t_stacks *s);
 void 	insert_blocks_on_a(t_stacks *s);
 void 	insert_blocks_on_b(t_stacks *s);
 void	divide_a(t_stacks *s);
 void	divide_b(t_stacks *s);
 
+
+
+
+
+
 // OPTION 2
 void 	pushback_on_a(t_stacks *s);
 int calculate_median_stackA(t_stacks *s);
-int check_lower_than_pivot_range(t_stacks *s, int pivot);
+int check_lower_than_pivot(int *s, int n_elem, int pivot);
+int check_higher_than_pivot(int *s, int n_elem, int pivot);
 void divide_stack_a(t_stacks *s);
 
 

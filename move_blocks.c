@@ -19,7 +19,8 @@ void insert_blocks_on_a(t_stacks *s)
 		else
 			reverse_rotate_b(s); // le sens depend de l'index ou on est
 	}
-	//printf ("HIGH CHUNK HERE  = %d\n", s->high_chunk);
+
+
 	while (i < s->high_chunk - tmp) // on retranche les tous mneufs, avant g mis 3
 	{
 		push_a(s); // on bouge sur A tous les gros elements d'abord
@@ -83,7 +84,7 @@ void insert_blocks_on_b(t_stacks *s)
 			reverse_rotate_a(s);
 			i++;
 		}
-		sleep(5);
+		//sleep(5);
 		return;
 	}
 
