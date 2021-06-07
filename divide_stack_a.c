@@ -59,13 +59,67 @@ int check_lower_than_pivot_range(t_stacks *s, int pivot)
 	return nb;
 }
 
+
 /**
- *	Find the n smallest numbers in the stack A and store them in array 
+ *	Find the n biggest numbers in the stack asked and store them in array
  *
  * 	@param {t_stacks} s
  *	@param {int**} array
+ *	@param {int*} stack
 **/
-void		find_smallest(t_stacks *s, int **array)
+void		find_biggest(t_stacks *s, int **array, int *stack)
+{
+	//array = array de taille size_chunk
+	int i;
+	int k;
+	int o;
+	int already_here;
+	already_here = 0;
+	i = 0;
+	k = 0;
+	o = 0;
+
+	while(k < s->chunk_size)
+	{
+		array[0][k] = INT32_MIN;
+	 	k++;
+	}
+	k = 0;
+	i = -1;
+	while (k < s->chunk_size)
+	{
+		i = -1;
+		while (++i <= s->n_elem_a)
+		{
+			if (stack[i] > array[0][k] && (i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
+			{
+				o = 0;
+				while (o < s->chunk_size)
+				{
+					if (array[0][o] == stack[i])
+						already_here = 1;
+					o++;
+				}
+				if (already_here == 0)
+					array[0][k] = stack[i];
+				already_here = 0;
+			}
+		}
+		k++;
+	}
+}
+
+
+
+
+/**
+ *	Find the n smallest numbers in the stack A and store them in array
+ *
+ * 	@param {t_stacks} s
+ *	@param {int**} array
+ *	@param {int*} stack
+**/
+void		find_smallest(t_stacks *s, int **array, int *stack)
 {
 	//array = array de taille size_chunk
 	int i;
@@ -89,95 +143,87 @@ void		find_smallest(t_stacks *s, int **array)
 		i = -1;
 		while (++i <= s->n_elem_a)
 		{
-			if (STACK_A[i] < array[0][k] && (i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
+			if (stack[i] < array[0][k] && (i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
 			{
 				o = 0;
 				while (o < s->chunk_size)
 				{
-					if (array[0][o] == STACK_A[i])
+					if (array[0][o] == stack[i])
 						already_here = 1;
 					o++;
 				}
 				if (already_here == 0)
-					array[0][k] = STACK_A[i];
+					array[0][k] = stack[i];
 				already_here = 0;
 			}
 		}
 		k++;
 	}
+}
 
+/**
+ *	Creates an array with the n biggest or smallest elements of a stack
+ *
+ * 	@param {int} size
+ *	@param {int*} stack
+ *	@param {int} type : or BIGGEST_VALUES or SMALLEST_VALUES (enum)
+ *	@return malloced array with extreme values
+**/
+int		*find_extreme_numbers(int size, int *stack, int type, t_stacks *s)
+{
+	int *array;
+
+	array = (int *)malloc(sizeof(int) * size);
+	if (type == BIGGEST_VALUES)
+		find_biggest(s, &array, stack);
+	else if (type == SMALLEST_VALUES)
+		find_smallest(s, &array, stack);
+
+	return (array);
 }
 
 
-
-void		find_3_smallest(t_stacks *s, int **array)
+int 	choose_move(t_stacks *s, int *array, int to_push)
 {
+	int *highest_index;
+	int *lowest_index;
+	int biggest;
+	int lowest;
 	int i;
-	i = -1;
 
-	array[0][0] = INT32_MAX;
-	array[0][1] = INT32_MAX;
-	array[0][2] = INT32_MAX;
-
-	array[0][2] = INT32_MAX; //pour 5 chunks
-	array[0][2] = INT32_MAX;  // pour 5 chunks
-	//printf ("INDEX MIN = %d \n\n", s->index_min);
-	while (++i <= s->n_elem_a)
+	highest_index = malloc(sizeof(int) * to_push);
+	lowest_index = malloc(sizeof(int) * to_push);
+	i = 0;
+	while (i < to_push) //on cherche l'index brut, le plus petit sera le lowest
 	{
-		if (STACK_A[i] < array[0][0] && STACK_A[i] != array[0][1]
-		&& STACK_A[i] != array[0][2] &&
-		(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
-			array[0][0] = STACK_A[i];
+		lowest_index[i] = find_index(array[i], STACK_A, s->n_elem_a);
+		if (lowest_index[i] == -1) // veut dire que pas trouve ici donc que a deja ete trouve dans le tab
+			lowest_index[i] = INT32_MAX; //comme ca ca sera pas le plus petit
+		i++;
 	}
-	i = -1;
-	while (++i <= s->n_elem_a)
+	i = 0;
+	while (i < to_push)
 	{
-		if (STACK_A[i] < array[0][1] && STACK_A[i] != array[0][0] &&
-		(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
-			array[0][1] = STACK_A[i];
+		highest_index[i] = s->n_elem_a - lowest_index[i];
+		if (lowest_index[i] ==  INT32_MAX)
+			highest_index[i] = INT32_MAX;
+		printf ("array[i] = %d // highest index = %d \n", array[i], highest_index[i]);
+		// normalement avec int overflow la valeur sera positive on va voir
+		i++;
 	}
-	i = -1;
-	while (++i <= s->n_elem_a)
-	{
-		if (STACK_A[i] < array[0][2] && STACK_A[i] != array[0][0] &&
-		STACK_A[i] != array[0][1] &&
-		(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
-			array[0][2] = STACK_A[i];
-	}
-}
+	take_smallest(lowest_index, to_push - 1, &lowest); // le + petit index en partant du bas
+	take_smallest(highest_index, to_push - 1, &biggest); // le + petit index en partant du haut
+	free(highest_index);
+	free(lowest_index);
+
+	printf ("lowest index is : %d\n", lowest);
+	printf ("biggest index is : %d\n", biggest);
 
 
-int 	choose_move(t_stacks *s, int *array)
-{
-	int index1;
-	int index2;
-	int index3;
-
-	int lowest_index;
-	int highest_index;
-
-	index1 = find_index(array[0], STACK_A, s->n_elem_a);
-	index2 = find_index(array[1], STACK_A, s->n_elem_a);
-	index3 = find_index(array[2], STACK_A, s->n_elem_a);
-
-	if (index1 < index2 && index1 < index2 && index1 != -1)
-		lowest_index = index1;
-	if (index2 < index1 && index2 < index3 && index2 != -1)
-		lowest_index = index2;
-	if (index3 < index2 && index3 < index1 && index3 != -1)
-		lowest_index = index3;
-
-	if (index1 > index2 && index1 > index2 && index1 != -1)
-		highest_index = index1;
-	if (index2 > index1 && index2 > index3 && index2 != -1)
-		highest_index = index1;
-	if (index3 > index2 && index3 > index1 && index3 != -1)
-		highest_index = index1;
-
-	if (s->n_elem_a - highest_index > lowest_index)
-		return 2; //reverse rotate
+	if (lowest < biggest && lowest > -1) //c  mieux daller vers le bas
+		return 2;//RRA
 	else
-		return 1; //rotate
+		return 3; // RA
 }
 
 void divide_stack_a(t_stacks *s)
@@ -200,7 +246,7 @@ void divide_stack_a(t_stacks *s)
 	}
 
 	int *min_array;
-	//int to_push = s->chunk_size; //est variable mais on se base la dessus
+
 	int to_push = s->n_elem_a - s->low_chunk + 1;
 	if (to_push > s->chunk_size)
 		to_push = s->chunk_size;
@@ -208,16 +254,19 @@ void divide_stack_a(t_stacks *s)
 	print_arrays(s);
 
 	//find_3_smallest(s, &min_array);
-	find_smallest(s, &min_array);
+	find_smallest(s, &min_array, STACK_A);
 	int i = 0;
 
-	int good_move;
-	good_move = choose_move(s, min_array); // a faire 
+	int next;
+	next = choose_move(s, min_array, to_push); // a faire
 
-	printf ("# smallest are : %d %d %d ", min_array[0], min_array[1], min_array[2]);
+	//printf ("# smallest are : %d %d %d %d %d ", min_array[0], min_array[1], min_array[2], min_array[3], min_array[4]);
 	while (to_push > 0)
 	{
 		i = 0;
+		next = choose_move(s, min_array, s->chunk_size);
+		//next = 3; //test pour comparer
+	//	sleep(5);
 		while (i < s->chunk_size)
 		{
 			if (STACK_A[s->n_elem_a] == min_array[i])
@@ -230,26 +279,12 @@ void divide_stack_a(t_stacks *s)
 		}
 		if (i == s->chunk_size)
 		{
-			rotate_a(s);
+			if (next == 2)
+				reverse_rotate_a(s);
+			else if (next == 3)
+				rotate_a(s);
 			printf("ici \n");
 		}
-
-		// if (STACK_A[s->n_elem_a] != min_array[0]
-		// && STACK_A[s->n_elem_a] != min_array[1]
-		// && STACK_A[s->n_elem_a] != min_array[2])
-		// {
-			
-		// 	//if (good_move == 1)
-		// 		rotate_a(s);
-		// 	// else
-		// 	// 	reverse_rotate_a(s);
-		// }
-		// else
-		// {
-		// 	push_b(s);
-		// 	good_move = choose_move(s, min_array);
-		// 	to_push--;
-		// }
 	}
 }
 

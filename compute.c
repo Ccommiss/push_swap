@@ -47,7 +47,7 @@ int		find_next(int *stack, int pivot, int top, char id) // je crois que cette op
 			j--;
 		}
 	}
-	if (top - j <= i) //car si j est egal a i, ex 0 - top, vaut mieux prendre le top 
+	if (top - j <= i) //car si j est egal a i, ex 0 - top, vaut mieux prendre le top
 	{
 	 	//printf ("pivot = %d j = %d ; i = %d \n",pivot,  j, i);
 		return (j);
@@ -135,18 +135,16 @@ void 	take_smallest(int *s, int top, int *pivot)
  *
  *	@param {int*} stack array
  *	@param {int} numbers of elems
+ *	@param {int} size : minimum size of nb lower
  *	@return {number} median
  **/
-int calculate_median(int *stack, int n_elems)
+int calculate_median(int *stack, int n_elems, int size)
 {
 	int min;
 	int max;
 	int sum = 0;
 
- // test
-	//if (n_elems < 2)
-	//	exit(0);
-
+	printf ("size = %d \n\n", size);
 	take_biggest(stack, n_elems, &max);
 	//printf ("Biggest = %d \n", max);
 	take_smallest(stack, n_elems, &min);
@@ -156,16 +154,26 @@ int calculate_median(int *stack, int n_elems)
 	j = 0;
 	//printf ("HELLO N ELEM = %d\n", n_elems);
 	while (min <= max)
-	{	//	printf ("min = %d\n", min);
+	{
 		j = 0;
 		while (j <= n_elems)
 		{
+
 			if (min == stack[j])
+			{
+				printf ("min = %d :)\n", min);
 				sum++; 	//printf ("sum = %d\n", sum);
+			}
 			j++;
 		}
-		if (sum >= (n_elems + 1) / 2 && sum > 2) //on rajoute + 1 car ca part de 0, ou + 2 si impair
+		if (size != 0 && sum > size)
 			return (min);
+		if (size == 0 && sum >= (n_elems + 1) / 2) //on rajoute + 1 car ca part de 0
+		{
+			printf ("N ELEMS =%d -- N ELEMS / 2 = %d  SUM = %d \n", n_elems, (n_elems + 1) / 2, sum);
+			//sleep(5);
+			return (min); //avant c t sup ou egal test avec sup
+		}
 		min++;
 	}
 //	printf ("sum = %d\n", sum);

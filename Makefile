@@ -6,7 +6,7 @@
 #    By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/21 15:59:42 by ccommiss          #+#    #+#              #
-#    Updated: 2021/06/01 14:36:47 by ccommiss         ###   ########.fr        #
+#    Updated: 2021/06/03 23:05:33 by ccommiss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS = main.c \
 	divide_stacks.c \
 	init.c \
 	divide_stack_a.c \
-	move_blocks_2.c ##alter 
+	sort_ten_twenty.c \
+	move_blocks_2.c ##alter
 
 FLAGS = -Wall -Werror -Wextra -fsanitize=address
 OBJS = $(SRCS:.c=.o)

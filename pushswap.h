@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/03 12:08:11 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/07 18:25:16 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_struct
 	int		n_elem_b;
 	int		high_chunk;
 	int		low_chunk;
-	
+
 	int		chunk_size;
 
 	int		op_count;
@@ -76,6 +76,11 @@ typedef struct s_struct
 enum bool {
 	FALSE = 0,
 	TRUE = 1
+};
+
+enum type {
+	SMALLEST_VALUES = 2,
+	BIGGEST_VALUES = 3
 };
 
 
@@ -101,7 +106,7 @@ void 	swap_b(t_stacks *s);
 *	? Computing functions
 **/
 
-int		calculate_median(int *stack, int n_elems);
+int		calculate_median(int *stack, int n_elems, int size);
 void 	take_smallest(int *s, int top, int *pivot);
 void 	take_biggest(int *s, int top, int *pivot);
 int		find_next(int *stack, int pivot, int top, char id);
@@ -113,10 +118,21 @@ int		find_index(int nb, int *array, int top);
  * ? Sorting
  **/
 
+int		reverse_sorted_array(int *array, int n);
+int		sorted_array(int *array, int n);
 void	sort_three(t_stacks *s);
 void	sort_five(t_stacks *s);
+void	sort_ten(t_stacks *s);
+void	sort_ten(t_stacks *s);
+void	sort_twenty(t_stacks *s);
+void	sort_forty(t_stacks *s);
+
 void	reverse_sort_three(t_stacks *s);
 void	reverse_sort_five(t_stacks *s);
+void	reverse_sort_ten(t_stacks *s);
+void	reverse_sort_twenty(t_stacks *s);
+void	reverse_sort_forty(t_stacks *s);
+
 void 	insert_blocks_on_a(t_stacks *s);
 void 	insert_blocks_on_b(t_stacks *s);
 void	divide_a(t_stacks *s);
@@ -133,6 +149,11 @@ int calculate_median_stackA(t_stacks *s);
 int check_lower_than_pivot(int *s, int n_elem, int pivot);
 int check_higher_than_pivot(int *s, int n_elem, int pivot);
 void divide_stack_a(t_stacks *s);
+
+void		find_biggest(t_stacks *s, int **array, int *stack);
+void		find_smallest(t_stacks *s, int **array, int *stack);
+int		*find_extreme_numbers(int size, int *stack, int type, t_stacks *s);
+
 
 
 int		is_sorted(t_stacks *s);

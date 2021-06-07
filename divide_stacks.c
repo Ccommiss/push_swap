@@ -32,26 +32,32 @@ void divide_a(t_stacks *s)
 {
 	int pivot;
 	int next;
+	int to_push;
 
-	printf("s->n_elem_a = %d \n", s->n_elem_a);
-	pivot = calculate_median(STACK_A, s->n_elem_a);
+	printf("s->n_elem_a = %d VS 2 * chunk = %d \n\n", s->n_elem_a, 2 * s->chunk_size);
+	if (s->n_elem_a < 2 * s->chunk_size)
+		to_push = s->n_elem_a - s->chunk_size;
+	else
+		to_push = 0;
+
+	pivot = calculate_median(STACK_A, s->n_elem_a, to_push);
+
 	next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
 
-	//printf (BGRN"Pivot = %d \n"reset, pivot);
+	printf (BGRN"Pivot = %d \n"reset, pivot);
+	//sleep(2);
 //	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE && s->n_elem_a >= 3)
-	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE && s->n_elem_a >= s->chunk_size)
+	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE || s->n_elem_a == s->chunk_size)
 	{
-
-		//if (s->n_elem_a == 3) // test
+		printf ( "pivot = %d \n", pivot);
 		if (s->n_elem_a == s->chunk_size)
 		{
 			take_smallest(STACK_A, s->n_elem_a, &pivot); //test
 			next = find_index(pivot, STACK_A, s->n_elem_a); //test !!
-			//printf (BRED"NEW NEXT = %d \n"reset, next);
 		}
-		//if(STACK_A[s->n_elem_a] < pivot || (STACK_A[s->n_elem_a] == pivot && s->n_elem_a == 3))
 		if(STACK_A[s->n_elem_a] < pivot || (STACK_A[s->n_elem_a] == pivot && s->n_elem_a == s->chunk_size))
 		{
+			printf ("coucou \n");
 			push_b(s);
 			next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
 				//printf (BRED"NEW NEXT = %d \n"reset, next);
@@ -74,19 +80,33 @@ void divide_b(t_stacks *s)
 	int pivot;
 	int next;
 
-	pivot = calculate_median(STACK_B, s->n_elem_b);
+	int to_push;
+
+	if (s->n_elem_b < s->chunk_size)
+		return ;
+	if (s->n_elem_b < 2 * s->chunk_size)
+		to_push = s->chunk_size;
+	else
+		to_push = 0;
+
+
+	printf ("TO PUSH = %d \n", to_push);
+	pivot = calculate_median(STACK_B, s->n_elem_b, to_push);
 	next = find_next(STACK_B, pivot, s->n_elem_b, 'B');
 
-	//printf (BGRN"Pivot = %d \n"reset, pivot);
+	printf (BGRN"Pivot = %d \n"reset, pivot);
+	//sleep(5);
 	//print_arrays(s);
 
 	//while (check_higher_than_pivot(STACK_B, s->n_elem_b, pivot) == TRUE && s->n_elem_b >= 3)
-	while (check_higher_than_pivot(STACK_B, s->n_elem_b, pivot) == TRUE && s->n_elem_b >= s->chunk_size)
+	while (check_higher_than_pivot(STACK_B, s->n_elem_b, pivot) == TRUE || s->n_elem_b == s->chunk_size)
 	{
-		//if (s->n_elem_b == 3)
+		printf ("pivot = %d \n\n\n", pivot);
+		//(1);
 		if (s->n_elem_b == s->chunk_size)
 		{
 			take_biggest(STACK_B, s->n_elem_b, &pivot);
+			printf (BGRN"Pivot = %d \n"reset, pivot);
 			next = find_index(pivot, STACK_B, s->n_elem_b);
 		}
 		//if(STACK_B[s->n_elem_b] > pivot || (STACK_B[s->n_elem_b] == pivot && s->n_elem_b == 3))

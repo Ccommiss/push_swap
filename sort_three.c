@@ -11,7 +11,7 @@ void	reverse_sort_three(t_stacks *s)
 	int max;
 
 	if (s->chunk_size == 3)
-		s->low_chunk += s->n_elem_b + 1; // A REMETTRE SI 3 
+		s->low_chunk += s->n_elem_b + 1; // A REMETTRE SI 3
 	if (s->n_elem_b < 1)
 	{
 		//NOTENOUGH("B")
@@ -136,41 +136,53 @@ void	sort_three(t_stacks *s)
 void	reverse_sort_five(t_stacks *s)
 {
 	int pivot;
+	int pushed_for_later = 0;
+	int next;
 
-	pivot = calculate_median(STACK_B, s->n_elem_b);
-	if (s->n_elem_b < 1)
+	pivot = calculate_median(STACK_B, s->n_elem_b, s->chunk_size);
+	if (s->n_elem_b < 1 || reverse_sorted_array(STACK_B, s->n_elem_b))
 	{
-		NOTENOUGH("B")
-		s->low_chunk += s->n_elem_b + 1; 
+		NOTENOUGH("B");
+		VERBOSE = TRUE;
+		print_arrays(s);
+			printf ("lol\n");
+		sleep(5);
+
+		VERBOSE = FALSE;
+		s->low_chunk += s->n_elem_b + 1;
 		return ;
 	}
 	if (s->n_elem_b == 1)
 	{
 		if (STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
 			swap_b(s);
-		s->low_chunk += s->n_elem_b + 1; 
+		s->low_chunk += s->n_elem_b + 1;
 		return ;
 	}
-	int pushed_for_later = 0;
-	while (check_higher_than_pivot(STACK_B, s->n_elem_b, pivot) == TRUE)
+
+	while (s->n_elem_b > 2)
 	{
-		if (STACK_B[s->n_elem_b] > pivot)
+		take_biggest(STACK_B, s->n_elem_b, &pivot); //a ameliorer pour trouver les deux biggest
+		next = find_index(pivot, STACK_B, s->n_elem_b);
+		printf("BIGGEST = %d \n", pivot);
+		if (STACK_B[s->n_elem_b] == pivot)
 		{
 			push_a(s);
 			pushed_for_later++;
 		}
-		else 
+		else if (next >= s->n_elem_b / 2)
 			rotate_b(s);
+		else if (next < s->n_elem_b / 2)
+			reverse_rotate_b(s);
 	}
 	if (pushed_for_later >= 2 && s->n_elem_a >= 1 && STACK_A[s->n_elem_a] > STACK_A[s->n_elem_a - 1])
-		swap_a(s); // on inserera tjrs le plus gros en derneir 
+		swap_a(s); // on inserera tjrs le plus gros en derneir
 
 	reverse_sort_three(s);
 	while (pushed_for_later-- > 0)
 		push_b(s);
-
-
-	s->low_chunk += s->n_elem_b + 1; 
+	if (s->chunk_size == 5)
+		s->low_chunk += s->n_elem_b + 1;
 }
 
 
@@ -178,27 +190,36 @@ void	reverse_sort_five(t_stacks *s)
 void	sort_five(t_stacks *s)
 {
 	int pivot;
+	int pushed_for_later = 0;
 
-	pivot = calculate_median(STACK_A, s->n_elem_a);
-	
-	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE)
+	if (s->n_elem_a < 1 || sorted_array(STACK_A, s->n_elem_a))
 	{
-		//if (s->n_elem_a == 3)
-		//	take_smallest(STACK_A, s->n_elem_a, &pivot); //test
+		NOTENOUGH("A")
+		s->high_chunk += s->n_elem_a + 1;
+
+		return ;
+	}
+	while (s->n_elem_a > 2)
+	{
+		take_smallest(STACK_A, s->n_elem_a, &pivot); //ameliorer pour trouver les 2 smallest
 		printf ("pivot = %d \n", pivot);
-		if (STACK_A[s->n_elem_a] < pivot)
+		if (STACK_A[s->n_elem_a] == pivot)
+		{
 			push_b(s);
-		else 
+			pushed_for_later++;
+		}
+		else
 			rotate_a(s);
 	}
-	if (s->n_elem_b >= 1 && STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
-		swap_b(s); // on inserera tjrs le plus leger en derneir 
+	if (pushed_for_later >= 2 && s->n_elem_b >= 1 && STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
+		swap_b(s);
 
 	sort_three(s);
-	push_a(s);
-	push_a(s);
+	while (pushed_for_later-- > 0)
+		push_a(s);
 	printf ("HIGH CHUNK BEFORE  = %d\n", s->high_chunk);
 
-	s->high_chunk += s->n_elem_a + 1;
+	if (s->chunk_size == 5)
+		s->high_chunk += s->n_elem_a + 1;
 	printf ("HIGH CHUNK AFTER  = %d\n", s->high_chunk);
 }
