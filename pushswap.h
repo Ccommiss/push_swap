@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/07 18:25:16 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/08 09:36:55 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,14 @@ void	sort_ten(t_stacks *s);
 void	sort_ten(t_stacks *s);
 void	sort_twenty(t_stacks *s);
 void	sort_forty(t_stacks *s);
+void	sort_sixty(t_stacks *s);
 
 void	reverse_sort_three(t_stacks *s);
 void	reverse_sort_five(t_stacks *s);
 void	reverse_sort_ten(t_stacks *s);
 void	reverse_sort_twenty(t_stacks *s);
 void	reverse_sort_forty(t_stacks *s);
+void	reverse_sort_sixty(t_stacks *s);
 
 void 	insert_blocks_on_a(t_stacks *s);
 void 	insert_blocks_on_b(t_stacks *s);
@@ -144,6 +146,7 @@ void	divide_b(t_stacks *s);
 
 
 // OPTION 2
+void 	divide_once(t_stacks *s);
 void 	pushback_on_a(t_stacks *s);
 int calculate_median_stackA(t_stacks *s);
 int check_lower_than_pivot(int *s, int n_elem, int pivot);

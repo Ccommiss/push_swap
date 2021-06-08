@@ -171,7 +171,6 @@ int calculate_median(int *stack, int n_elems, int size)
 		if (size == 0 && sum >= (n_elems + 1) / 2) //on rajoute + 1 car ca part de 0
 		{
 			printf ("N ELEMS =%d -- N ELEMS / 2 = %d  SUM = %d \n", n_elems, (n_elems + 1) / 2, sum);
-			//sleep(5);
 			return (min); //avant c t sup ou egal test avec sup
 		}
 		min++;

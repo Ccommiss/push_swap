@@ -64,14 +64,14 @@ void insert_blocks_on_b(t_stacks *s)
 	block = s->high_chunk + s->low_chunk - tmp;
 	printf("BAS DES ELEMS TRIES = %d\n", s->n_elem_a - block);
 
-	if (tmp < 3) // TEST POUR PAS TOUT REMETTRE SUR B SI IL Y A JUSTE DEUX NOUVEAU ELEMENTS 
+	if (tmp < 3) // TEST POUR PAS TOUT REMETTRE SUR B SI IL Y A JUSTE DEUX NOUVEAU ELEMENTS
 	{
 		while (i < s->low_chunk - tmp) //on rotate les petits pour les mettre en bas
 		{
 			rotate_a(s);
 			i++;
 		}
-		
+
 		i = 0;
 		while (i < tmp)
 		{
@@ -79,16 +79,15 @@ void insert_blocks_on_b(t_stacks *s)
 			i++;
 		}
 		i = 0;
-		while (i < s->low_chunk - tmp) //on reverse totate pour remettre les petits en haut 
+		while (i < s->low_chunk - tmp) //on reverse totate pour remettre les petits en haut
 		{
 			reverse_rotate_a(s);
 			i++;
 		}
-		//sleep(5);
 		return;
 	}
 
-	
+
 
 	if (block > s->n_elem_a / 2)
 	{

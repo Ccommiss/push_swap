@@ -129,16 +129,13 @@ void boucle_unepile(t_stacks *s)
 {
 
 	int i = 0;
-	s->chunk_size = 40;
-	//VERBOSE = TRUE;
+	s->chunk_size = 60;
+	VERBOSE = FALSE;
 	while (!finish(s))
 	{
 		printf(BWHT "TOUR %d\n\n" reset, i);
-		//VERBOSE = TRUE;
-		//  if (s->op_count >= 20)
-		//VERBOSE = FALSE;
-		// else
-		//VERBOSE = FALSE;
+
+
 		printf(BRED "DIVIDE S A \n" reset);
 		divide_stack_a(s);
 		print_stats(s);
@@ -154,16 +151,42 @@ void boucle_unepile(t_stacks *s)
 			reverse_sort_twenty(s);
 		if (s->chunk_size == 40)
 			reverse_sort_forty(s);
+		if (s->chunk_size == 60)
+			reverse_sort_sixty(s);
+
+		if (is_reverse_sorted(s))
+			push_all(s);
 
 		print_stats(s);
 		//sleep(5);
 		printf(BRED "PUSH BACK \n" reset);
 		pushback_on_a(s);
+		//sleep(10);
 		print_stats(s);
 		//sleep(5);
 		i++;
 		print_arrays(s);
 	}
+}
+
+void boucle_deux_pile_divide(t_stacks *s)
+{
+	s->chunk_size = 60;
+	VERBOSE = FALSE;
+	divide_once(s);
+	print_stats(s);
+	sleep(10);
+	VERBOSE = FALSE;
+	sort_sixty(s);
+
+	print_stats(s);
+	sleep(10);
+	reverse_sort_sixty(s);
+	sleep(10);
+	if (is_reverse_sorted(s))
+		push_all(s);
+	print_stats(s);
+
 }
 
 int main(int ac, char **argv)
@@ -234,6 +257,12 @@ int main(int ac, char **argv)
 		else if (strcmp(buf, "while") == 0)
 		{
 			boucle_test(&s);
+			print_arrays(&s);
+			printf("ARG = %d // NB OPERATIONS = %d \n", tmp + 1, s.op_count);
+		}
+		else if (strcmp(buf, "trydivide") == 0)
+		{
+			boucle_deux_pile_divide(&s);
 			print_arrays(&s);
 			printf("ARG = %d // NB OPERATIONS = %d \n", tmp + 1, s.op_count);
 		}

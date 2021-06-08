@@ -1,6 +1,13 @@
 #include "pushswap.h"
 
-int check_lower_than_pivot(int *s, int n_elem, int pivot)
+/**
+ *		_Checks if the array still contains numbers lower than provided one
+ *		@param {int*}s : the stack or array we want to look in
+ *		@param {int} n : the nb of elems we need to check
+ *		@param {int} pivot : the pivot nb
+ *		@return : false if no nb < pivot, true if yes
+ **/
+int		check_lower_than_pivot(int *s, int n_elem, int pivot)
 {
 	int i;
 
@@ -14,6 +21,13 @@ int check_lower_than_pivot(int *s, int n_elem, int pivot)
 	return FALSE;
 }
 
+/**
+ *		_Checks if the array still contains numbers higher than provided one
+ *		@param {int*}s : the stack or array we want to look in
+ *		@param {int} n : the nb of elems we need to check
+ *		@param {int} pivot : the pivot nb
+ *		@return : false if no nb < pivot, true if yes
+ **/
 int check_higher_than_pivot(int *s, int n_elem, int pivot)
 {
 	int i; //peeut etre a remplacer par folded index
@@ -28,6 +42,11 @@ int check_higher_than_pivot(int *s, int n_elem, int pivot)
 	return FALSE;
 }
 
+/**
+ *		_Recursively divides A and keeps the lower part from median, until
+ *		_the number of elems equals to chunk size
+ *		@params {t_stacks*}s
+ **/
 void divide_a(t_stacks *s)
 {
 	int pivot;
@@ -74,7 +93,11 @@ void divide_a(t_stacks *s)
 }
 
 
-
+/**
+ *		_Recursively divides B and keeps the lower part from median, until
+ *		_the number of elems equals to chunk size
+ *		@params {t_stacks*}s
+ **/
 void divide_b(t_stacks *s)
 {
 	int pivot;
@@ -123,4 +146,40 @@ void divide_b(t_stacks *s)
 	//while (s->n_elem_b >= 3)
 	while (s->n_elem_b >= s->chunk_size)
 		divide_b(s);
+}
+
+
+/**
+ *		_At very first call, divide the stack A into A and B,
+ *		_in two equal parts from median.
+ *		@params {t_stacks*}s
+ **/
+void 	divide_once(t_stacks *s)
+{
+	int pivot;
+	int next;
+
+	pivot = calculate_median(STACK_A, s->n_elem_a, s->n_elem_a / 2 + 1);
+
+	next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
+
+	printf (BGRN"Pivot = %d \n"reset, pivot);
+
+	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE)
+	{
+		printf ( "pivot = %d \n", pivot);
+		if(STACK_A[s->n_elem_a] < pivot)
+		{
+			printf ("coucou \n");
+			push_b(s);
+			next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
+			printf (BRED"NEW NEXT = %d \n"reset, next);
+			print_arrays(s);
+		}
+		else if (next >= s->n_elem_a / 2) // next est en haut de la pile
+			rotate_a(s);
+		else // next est en bas de la pile
+			reverse_rotate_a(s);
+	}
+
 }
