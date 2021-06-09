@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/08 09:36:55 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/08 13:58:28 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	sort_ten(t_stacks *s);
 void	sort_twenty(t_stacks *s);
 void	sort_forty(t_stacks *s);
 void	sort_sixty(t_stacks *s);
+void	sort_hundred(t_stacks *s);
 
 void	reverse_sort_three(t_stacks *s);
 void	reverse_sort_five(t_stacks *s);
@@ -134,6 +135,8 @@ void	reverse_sort_ten(t_stacks *s);
 void	reverse_sort_twenty(t_stacks *s);
 void	reverse_sort_forty(t_stacks *s);
 void	reverse_sort_sixty(t_stacks *s);
+
+void	reverse_sort_hundred(t_stacks *s);
 
 void 	insert_blocks_on_a(t_stacks *s);
 void 	insert_blocks_on_b(t_stacks *s);

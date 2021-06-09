@@ -129,7 +129,7 @@ void boucle_unepile(t_stacks *s)
 {
 
 	int i = 0;
-	s->chunk_size = 60;
+	s->chunk_size = 50;
 	VERBOSE = FALSE;
 	while (!finish(s))
 	{
@@ -149,10 +149,18 @@ void boucle_unepile(t_stacks *s)
 			reverse_sort_ten(s);
 		if (s->chunk_size == 20)
 			reverse_sort_twenty(s);
-		if (s->chunk_size == 40)
+		if (s->chunk_size == 40 || s->chunk_size == 50)
 			reverse_sort_forty(s);
 		if (s->chunk_size == 60)
 			reverse_sort_sixty(s);
+		if (s->chunk_size == 100)
+			reverse_sort_hundred(s);
+
+		VERBOSE = TRUE;
+		print_arrays(s);
+		print_stats(s);
+		VERBOSE = FALSE;
+		sleep(5);
 
 		if (is_reverse_sorted(s))
 			push_all(s);
@@ -160,8 +168,26 @@ void boucle_unepile(t_stacks *s)
 		print_stats(s);
 		//sleep(5);
 		printf(BRED "PUSH BACK \n" reset);
-		pushback_on_a(s);
+
+		if (s->n_elem_a >= s->chunk_size)
+		{///test
+			printf("%d ->> \n", s->n_elem_a);
+			sleep(2);
+			pushback_on_a(s);
+		}
+		else{
+			///TEST AUSSI
+			printf ("triggered :) \n\n");
+			sort_sixty(s);
+		}
+
+		if (is_reverse_sorted(s)){
+			printf ("triggered \n\n");
+			sleep(5);
+			push_all(s);
+		}
 		//sleep(10);
+		print_stats(s);
 		print_stats(s);
 		//sleep(5);
 		i++;
@@ -171,17 +197,18 @@ void boucle_unepile(t_stacks *s)
 
 void boucle_deux_pile_divide(t_stacks *s)
 {
-	s->chunk_size = 60;
+	s->chunk_size = 50;
 	VERBOSE = FALSE;
 	divide_once(s);
 	print_stats(s);
 	sleep(10);
+	VERBOSE = TRUE;
+	print_arrays(s);
 	VERBOSE = FALSE;
-	sort_sixty(s);
-
+	sort_hundred(s);
 	print_stats(s);
 	sleep(10);
-	reverse_sort_sixty(s);
+	reverse_sort_hundred(s);
 	sleep(10);
 	if (is_reverse_sorted(s))
 		push_all(s);

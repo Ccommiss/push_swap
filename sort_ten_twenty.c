@@ -27,6 +27,60 @@ int		sorted_array(int *array, int n)
 }
 
 
+void	reverse_sort_hundred(t_stacks *s)
+{
+	int pivot;
+	int max;
+
+	pivot = calculate_median(STACK_B, s->n_elem_b, 0);
+	if (s->n_elem_b < 1)
+	{
+		NOTENOUGH("B")
+		s->low_chunk += s->n_elem_b + 1;
+		return ;
+	}
+	if (s->n_elem_b == 1)
+	{
+		if (STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
+			swap_b(s);
+		s->low_chunk += s->n_elem_b + 1;
+		return ;
+	}
+	int pushed_for_later = 0;
+	int next;
+	while (s->n_elem_b >= 60) // on met les 20 plus gros sur A dans l;ordre
+	{
+		take_biggest(STACK_B, s->n_elem_b, &max);
+		next = find_index(max, STACK_B, s->n_elem_b);
+		if (STACK_B[s->n_elem_b] == max)
+		{
+			push_a(s);
+			pushed_for_later++;
+		}
+		else if (next >= s->n_elem_b / 2)
+			rotate_b(s);
+		else if (next < s->n_elem_b / 2)
+			reverse_rotate_b(s);
+	}
+	reverse_sort_sixty(s);
+
+	// if (reverse_sorted_array(STACK_B, s->n_elem_b) && sorted_array(STACK_A, s->n_elem_a)) // TEST
+	// 	return ;
+
+	while (pushed_for_later-- > 0)
+		push_b(s);
+	if (s->chunk_size == 100)
+	s->low_chunk += s->n_elem_b + 1;
+}
+
+
+
+
+
+
+
+
+
 
 void	reverse_sort_sixty(t_stacks *s)
 {
@@ -119,7 +173,7 @@ void	reverse_sort_forty(t_stacks *s)
 
 	while (pushed_for_later-- > 0)
 		push_b(s);
-	if (s->chunk_size == 40)
+	if (s->chunk_size == 40 || s->chunk_size == 50 ) // TEST
 	s->low_chunk += s->n_elem_b + 1;
 }
 
@@ -169,14 +223,6 @@ void	reverse_sort_twenty(t_stacks *s)
 	s->low_chunk += s->n_elem_b + 1;
 }
 
-
-
-
-
-
-
-
-
 void	reverse_sort_ten(t_stacks *s)
 {
 	int pivot;
@@ -224,6 +270,43 @@ void	reverse_sort_ten(t_stacks *s)
 
 	if (s->chunk_size == 10)
 	s->low_chunk += s->n_elem_b + 1;
+}
+
+
+
+void	sort_hundred(t_stacks *s)
+{
+	int pivot;
+	int pushed_for_later;
+	int min;
+	int next;
+
+	pivot = calculate_median(STACK_A, s->n_elem_a, 0);
+	pushed_for_later = 0;
+	while (s->n_elem_a >= 60)
+	{
+		take_smallest(STACK_A, s->n_elem_a, &min);
+		next = find_index(min, STACK_A, s->n_elem_a);
+		printf ("pivot = %d \n", pivot);
+		if (STACK_A[s->n_elem_a] == min)
+		{
+			pushed_for_later++;
+			push_b(s);
+		}
+		else if (next >= s->n_elem_a / 2)
+			rotate_a(s);
+		else
+			reverse_rotate_a(s);
+	}
+	sort_sixty(s);
+	while (pushed_for_later-- > 0)
+	{
+		push_a(s);
+	}
+	printf ("HIGH CHUNK BEFORE  = %d\n", s->high_chunk);
+	if (s->chunk_size == 100)
+		s->high_chunk += s->n_elem_a + 1;
+	printf ("HIGH CHUNK AFTER  = %d\n", s->high_chunk);
 }
 
 
@@ -297,7 +380,7 @@ void	sort_forty(t_stacks *s)
 		push_a(s);
 	}
 	printf ("HIGH CHUNK BEFORE  = %d\n", s->high_chunk);
-	if (s->chunk_size == 40)
+	if (s->chunk_size == 40 || s->chunk_size == 50 ) // TEST
 		s->high_chunk += s->n_elem_a + 1;
 	printf ("HIGH CHUNK AFTER  = %d\n", s->high_chunk);
 }
