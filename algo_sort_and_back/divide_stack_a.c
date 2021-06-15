@@ -1,16 +1,11 @@
 #include "pushswap.h"
 
-
-//Fichier pour l'option une pile
-
-
-/**
- *	_Find the median of stackA
- *
- *	@param {int*} stack
- *	@return median
-**/
-
+/*
+**	Find the median of stack A
+**
+**	@param {int*} stack
+** 	@return median
+*/
 int calculate_median_stackA(t_stacks *s)
 {
 	int min = INT32_MAX;
@@ -21,10 +16,10 @@ int calculate_median_stackA(t_stacks *s)
 	while (i < s->n_elem_a)
 	{
 		if (STACK_A[i] > max &&
-		(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
+			(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
 			max = STACK_A[i];
 		if (STACK_A[i] < min &&
-		(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
+			(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
 			min = STACK_A[i];
 		i++;
 	}
@@ -36,7 +31,7 @@ int calculate_median_stackA(t_stacks *s)
 		while (j <= s->n_elem_a)
 		{
 			if (min == STACK_A[j])
-				sum++; 	//printf ("sum = %d\n", sum);
+				sum++; //printf ("sum = %d\n", sum);
 			j++;
 		}
 		if (sum >= (s->n_elem_a + 1) / 2 && sum > 2) //on rajoute + 1 car ca part de 0, ou + 2 si impair
@@ -46,13 +41,13 @@ int calculate_median_stackA(t_stacks *s)
 	return (0);
 }
 
-/**
- *	_Cheecks if lower
- *
- *	@param {int*} stack
- *	@return median
-**/
-
+/*
+**	Checks if lower
+**
+**	@param {int*} stack
+**	@return median
+**
+*/
 int check_lower_than_pivot_range(t_stacks *s, int pivot)
 {
 	int i;
@@ -63,22 +58,30 @@ int check_lower_than_pivot_range(t_stacks *s, int pivot)
 	while (i <= s->n_elem_a)
 	{
 		if (STACK_A[i] < pivot &&
-		(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
+			(i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
 			nb++;
 		i++;
 	}
 	return nb;
 }
 
-
-/**
- *	_Find the n biggest numbers in the stack asked and store them in array
- *
- * 	@param {t_stacks} s
- *	@param {int**} array
- *	@param {int*} stack
-**/
-void		find_biggest(t_stacks *s, int **array, int *stack)
+/*
+**  Finds the n biggest numbers in the stack A and stores them in array.
+**		> First step : all nb are set to intmin
+**		> Second step : if a nb from stack[i] is found to be > to the one in array,
+**			- /!\ stack[i] mustnt be already sorted, so checking that too
+**				(index_min = index of the minimal value eg the first value sorted)
+**			- checks all previous array[0][k] to check if it has not been already set;
+**			- if not, array[0][k] stores this value
+**			- if yes, iterating until the next < value found in stack A.
+**	 	=> Iterating through this process until all k items of array are set
+**		=> All biggest nb, from (k = 0) -> biggest to (k = chunksize) = "lowest of biggest" are set
+**
+**  @param {t_stacks} s
+**  @param {int**} array of size chunk_size
+**  @param {int*} stack
+*/
+void find_biggest(t_stacks *s, int **array, int *stack)
 {
 	//array = array de taille size_chunk
 	int i;
@@ -90,13 +93,14 @@ void		find_biggest(t_stacks *s, int **array, int *stack)
 	k = 0;
 	o = 0;
 
-	while(k < s->chunk_size)
+	while (k < s->chunk_size)
 	{
 		array[0][k] = INT32_MIN;
-	 	k++;
+		k++;
 	}
 	k = 0;
 	i = -1;
+
 	while (k < s->chunk_size)
 	{
 		i = -1;
@@ -105,7 +109,7 @@ void		find_biggest(t_stacks *s, int **array, int *stack)
 			if (stack[i] > array[0][k] && (i > s->index_min || i < s->index_min - s->low_chunk - s->high_chunk))
 			{
 				o = 0;
-				while (o < s->chunk_size)
+				while (o < s->chunk_size) // a essayer : en fait ici on cherche while o < k car les autres sont pas set
 				{
 					if (array[0][o] == stack[i])
 						already_here = 1;
@@ -127,7 +131,7 @@ void		find_biggest(t_stacks *s, int **array, int *stack)
  *	@param {int**} array
  *	@param {int*} stack
 **/
-void		find_smallest(t_stacks *s, int **array, int *stack)
+void find_smallest(t_stacks *s, int **array, int *stack)
 {
 	//array = array de taille size_chunk
 	int i;
@@ -139,10 +143,10 @@ void		find_smallest(t_stacks *s, int **array, int *stack)
 	k = 0;
 	o = 0;
 
-	while(k < s->chunk_size)
+	while (k < s->chunk_size)
 	{
 		array[0][k] = INT32_MAX;
-	 	k++;
+		k++;
 	}
 	k = 0;
 	i = -1;
@@ -177,7 +181,7 @@ void		find_smallest(t_stacks *s, int **array, int *stack)
  *	@param {int} type : or BIGGEST_VALUES or SMALLEST_VALUES (enum)
  *	@return malloced array with extreme values
 **/
-int		*find_extreme_numbers(int size, int *stack, int type, t_stacks *s)
+int *find_extreme_numbers(int size, int *stack, int type, t_stacks *s)
 {
 	int *array;
 
@@ -189,14 +193,13 @@ int		*find_extreme_numbers(int size, int *stack, int type, t_stacks *s)
 	return (array);
 }
 
-
 /**
  *	_Choose move in function of the closest nb
  *
  * 	@param {int*} array containing biggest/lowest nb
  *	@param {int*} stack
 **/
-int 	choose_move(t_stacks *s, int *array, int to_push)
+int choose_move(t_stacks *s, int *array, int to_push)
 {
 	int *highest_index;
 	int *lowest_index;
@@ -210,7 +213,7 @@ int 	choose_move(t_stacks *s, int *array, int to_push)
 	while (i < to_push) //on cherche l'index brut, le plus petit sera le lowest
 	{
 		lowest_index[i] = find_index(array[i], STACK_A, s->n_elem_a);
-		if (lowest_index[i] == -1) // veut dire que pas trouve ici donc que a deja ete trouve dans le tab
+		if (lowest_index[i] == -1)		 // veut dire que pas trouve ici donc que a deja ete trouve dans le tab
 			lowest_index[i] = INT32_MAX; //comme ca ca sera pas le plus petit
 		i++;
 	}
@@ -218,20 +221,20 @@ int 	choose_move(t_stacks *s, int *array, int to_push)
 	while (i < to_push)
 	{
 		highest_index[i] = s->n_elem_a - lowest_index[i];
-		if (lowest_index[i] ==  INT32_MAX)
+		if (lowest_index[i] == INT32_MAX)
 			highest_index[i] = INT32_MAX;
 		i++;
 	}
-	take_smallest(lowest_index, to_push - 1, &lowest); // le + petit index en partant du bas
+	take_smallest(lowest_index, to_push - 1, &lowest);	 // le + petit index en partant du bas
 	take_smallest(highest_index, to_push - 1, &biggest); // le + petit index en partant du haut
 	free(highest_index);
 	free(lowest_index);
 
-	printf ("lowest index is : %d\n", lowest);
-	printf ("biggest index is : %d\n", biggest);
+	printf("lowest index is : %d\n", lowest);
+	printf("biggest index is : %d\n", biggest);
 
 	if (lowest < biggest && lowest > -1) //c  mieux daller vers le bas
-		return (2);//RRA
+		return (2);						 //RRA
 	else
 		return (3); // RA
 }
@@ -294,5 +297,3 @@ void divide_stack_a(t_stacks *s)
 		}
 	}
 }
-
-

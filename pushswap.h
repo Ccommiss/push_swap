@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/10 13:58:03 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/15 16:46:46 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_struct
 enum bool {
 	FALSE = 0,
 	TRUE = 1
-};
+} t_enum;
 
 enum type {
 	SMALLEST_VALUES = 2,
@@ -84,13 +84,21 @@ enum type {
 };
 
 
+/*
+**
+**
+*/
 void 	print_array(char which_stack, int *stack, int top);
 void	print_arrays(t_stacks *s);
-void check_errors(t_stacks *s);
+void	check_errors(t_stacks *s);
+void	print_stats(t_stacks *s);
 
-/**
-*	? MOVES
-**/
+
+/*
+**
+** 	[MOVES]
+**
+*/
 
 void 	push_a(t_stacks *s);
 void 	push_b(t_stacks *s);
@@ -114,9 +122,11 @@ int		find_index(int nb, int *array, int top);
 
 
 
-/**
- * ? Sorting
- **/
+/*
+**
+**  Sorting
+**
+*/
 
 int		reverse_sorted_array(int *array, int n);
 int		sorted_array(int *array, int n);
@@ -149,12 +159,20 @@ void	divide_b(t_stacks *s);
 
 
 // OPTION 2
-void 	divide_once(t_stacks *s);
+
+void clear_a(t_stacks *s);
+void	sort_b_on_a(t_stacks *s);
 void 	pushback_on_a(t_stacks *s);
 int calculate_median_stackA(t_stacks *s);
 int check_lower_than_pivot(int *s, int n_elem, int pivot);
 int check_higher_than_pivot(int *s, int n_elem, int pivot);
+
+
 void divide_stack_a(t_stacks *s);
+
+//option 3 : 
+void 	divide_once(t_stacks *s);
+
 
 void		find_biggest(t_stacks *s, int **array, int *stack);
 void		find_smallest(t_stacks *s, int **array, int *stack);

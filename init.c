@@ -9,6 +9,7 @@ void check_errors(t_stacks *s)
 	int j;
 	copy = (int *)malloc(sizeof(int) * (s->n_elem_a + 1));
 
+	printf ("Error checkin...\n");
 	i = 0;
 	j = 0;
 	while (i <= s->n_elem_a)
