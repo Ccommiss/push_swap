@@ -20,7 +20,7 @@ void check_errors(t_stacks *s)
 			//printf ("index j = copy[%d] = %d -- copy[%d] = %d", j, copy[j], i, copy[i]);
 			if (j != i && copy[j] == copy[i])
 			{
-				printf("Index [%d] and [%d] : value are the same (%d)", j, i, copy[j]);
+				//printf("Index [%d] and [%d] : value are the same (%d)", j, i, copy[j]);
 				exit (0);
 			}
 			j++;

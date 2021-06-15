@@ -53,7 +53,7 @@ void divide_a(t_stacks *s)
 	int next;
 	int to_push;
 
-	printf("s->n_elem_a = %d VS 2 * chunk = %d \n\n", s->n_elem_a, 2 * s->chunk_size);
+	//printf("s->n_elem_a = %d VS 2 * chunk = %d \n\n", s->n_elem_a, 2 * s->chunk_size);
 	if (s->n_elem_a < 2 * s->chunk_size)
 		to_push = s->n_elem_a - s->chunk_size;
 	else
@@ -63,12 +63,12 @@ void divide_a(t_stacks *s)
 
 	next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
 
-	printf (BGRN"Pivot = %d \n"reset, pivot);
+	//printf (BGRN"Pivot = %d \n"reset, pivot);
 	//sleep(2);
 //	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE && s->n_elem_a >= 3)
 	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE || s->n_elem_a == s->chunk_size)
 	{
-		printf ( "pivot = %d \n", pivot);
+		//printf ( "pivot = %d \n", pivot);
 		if (s->n_elem_a == s->chunk_size)
 		{
 			take_smallest(STACK_A, s->n_elem_a, &pivot); //test
@@ -76,11 +76,11 @@ void divide_a(t_stacks *s)
 		}
 		if(STACK_A[s->n_elem_a] < pivot || (STACK_A[s->n_elem_a] == pivot && s->n_elem_a == s->chunk_size))
 		{
-			printf ("coucou \n");
+			//printf ("coucou \n");
 			push_b(s);
 			next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
 				//printf (BRED"NEW NEXT = %d \n"reset, next);
-			print_arrays(s);
+			//print_arrays(s);
 		}
 		else if (next >= s->n_elem_a / 2) // next est en haut de la pile
 			rotate_a(s);
@@ -113,23 +113,23 @@ void divide_b(t_stacks *s)
 		to_push = 0;
 
 
-	printf ("TO PUSH = %d \n", to_push);
+	//printf ("TO PUSH = %d \n", to_push);
 	pivot = calculate_median(STACK_B, s->n_elem_b, to_push);
 	next = find_next(STACK_B, pivot, s->n_elem_b, 'B');
 
-	printf (BGRN"Pivot = %d \n"reset, pivot);
+	//printf (BGRN"Pivot = %d \n"reset, pivot);
 	//sleep(5);
 	//print_arrays(s);
 
 	//while (check_higher_than_pivot(STACK_B, s->n_elem_b, pivot) == TRUE && s->n_elem_b >= 3)
 	while (check_higher_than_pivot(STACK_B, s->n_elem_b, pivot) == TRUE || s->n_elem_b == s->chunk_size)
 	{
-		printf ("pivot = %d \n\n\n", pivot);
+		//printf ("pivot = %d \n\n\n", pivot);
 		//(1);
 		if (s->n_elem_b == s->chunk_size)
 		{
 			take_biggest(STACK_B, s->n_elem_b, &pivot);
-			printf (BGRN"Pivot = %d \n"reset, pivot);
+			//printf (BGRN"Pivot = %d \n"reset, pivot);
 			next = find_index(pivot, STACK_B, s->n_elem_b);
 		}
 		//if(STACK_B[s->n_elem_b] > pivot || (STACK_B[s->n_elem_b] == pivot && s->n_elem_b == 3))
@@ -163,18 +163,17 @@ void 	divide_once(t_stacks *s)
 
 	next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
 
-	printf (BGRN"Pivot = %d \n"reset, pivot);
+	//printf (BGRN"Pivot = %d \n"reset, pivot);
 
 	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE)
 	{
-		printf ( "pivot = %d \n", pivot);
+		//printf ( "pivot = %d \n", pivot);
 		if(STACK_A[s->n_elem_a] < pivot)
 		{
-			printf ("coucou \n");
 			push_b(s);
 			next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
-			printf (BRED"NEW NEXT = %d \n"reset, next);
-			print_arrays(s);
+		//	printf (BRED"NEW NEXT = %d \n"reset, next);
+			//print_arrays(s);
 		}
 		else if (next >= s->n_elem_a / 2) // next est en haut de la pile
 			rotate_a(s);

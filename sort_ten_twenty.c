@@ -262,7 +262,7 @@ void	reverse_sort_ten(t_stacks *s)
 	}
 	reverse_sort_five(s);
 
-	// if (reverse_sorted_array(STACK_B, s->n_elem_b) && sorted_array(STACK_A, s->n_elem_a)) // TEST
+	// if (reverse_sorted_array(STACK_B, s->n_elem_b) && sorted_array(STACK_A, s->n_elem_a)) // TEST POUR TRYDIVIDE
 	// 	return ;
 
 	while (pushed_for_later-- > 0)
@@ -287,7 +287,6 @@ void	sort_hundred(t_stacks *s)
 	{
 		take_smallest(STACK_A, s->n_elem_a, &min);
 		next = find_index(min, STACK_A, s->n_elem_a);
-		printf ("pivot = %d \n", pivot);
 		if (STACK_A[s->n_elem_a] == min)
 		{
 			pushed_for_later++;
@@ -325,7 +324,6 @@ void	sort_sixty(t_stacks *s)
 	{
 		take_smallest(STACK_A, s->n_elem_a, &min);
 		next = find_index(min, STACK_A, s->n_elem_a);
-		printf ("pivot = %d \n", pivot);
 		if (STACK_A[s->n_elem_a] == min)
 		{
 			pushed_for_later++;
@@ -363,7 +361,6 @@ void	sort_forty(t_stacks *s)
 	{
 		take_smallest(STACK_A, s->n_elem_a, &min);
 		next = find_index(min, STACK_A, s->n_elem_a);
-		printf ("pivot = %d \n", pivot);
 		if (STACK_A[s->n_elem_a] == min)
 		{
 			pushed_for_later++;
@@ -400,7 +397,6 @@ void	sort_twenty(t_stacks *s)
 	{
 		take_smallest(STACK_A, s->n_elem_a, &min);
 		next = find_index(min, STACK_A, s->n_elem_a);
-		printf ("pivot = %d \n", pivot);
 		if (STACK_A[s->n_elem_a] == min)
 		{
 			pushed_for_later++;
@@ -443,7 +439,6 @@ void	sort_ten(t_stacks *s)
 	{
 		take_smallest(STACK_A, s->n_elem_a, &min);
 		next = find_index(min, STACK_A, s->n_elem_a);
-		printf ("pivot = %d \n", pivot);
 		if (STACK_A[s->n_elem_a] == min)
 		{
 			pushed_for_later++;

@@ -34,6 +34,7 @@ void pushback_on_a(t_stacks *s)
 		}
 	}
 
+
 	while (i < new_chunks)
 	{
 		push_a(s);

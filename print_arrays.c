@@ -1,4 +1,5 @@
 #include "pushswap.h"
+#include <time.h>
 
 void print_array(char which_stack, int *stack, int top)
 {
@@ -33,13 +34,16 @@ void print_arrays(t_stacks *s)
 	else
 		ref = s->n_elem_b;
 
-	printf("%-25s	%-25s", BRED"||       TOP A      ||", BCYN"||      TOP B       ||");
-	printf("%20s	%20s", BRED "\n||__________________||", BCYN "||__________________||\n");
+	printf ("%40c", 32);
+	printf("%-25s	%-25s", BRED"||       TOP A      ||", BCYN"||      TOP B       ||\n");
+	printf ("%40c", 32);
+	printf("%20s	%20s", BRED "||__________________||", BCYN "||__________________||\n");
 
 	while (ref >= 0 )
 	{
 		n = ref;
 
+		printf ("%40c", 32);
 		if (s->n_elem_a > n)
 			printf(BRED "||[%5d] => %5d  ||	", n, s->stack_a[n]);
 		else if (s->n_elem_a == n)
@@ -47,27 +51,33 @@ void print_arrays(t_stacks *s)
 		else
 			printf("%20s	", " ");
 
+		printf ("%40c", 32);
 		if (s->n_elem_b > n)
 			printf(BCYN "||[%5d] => %5d  ||", n, s->stack_b[n]);
 		else if (s->n_elem_b == n)
 			printf(BCYN "||[> %3d] => %5d  ||", n, s->stack_b[n]);
 
-		if (s->n_elem_a >= n)
-			printf("%20s", BRED "\n||__________________||");
-		else if (s->n_elem_a == -1 && n == 0)
-			printf("%20s", BRED "\n______________________");
-		else
-			printf("\n %20s", " ");
+		// if (s->n_elem_a >= n)
+		// 	printf("%20s", BRED "\n||__________________||");
+		// else if (s->n_elem_a == -1 && n == 0)
+		// 	printf("%20s", BRED "\n______________________");
+		// else
+		//	printf("\n %20s", " ");
+		printf ("\n");
 
-		if (s->n_elem_b >= n)
-			printf("	%20s", BCYN "||__________________||\n");
-		else if (s->n_elem_b == -1 && n == 0)
-			printf("	%20s", BCYN "______________________\n");
-		else
-			printf("	%20s", "\n");
+		// if (s->n_elem_b >= n)
+		// 	printf("	%20s", BCYN "||__________________||\n");
+		// else if (s->n_elem_b == -1 && n == 0)
+		// 	printf("	%20s", BCYN "______________________\n");
+		// else
+		// 	printf("	%20s", "\n");
 		ref--;
 	}
-	printf("%-25s	%-25s", BRED"||      STACK A     ||", BCYN"||      STACK B     ||");
-	printf("%20s	%20s", BRED "\n||__________________||", BCYN "||__________________||\n");
+		printf ("%40c", 32);
+	printf("%-25s	%-25s", BRED"||      STACK A     ||", BCYN"||      STACK B     ||\n");
+	printf ("%40c", 32);
+	printf("%20s	%20s", BRED "||__________________||", BCYN "||__________________||\n");
+	printf ("%40c", 32);
 	printf("\n" reset);
+	usleep(9000);
 }

@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/08 13:58:28 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/10 13:58:03 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 
 #define reset "\e[0m"
 
-#define DEBUG(string) printf(BWHT"*** OPERATION == %s \n"reset, string);
-//#define DEBUG(string) printf("");
+//#define DEBUG(string) printf(BWHT"*** OPERATION == %s \n"reset, string);
+#define DEBUG(string) printf("");
 #define NOTENOUGH(string) printf(YEL"⚠ Not enough elems in %s \n\n"reset, string);
 #define STACK_B s->stack_b
 #define STACK_A s->stack_a

@@ -3,18 +3,19 @@
 
 void print_stats(t_stacks *s)
 {
-	printf("\n\nSTATS :\n");
-	printf("SwapA = %d\n", s->sa);
-	printf("SwapB = %d\n", s->sb);
-	printf("PushA = %d\n", s->pa);
-	printf("PushB = %d\n", s->pb);
-	printf("RA = %d\n", s->ra);
-	printf("RB = %d\n", s->rb);
-	printf("RRA = %d\n", s->rra);
-	printf("RRB = %d\n", s->rrb);
+	(void)s;
+	// printf("\n\nSTATS :\n");
+	// printf("SwapA = %d\n", s->sa);
+	// printf("SwapB = %d\n", s->sb);
+	// printf("PushA = %d\n", s->pa);
+	// printf("PushB = %d\n", s->pb);
+	// printf("RA = %d\n", s->ra);
+	// printf("RB = %d\n", s->rb);
+	// printf("RRA = %d\n", s->rra);
+	// printf("RRB = %d\n", s->rrb);
 
-	printf(BWHT "\n\nTOTAL OPCOUNT => %d\n" reset, s->op_count);
-	printf("\n\n_____\n");
+	// printf(BWHT "\n\nTOTAL OPCOUNT => %d\n" reset, s->op_count);
+	// printf("\n\n_____\n");
 	// s->sa = 0;
 	// s->sb = 0;
 	// s->pa = 0;
@@ -39,7 +40,7 @@ void boucle_test(t_stacks *s)
 	VERBOSE = FALSE;
 	int i = 1;
 
-	s->chunk_size = 40;
+	s->chunk_size = 100;
 	while (!finish(s))
 	{
 
@@ -49,6 +50,10 @@ void boucle_test(t_stacks *s)
 		divide_a(s);
 		print_stats(s);
 		//sleep(1);
+		VERBOSE = TRUE;
+		print_arrays(s);
+		sleep(10);
+		VERBOSE = FALSE;
 
 		printf(BRED "SORT\n" reset);
 		if (s->chunk_size == 3)
@@ -61,20 +66,40 @@ void boucle_test(t_stacks *s)
 			sort_twenty(s);
 		if (s->chunk_size == 40)
 			sort_forty(s);
+		if (s->chunk_size == 60)
+			sort_sixty(s);
+		if (s->chunk_size == 100)
+			sort_hundred(s);
 
 		print_stats(s);
-		//	sleep(1);
+
+		VERBOSE = TRUE;
+		print_arrays(s);
+		sleep(10);
+		VERBOSE = FALSE;
+		//sleep(10);
 
 		printf(BRED "INSERT A\n" reset);
 		insert_blocks_on_a(s);
 		print_stats(s);
-		//sleep(5);
+
+		VERBOSE = TRUE;
+		print_arrays(s);
+		sleep(10);
+		VERBOSE = FALSE;
+		//sleep(10);
 
 		if (!finish(s))
 		{
 			printf(BRED "B --- TEST\n" reset);
 			divide_b(s);
 			print_stats(s);
+
+			VERBOSE = TRUE;
+			print_arrays(s);
+			sleep(10);
+			VERBOSE = FALSE;
+
 			//exit(0);
 			//sleep(5);
 
@@ -89,16 +114,25 @@ void boucle_test(t_stacks *s)
 				reverse_sort_twenty(s);
 			if (s->chunk_size == 40)
 				reverse_sort_forty(s);
+			if (s->chunk_size == 60)
+				reverse_sort_sixty(s);
+			if (s->chunk_size == 100)
+				reverse_sort_hundred(s);
 
 			print_stats(s);
-			//	sleep(5);
+			//sleep(10);
+				VERBOSE = TRUE;
+		print_arrays(s);
+		sleep(10);
+		VERBOSE = FALSE;
+
 
 			printf(BRED "B -- INSERT\n" reset);
 			if (!is_reverse_sorted(s))
 			{
 				insert_blocks_on_b(s);
 				print_stats(s);
-				//	sleep(5);
+				//sleep(10);
 			}
 			else
 			{
@@ -129,7 +163,7 @@ void boucle_unepile(t_stacks *s)
 {
 
 	int i = 0;
-	s->chunk_size = 50;
+	s->chunk_size = 60;
 	VERBOSE = FALSE;
 	while (!finish(s))
 	{
@@ -172,7 +206,7 @@ void boucle_unepile(t_stacks *s)
 		if (s->n_elem_a >= s->chunk_size)
 		{///test
 			printf("%d ->> \n", s->n_elem_a);
-			sleep(2);
+			//sleep(2);
 			pushback_on_a(s);
 		}
 		else{

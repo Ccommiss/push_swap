@@ -206,14 +206,17 @@ void	sort_five(t_stacks *s)
 	if (s->n_elem_a < 1 || sorted_array(STACK_A, s->n_elem_a))
 	{
 		NOTENOUGH("A")
+		if (s->chunk_size == 5) // TEST !!!!!! pour while
 		s->high_chunk += s->n_elem_a + 1;
-
+		VERBOSE = TRUE;
+		print_arrays(s);
+		VERBOSE = FALSE;
+		sleep(10);
 		return ;
 	}
 	while (s->n_elem_a > 2)
 	{
 		take_smallest(STACK_A, s->n_elem_a, &pivot); //ameliorer pour trouver les 2 smallest
-		printf ("pivot = %d \n", pivot);
 		if (STACK_A[s->n_elem_a] == pivot)
 		{
 			push_b(s);
