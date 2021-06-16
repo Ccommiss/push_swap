@@ -109,15 +109,12 @@ void	reverse_sort_five(t_stacks *s)
 	if (s->n_elem_b < 1 || reverse_sorted_array(STACK_B, s->n_elem_b))
 	{
 		NOTENOUGH("B");
-		sleep(3);
-		//s->low_chunk += s->n_elem_b + 1;
 		return ;
 	}
 	if (s->n_elem_b == 1)
 	{
 		if (STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
 			swap_b(s);
-		//s->low_chunk += s->n_elem_b + 1;
 		return ;
 	}
 
@@ -126,7 +123,6 @@ void	reverse_sort_five(t_stacks *s)
 		printf ("coucou la mif\n");
 		take_biggest(STACK_B, s->n_elem_b, &pivot); //a ameliorer pour trouver les deux biggest
 		next = find_index(pivot, STACK_B, s->n_elem_b);
-		printf("BIGGEST = %d \n", pivot);
 		if (STACK_B[s->n_elem_b] == pivot)
 		{
 			push_a(s);
@@ -137,15 +133,9 @@ void	reverse_sort_five(t_stacks *s)
 		else if (next < s->n_elem_b / 2)
 			reverse_rotate_b(s);
 	}
-
 	if (pushed_for_later >= 2 && s->n_elem_a >= 1 && STACK_A[s->n_elem_a] > STACK_A[s->n_elem_a - 1])
-		swap_a(s); // on inserera tjrs le plus gros en derneir
-
+		swap_a(s);
 	reverse_sort_three(s);
-
-	// if (reverse_sorted_array(STACK_B, s->n_elem_b) && sorted_array(STACK_A, s->n_elem_a)) // TEST
-	// 	return ;
-
 	while (pushed_for_later-- > 0)
 		push_b(s);
 }
@@ -158,9 +148,6 @@ void	sort_five(t_stacks *s)
 	if (s->n_elem_a < 1 || sorted_array(STACK_A, s->n_elem_a))
 	{
 		NOTENOUGH("A")
-		//if (s->chunk_size == 5) // TEST !!!!!! pour while
-		s->high_chunk += s->n_elem_a + 1;
-		sleep(10);
 		return ;
 	}
 	while (s->n_elem_a > 2)

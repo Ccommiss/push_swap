@@ -42,11 +42,12 @@ int check_higher_than_pivot(int *s, int n_elem, int pivot)
 	return FALSE;
 }
 
-/**
- *		_Recursively divides A and keeps the lower part from median, until
- *		_the number of elems equals to chunk size
- *		@params {t_stacks*}s
- **/
+/*
+**
+**  Recursively divides A and keeps the lower part from median, until
+**	the number of elems equals to chunk size
+**  @params {t_stacks*}s
+*/
 void divide_a(t_stacks *s)
 {
 	int pivot;

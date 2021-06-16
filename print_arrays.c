@@ -6,26 +6,26 @@
 void print_stats(t_stacks *s)
 {
 	(void)s;
-	// printf("\n\nSTATS :\n");
-	// printf("SwapA = %d\n", s->sa);
-	// printf("SwapB = %d\n", s->sb);
-	// printf("PushA = %d\n", s->pa);
-	// printf("PushB = %d\n", s->pb);
-	// printf("RA = %d\n", s->ra);
-	// printf("RB = %d\n", s->rb);
-	// printf("RRA = %d\n", s->rra);
-	// printf("RRB = %d\n", s->rrb);
+	printf("\n\nSTATS :\n");
+	printf("SwapA = %d\n", s->sa);
+	printf("SwapB = %d\n", s->sb);
+	printf("PushA = %d\n", s->pa);
+	printf("PushB = %d\n", s->pb);
+	printf("RA = %d\n", s->ra);
+	printf("RB = %d\n", s->rb);
+	printf("RRA = %d\n", s->rra);
+	printf("RRB = %d\n", s->rrb);
 
-	// printf(BWHT "\n\nTOTAL OPCOUNT => %d\n" reset, s->op_count);
-	// printf("\n\n_____\n");
-	// s->sa = 0;
-	// s->sb = 0;
-	// s->pa = 0;
-	// s->pb = 0;
-	// s->ra = 0;
-	// s->rb = 0;
-	// s->rra = 0;
-	// s->rrb = 0;
+	printf(BWHT "\n\nTOTAL OPCOUNT => %d\n" reset, s->op_count);
+	printf("\n\n_____\n");
+	s->sa = 0;
+	s->sb = 0;
+	s->pa = 0;
+	s->pb = 0;
+	s->ra = 0;
+	s->rb = 0;
+	s->rra = 0;
+	s->rrb = 0;
 }
 
 
@@ -56,7 +56,7 @@ void print_arrays(t_stacks *s)
 	int n;
 	int ref;
 
-	printf("\033[2J\033[1;1H");
+	//printf("\033[2J\033[1;1H");
 	if (s->verbose == FALSE)
 		return ;
 	if (s->n_elem_a >= s->n_elem_b)

@@ -10,13 +10,12 @@ void push_all(t_stacks *s)
 		push_a(s);
 }
 
-
 void boucle_test(t_stacks *s)
 {
 	VERBOSE = FALSE;
 	int i = 1;
 
-	s->chunk_size = 100;
+	s->chunk_size = 30;
 	while (!finish(s))
 	{
 
@@ -24,26 +23,14 @@ void boucle_test(t_stacks *s)
 
 		printf(BRED "TEST\n" reset);
 		divide_a(s);
-		print_stats(s);
 		VERBOSE = TRUE;
 		print_arrays(s);
+		print_stats(s);
+		sleep(5);
 		VERBOSE = FALSE;
 
 		printf(BRED "SORT\n" reset);
-		// if (s->chunk_size == 3)
-		// 	sort_three(s);
-		// if (s->chunk_size == 5)
-		// 	sort_five(s);
-		// if (s->chunk_size == 10)
-		// 	sort_ten(s);
-		// if (s->chunk_size == 20)
-		// 	sort_twenty(s);
-		// if (s->chunk_size == 40)
-		// 	sort_forty(s);
-		// if (s->chunk_size == 60)
-		// 	sort_sixty(s);
-		// if (s->chunk_size == 100)
-		// 	sort_hundred(s);
+		sort_ten(s);
 
 		print_stats(s);
 
@@ -51,7 +38,6 @@ void boucle_test(t_stacks *s)
 		print_arrays(s);
 
 		VERBOSE = FALSE;
-
 
 		printf(BRED "INSERT A\n" reset);
 		insert_blocks_on_a(s);
@@ -60,7 +46,6 @@ void boucle_test(t_stacks *s)
 		VERBOSE = TRUE;
 		print_arrays(s);
 		VERBOSE = FALSE;
-
 
 		if (!finish(s))
 		{
@@ -71,30 +56,13 @@ void boucle_test(t_stacks *s)
 			VERBOSE = TRUE;
 			print_arrays(s);
 			VERBOSE = FALSE;
-
-			// printf(BRED "B -- REVERSE SORT\n" reset);
-			// if (s->chunk_size == 3)
-			// 	reverse_sort_three(s);
-			// if (s->chunk_size == 5)
-			// 	reverse_sort_five(s);
-			// if (s->chunk_size == 10)
-			// 	reverse_sort_ten(s);
-			// if (s->chunk_size == 20)
-			// 	reverse_sort_twenty(s);
-			// if (s->chunk_size == 40)
-			// 	reverse_sort_forty(s);
-			// if (s->chunk_size == 60)
-			// 	reverse_sort_sixty(s);
-			// if (s->chunk_size == 100)
-			// 	reverse_sort_hundred(s);
-
+			reverse_sort_ten(s);
 			print_stats(s);
 			//sleep(10);
-				VERBOSE = TRUE;
-		print_arrays(s);
-		sleep(10);
-		VERBOSE = FALSE;
-
+			VERBOSE = TRUE;
+			print_arrays(s);
+			sleep(10);
+			VERBOSE = FALSE;
 
 			printf(BRED "B -- INSERT\n" reset);
 			if (!is_reverse_sorted(s))
@@ -119,9 +87,6 @@ void boucle_test(t_stacks *s)
 	}
 }
 
-
-
-
 /*
 **	Algo "sort and back"
 **	Takes the chunk_size lowest unsorted numbers, push and sort them on stack B.
@@ -129,16 +94,15 @@ void boucle_test(t_stacks *s)
 */
 void algo_sort_and_back(t_stacks *s)
 {
-	printf ("Sort and back launcheed !\n");
+	printf("Sort and back launcheed !\n");
 	int i = 0;
-	s->chunk_size = 50; //
-	VERBOSE = FALSE;
+	s->chunk_size = 25;
+	VERBOSE = TRUE;
 	while (!finish(s))
 	{
 		printf(BWHT "TOUR %d\n\n" reset, i);
 		printf(BRED "DIVIDE S A \n" reset);
 		divide_stack_a(s);
-		//clear stack A
 		clear_a(s);
 		sort_b_on_a(s);
 		if (is_reverse_sorted(s))
@@ -149,13 +113,15 @@ void algo_sort_and_back(t_stacks *s)
 			printf("%d ->> \n", s->n_elem_a);
 			pushback_on_a(s);
 		}
-		else {
-			printf ("triggered :) \n\n");
+		else
+		{
+			printf("triggered :) \n\n");
 			sort_ten(s);
 		}
 
-		if (is_reverse_sorted(s)){
-			printf ("triggered \n\n");
+		if (is_reverse_sorted(s))
+		{
+			printf("triggered \n\n");
 			push_all(s);
 		}
 		//sleep(10);
@@ -222,6 +188,7 @@ int main(int ac, char **argv)
 			boucle_test(&s);
 			print_arrays(&s);
 			printf("ARG = %d // NB OPERATIONS = %d \n", tmp + 1, s.op_count);
+			return (0);
 		}
 		else if (strcmp(buf, "algo2") == 0)
 		{
@@ -236,7 +203,7 @@ int main(int ac, char **argv)
 			algo_sort_and_back(&s);
 			print_arrays(&s);
 			printf("ARG = %d // NB OPERATIONS = %d \n", tmp + 1, s.op_count);
-			return(0);
+			return (0);
 		}
 	}
 }
