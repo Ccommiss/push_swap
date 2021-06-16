@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 11:38:49 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/15 11:39:08 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/16 18:02:20 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 **	@param {t_stacks *} stack
 **	@returns none
 */
-void rotate_a(t_stacks *s)
+void	rotate_a(t_stacks *s)
 {
-	DEBUG("RA");
-	int tmp;
-	int i;
+	int	tmp;
+	int	i;
 
+	DEBUG("RA");
 	i = s->n_elem_a;
 	if (i < 1)
 	{
 		NOTENOUGH("A");
-		return;
+		return ;
 	}
 	tmp = s->stack_a[s->n_elem_a];
 	while (i > 0)
@@ -41,6 +41,7 @@ void rotate_a(t_stacks *s)
 	print_arrays(s);
 	s->op_count++;
 	s->ra++;
+	printf("ra\n");
 }
 
 /*
@@ -50,16 +51,16 @@ void rotate_a(t_stacks *s)
 **	@param {t_stacks *} stack
 **	@returns none
 */
-void rotate_b(t_stacks *s)
+void	rotate_b(t_stacks *s)
 {
-	DEBUG("RB");
-	int tmp;
-	int i;
+	int	tmp;
+	int	i;
 
+	DEBUG("RB");
 	if (s->n_elem_b < 1)
 	{
 		NOTENOUGH("B");
-		return;
+		return ;
 	}
 	i = s->n_elem_b;
 	tmp = s->stack_b[s->n_elem_b];
@@ -72,6 +73,7 @@ void rotate_b(t_stacks *s)
 	print_arrays(s);
 	s->op_count++;
 	s->rb++;
+	printf("rb\n");
 }
 
 /*
@@ -79,17 +81,17 @@ void rotate_b(t_stacks *s)
 ** 	@param {t_stacks *} stack
 ** 	@returns none
 */
-void reverse_rotate_a(t_stacks *s)
+void	reverse_rotate_a(t_stacks *s)
 {
-	DEBUG("RRA");
-	int tmp;
-	int i;
+	int	tmp;
+	int	i;
 
+	DEBUG("RRA");
 	i = 0;
 	if (s->n_elem_a < 1)
 	{
 		NOTENOUGH("A");
-		return;
+		return ;
 	}
 	tmp = s->stack_a[0];
 	while (i < s->n_elem_a)
@@ -101,6 +103,7 @@ void reverse_rotate_a(t_stacks *s)
 	print_arrays(s);
 	s->op_count++;
 	s->rra++;
+	printf("rra\n");
 }
 
 /*
@@ -108,19 +111,19 @@ void reverse_rotate_a(t_stacks *s)
 ** 	@param {t_stacks *} stack
 ** 	@returns none
 */
-void reverse_rotate_b(t_stacks *s)
+void	reverse_rotate_b(t_stacks *s)
 {
-	DEBUG("RRB");
-	int tmp;
-	int i;
+	int	tmp;
+	int	i;
 
+	DEBUG("RRB");
 	i = 0;
 	if (s->n_elem_b < 1)
 	{
 		NOTENOUGH("B");
-		return;
+		return ;
 	}
-	tmp = s->stack_b[0]; //on save l'element du top de la stack
+	tmp = s->stack_b[0];
 	while (i < s->n_elem_b)
 	{
 		s->stack_b[i] = s->stack_b[i + 1];

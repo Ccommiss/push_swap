@@ -81,26 +81,12 @@ void print_arrays(t_stacks *s)
 		else
 			printf("%20s	", " ");
 
-		printf ("%40c", 32);
+		
 		if (s->n_elem_b > n)
 			printf(BCYN "||[%5d] => %5d  ||", n, s->stack_b[n]);
 		else if (s->n_elem_b == n)
 			printf(BCYN "||[> %3d] => %5d  ||", n, s->stack_b[n]);
-
-		// if (s->n_elem_a >= n)
-		// 	printf("%20s", BRED "\n||__________________||");
-		// else if (s->n_elem_a == -1 && n == 0)
-		// 	printf("%20s", BRED "\n______________________");
-		// else
-		//	printf("\n %20s", " ");
 		printf ("\n");
-
-		// if (s->n_elem_b >= n)
-		// 	printf("	%20s", BCYN "||__________________||\n");
-		// else if (s->n_elem_b == -1 && n == 0)
-		// 	printf("	%20s", BCYN "______________________\n");
-		// else
-		// 	printf("	%20s", "\n");
 		ref--;
 	}
 		printf ("%40c", 32);
@@ -110,5 +96,4 @@ void print_arrays(t_stacks *s)
 	printf ("%40c", 32);
 	printf("\n" reset);
 	usleep(80000);
-	//sleep(1);
 }

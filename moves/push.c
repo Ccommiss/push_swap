@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 11:16:04 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/15 15:25:58 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/16 17:58:45 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **  @param stack *s
 **  @return none
 */
-void push_a(t_stacks *s)
+void	push_a(t_stacks *s)
 {
 	DEBUG("PUSH A");
 	if (s->n_elem_b == -1)
@@ -25,7 +25,7 @@ void push_a(t_stacks *s)
 		NOTENOUGH("B");
 		return ;
 	}
-	s->n_elem_a++; //on prepare le top de la pile B a recevoir en ajoutant +1 dindex
+	s->n_elem_a++;
 	s->stack_a[s->n_elem_a] = s->stack_b[s->n_elem_b];
 	s->n_elem_b--;
 	print_arrays(s);
@@ -39,7 +39,7 @@ void push_a(t_stacks *s)
 **  @param stack *s
 **  @return none
 */
-void push_b(t_stacks *s)
+void	push_b(t_stacks *s)
 {
 	DEBUG("PUSH B");
 	if (s->n_elem_a == -1)
@@ -47,7 +47,6 @@ void push_b(t_stacks *s)
 		NOTENOUGH("A");
 		return ;
 	}
-
 	s->n_elem_b++;
 	s->stack_b[s->n_elem_b] = s->stack_a[s->n_elem_a];
 	s->n_elem_a--;
@@ -62,10 +61,11 @@ void push_b(t_stacks *s)
 **  @param stack *s
 **  @return none
 */
-void swap_b(t_stacks *s)
+void	swap_b(t_stacks *s)
 {
+	int	tmp;
+
 	DEBUG("SWAP B");
-	int tmp;
 	if (s->n_elem_b < 1)
 	{
 		NOTENOUGH("B");
@@ -85,11 +85,11 @@ void swap_b(t_stacks *s)
 **  @param stack *s
 **  @return none
 */
-void swap_a(t_stacks *s)
+void	swap_a(t_stacks *s)
 {
-	DEBUG("SWAP A");
-	int tmp;
+	int	tmp;
 
+	DEBUG("SWAP A");
 	if (s->n_elem_a < 1)
 	{
 		NOTENOUGH("A");

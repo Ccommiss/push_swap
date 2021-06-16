@@ -1,17 +1,24 @@
 #include "pushswap.h"
 
 /*
+**	Clear A
 **
+**	Puts all sorted numbers to the bottom of stack A
+**	@param {t_stacks *s} our main structure pointer
 */
-void clear_a(t_stacks *s) //met le index min le plus bas possible
+void	clear_a(t_stacks *s)
 {
-	int min = 0;
+	int	min;
+
+	min = 0;
 	take_smallest(STACK_A, s->n_elem_a, &min);
+	if (s->index_min == -1)
+		return ;
 	s->index_min = find_index(min, STACK_A, s->n_elem_a);
 	while (s->index_min != -1 && (s->index_min + 1) - (s->low_chunk) != 0)
 	{
-		printf ("%d === \n", (s->index_min + 1) - (s->low_chunk));
-		if (((s->index_min + 1) - (s->low_chunk) >= (s->n_elem_a + 1) / 2) || ((s->index_min + 1) - (s->low_chunk) < 0))
+		if (((s->index_min + 1) - (s->low_chunk) >= (s->n_elem_a + 1) / 2)
+			|| ((s->index_min + 1) - (s->low_chunk) < 0))
 		{
 			rotate_a(s);
 			s->index_min++;
@@ -26,18 +33,21 @@ void clear_a(t_stacks *s) //met le index min le plus bas possible
 	}
 }
 
-void pushback_on_a(t_stacks *s)
+void	pushback_on_a(t_stacks *s)
 {
-	int new_chunks = s->n_elem_b + 1;
-	int i = -1;
-	int min = 0;
+	int	i;
+	int	min;
+	int	new_items;
 
+	new_items = s->n_elem_b + 1;
+	i = -1;
+	min = 0;
 	if (s->n_elem_b == -1)
-		return;
+		return ;
 	take_smallest(STACK_A, s->n_elem_a, &min);
 	if (s->index_min != -1)
 		s->index_min = find_index(min, STACK_A, s->n_elem_a);
-	while (++i < new_chunks)
+	while (++i < new_items)
 		push_a(s);
 	i = -1;
 	while (++i < s->low_chunk - s->index_min - 1)

@@ -142,39 +142,26 @@ int calculate_median(int *stack, int n_elems, int size)
 {
 	int min;
 	int max;
-	int sum = 0;
-
-	//printf ("size = %d \n\n", size);
-	take_biggest(stack, n_elems, &max);
-	//printf ("Biggest = %d \n", max);
-	take_smallest(stack, n_elems, &min);
-	//printf ("smallest = %d \n", min);
 	int j;
+	int sum;
 
 	j = 0;
-	//printf ("HELLO N ELEM = %d\n", n_elems);
+	sum = 0;
+	take_biggest(stack, n_elems, &max);
+	take_smallest(stack, n_elems, &min);
 	while (min <= max)
 	{
-		j = 0;
-		while (j <= n_elems)
+		j = -1;
+		while (++j <= n_elems)
 		{
-
 			if (min == stack[j])
-			{
-				//printf ("min = %d :)\n", min);
-				sum++; 	//printf ("sum = %d\n", sum);
-			}
-			j++;
+				sum++;
 		}
 		if (size != 0 && sum > size)
 			return (min);
-		if (size == 0 && sum >= (n_elems + 1) / 2) //on rajoute + 1 car ca part de 0
-		{
-			//printf ("N ELEMS =%d -- N ELEMS / 2 = %d  SUM = %d \n", n_elems, (n_elems + 1) / 2, sum);
-			return (min); //avant c t sup ou egal test avec sup
-		}
+		if (size == 0 && sum >= (n_elems + 1) / 2)
+			return (min);
 		min++;
 	}
-//	printf ("sum = %d\n", sum);
 	return (0);
 }

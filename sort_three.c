@@ -105,7 +105,6 @@ void	reverse_sort_five(t_stacks *s)
 	int pushed_for_later = 0;
 	int next;
 
-	pivot = calculate_median(STACK_B, s->n_elem_b, s->chunk_size);
 	if (s->n_elem_b < 1 || reverse_sorted_array(STACK_B, s->n_elem_b))
 	{
 		NOTENOUGH("B");
@@ -120,7 +119,6 @@ void	reverse_sort_five(t_stacks *s)
 
 	while (s->n_elem_b > 2 && !reverse_sorted_array(STACK_B, s->n_elem_b))
 	{
-		printf ("coucou la mif\n");
 		take_biggest(STACK_B, s->n_elem_b, &pivot); //a ameliorer pour trouver les deux biggest
 		next = find_index(pivot, STACK_B, s->n_elem_b);
 		if (STACK_B[s->n_elem_b] == pivot)
@@ -136,7 +134,7 @@ void	reverse_sort_five(t_stacks *s)
 	if (pushed_for_later >= 2 && s->n_elem_a >= 1 && STACK_A[s->n_elem_a] > STACK_A[s->n_elem_a - 1])
 		swap_a(s);
 	reverse_sort_three(s);
-	while (pushed_for_later-- > 0)
+	while (pushed_for_later-- > 0) //1036 sans, 1019 avec....
 		push_b(s);
 }
 
