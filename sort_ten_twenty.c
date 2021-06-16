@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 14:03:41 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/15 17:02:50 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/16 18:31:44 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 **	@param {int n} nb of items to check
 **	@return 0 if not reverse sorted, 1 if yes
 */
-int		reverse_sorted_array(int *array, int n)
+int	reverse_sorted_array(int *array, int n)
 {
 	while (n > 0)
 	{
@@ -32,7 +32,7 @@ int		reverse_sorted_array(int *array, int n)
 	return (TRUE);
 }
 
-int		sorted_array(int *array, int n)
+int	sorted_array(int *array, int n)
 {
 	while (n > 0)
 	{
