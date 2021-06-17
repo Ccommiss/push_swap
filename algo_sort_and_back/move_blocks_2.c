@@ -12,7 +12,7 @@ void	clear_a(t_stacks *s)
 
 	min = 0;
 	take_smallest(STACK_A, s->n_elem_a, &min);
-	if (s->index_min == -1)
+	if (s->index_min == -1 || s->n_elem_b == -1)
 		return ;
 	s->index_min = find_index(min, STACK_A, s->n_elem_a);
 	while (s->index_min != -1 && (s->index_min + 1) - (s->low_chunk) != 0)

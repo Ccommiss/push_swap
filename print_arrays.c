@@ -95,5 +95,5 @@ void print_arrays(t_stacks *s)
 	printf("%20s	%20s", BRED "||__________________||", BCYN "||__________________||\n"reset);
 	printf ("%40c", 32);
 	printf("\n" reset);
-	usleep(80000);
+	usleep(8000);
 }

@@ -26,7 +26,7 @@ int	sorted_array(int *array, int n)
 		if (array[n] < array[n - 1])
 			n--;
 		else
-			return FALSE;
+			return (FALSE);
 	}
-	return TRUE;
+	return (TRUE);
 }

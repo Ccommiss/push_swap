@@ -60,11 +60,16 @@ int	choose_move(t_stacks *s, int *array, int to_push)
 		return (3);
 }
 
-void	handle_exceptions(t_stacks *s)
+int	handle_exceptions(t_stacks *s, int to_push)
 {
-	rotate_a(s);
-	s->low_chunk += 1;
-	return ;
+	if (to_push == 1)
+	{
+		rotate_a(s);
+		s->low_chunk += 1;
+		sleep(3);
+		return (1);
+	}
+	return (0);
 }
 
 /*
@@ -85,14 +90,12 @@ int	is_in_array(t_stacks *s, int nb_in_array, int *to_push)
 }
 
 /*
-**
 **  Creates an array with the n biggest or smallest elements of a stack
 **
 **	@param {int} size
 **	@param {int*} stack
 **  @param {int} type : or BIGGEST_VALUES or SMALLEST_VALUES (enum)
 **  @return malloced array with extreme values
-**
 */
 void	divide_stack_a(t_stacks *s)
 {
@@ -102,8 +105,8 @@ void	divide_stack_a(t_stacks *s)
 	int	next;
 
 	to_push = s->n_elem_a - s->low_chunk + 1;
-	if (to_push == 1)
-		handle_exceptions(s);
+	if (handle_exceptions(s, to_push))
+		return ;
 	if (to_push > s->chunk_size)
 		to_push = s->chunk_size;
 	min_array = find_extreme_numbers (s->chunk_size, STACK_A,

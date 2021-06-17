@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ctype.h>
 #include "pushswap.h"
 
 void push_all(t_stacks *s)
@@ -12,78 +13,35 @@ void push_all(t_stacks *s)
 
 void boucle_test(t_stacks *s)
 {
-	VERBOSE = FALSE;
+	VERBOSE = TRUE;
 	int i = 1;
 
-	s->chunk_size = 4;
+	s->chunk_size = 10;
 	while (!finish(s))
 	{
 
 		printf(BWHT "\n\nTOUR %d \n\n" reset, i);
-
-		printf(BRED "TEST\n" reset);
+		printf(BRED "DIVIDE A \n" reset);
 		divide_a(s);
-		VERBOSE = TRUE;
-		print_arrays(s);
-		print_stats(s);
-		sleep(5);
-		VERBOSE = FALSE;
-
-		printf(BRED "SORT\n" reset);
+		if(i>=4) sleep(4);
+		printf(BRED "SORT A\n" reset);
 		sort_ten(s);
-
-		print_stats(s);
-
-		VERBOSE = TRUE;
-		print_arrays(s);
-
-		VERBOSE = FALSE;
-
-		printf(BRED "INSERT A\n" reset);
+		if(i>=4) sleep(4);
+		printf(BRED "INSERT ON A\n" reset);
 		insert_blocks_on_a(s);
-		print_stats(s);
-
-		VERBOSE = TRUE;
-		print_arrays(s);
-		VERBOSE = FALSE;
-
-		if (!finish(s))
-		{
-			printf(BRED "B --- TEST\n" reset);
-			divide_b(s);
-			print_stats(s);
-
-			VERBOSE = TRUE;
-			print_arrays(s);
-			VERBOSE = FALSE;
-			reverse_sort_ten(s);
-			print_stats(s);
-			//sleep(10);
-			VERBOSE = TRUE;
-			print_arrays(s);
-			sleep(10);
-			VERBOSE = FALSE;
-
-			printf(BRED "B -- INSERT\n" reset);
-			if (!is_reverse_sorted(s))
-			{
-				insert_blocks_on_b(s);
-				print_stats(s);
-				//sleep(10);
-			}
-			else
-			{
-				VERBOSE = FALSE;
-				push_all(s);
-			}
-
-			if (is_reverse_sorted(s)) //tous les elems de B sont tries a lenveers, ceux de A ok ou bien 0 elems dans A
-			{
-				VERBOSE = FALSE;
-				push_all(s);
-			}
-			i++;
-		}
+		if(i>=4) sleep(4);
+		if (finish(s))
+			break ;
+		printf(BRED "DIVIDE B\n" reset);
+		divide_b(s);
+		if(i>=4) sleep(4);
+		printf(BRED "SORT B\n" reset);
+		reverse_sort_ten(s);
+		if(i>=4) sleep(4);
+		printf(BRED "B -- INSERT\n" reset);
+		insert_blocks_on_b(s);
+		if(i>=4) sleep(4);
+		i++;
 	}
 }
 
@@ -94,9 +52,8 @@ void boucle_test(t_stacks *s)
 */
 void algo_sort_and_back(t_stacks *s)
 {
-	printf("Sort and back launcheed !\n");
 	int i = 0;
-	s->chunk_size = 25;
+	s->chunk_size = 10;
 	VERBOSE = TRUE;
 	while (!finish(s))
 	{
@@ -105,31 +62,17 @@ void algo_sort_and_back(t_stacks *s)
 		divide_stack_a(s);
 		clear_a(s);
 		sort_b_on_a(s);
-		if (is_reverse_sorted(s))
-			push_all(s);
 		printf(BRED "PUSH BACK \n" reset);
 		if (s->n_elem_a >= s->chunk_size)
-		{
-			printf("%d ->> \n", s->n_elem_a);
 			pushback_on_a(s);
-		}
 		else
-		{
-			printf("triggered :) \n\n");
 			sort_ten(s);
-		}
-
-		if (is_reverse_sorted(s))
-		{
-			printf("triggered \n\n");
+		if (sorted_array(STACK_A, s->n_elem_a) 
+			&& reverse_sorted_array(STACK_B, s->n_elem_b))
 			push_all(s);
-		}
-		//sleep(10);
 		print_stats(s);
-		print_stats(s);
-		//sleep(5);
-		i++;
 		print_arrays(s);
+		i++;
 	}
 }
 
@@ -143,13 +86,30 @@ void algo_sort_and_back(t_stacks *s)
 void algo_two_stacks(t_stacks *s)
 {
 	VERBOSE = TRUE;
-	s->chunk_size = 60;
+	s->chunk_size = 3;
 	divide_once(s);
 	sort_ten(s);
 	reverse_sort_ten(s);
-	if (is_reverse_sorted(s))
+	if (sorted_array(STACK_A, s->n_elem_a) 
+		&& reverse_sorted_array(STACK_B, s->n_elem_b))
 		push_all(s);
 	print_arrays(s);
+}
+
+
+int		ft_str_is_digit(char *str) //  ametrre dans libft
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != 0)
+	{
+		if ((!isdigit(str[i]) && str[i] != '-') 
+			|| (i != 0 && str[i] == '-'))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int main(int ac, char **argv)
@@ -164,6 +124,11 @@ int main(int ac, char **argv)
 	while (ac >= 0)
 	{
 		s.n_elem_a++;
+		if (!ft_str_is_digit(argv[ac]))
+		{
+			printf ("Args must be numerics.\n");
+			exit(0);
+		}
 		s.stack_a[s.n_elem_a] = atoi(argv[ac]);
 		printf("%d : %s\n", s.n_elem_a, argv[ac]);
 		ac--;
