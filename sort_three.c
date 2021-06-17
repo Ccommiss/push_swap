@@ -142,6 +142,7 @@ void	sort_five(t_stacks *s)
 {
 	int pivot;
 	int pushed_for_later = 0;
+	int index;
 
 	if (s->n_elem_a < 1 || sorted_array(STACK_A, s->n_elem_a))
 	{
@@ -150,14 +151,17 @@ void	sort_five(t_stacks *s)
 	}
 	while (s->n_elem_a > 2)
 	{
-		take_smallest(STACK_A, s->n_elem_a, &pivot); //ameliorer pour trouver les 2 smallest
+		take_smallest(STACK_A, s->n_elem_a, &pivot);
+		index = find_index(pivot, STACK_A, s->n_elem_a);
 		if (STACK_A[s->n_elem_a] == pivot)
 		{
 			push_b(s);
 			pushed_for_later++;
 		}
-		else
+		else if (index >= s->n_elem_a / 2)
 			rotate_a(s);
+		else
+			reverse_rotate_a(s);
 	}
 	if (pushed_for_later >= 2 && s->n_elem_b >= 1 && STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
 		swap_b(s);

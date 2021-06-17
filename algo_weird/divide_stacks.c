@@ -1,49 +1,28 @@
 #include "pushswap.h"
 
-/**
- *		_Checks if the array still contains numbers lower than provided one
- *		@param {int*}s : the stack or array we want to look in
- *		@param {int} n : the nb of elems we need to check
- *		@param {int} pivot : the pivot nb
- *		@return : false if no nb < pivot, true if yes
- **/
-int	check_lower_than_pivot(int *s, int n_elem, int pivot)
+void	push_or_rotate_a(t_stacks *s, int pivot)
 {
-	int	i;
+	int	next;
 
-	i = 0;
-	while (i <= n_elem)
+	next = 0;
+	if (s->n_elem_a == s->chunk_size)
 	{
-		if (s[i] < pivot)
-			return (TRUE);
-		i++;
+		take_smallest(STACK_A, s->n_elem_a, &pivot);
+		next = find_index(pivot, STACK_A, s->n_elem_a);
 	}
-	return (FALSE);
-}
-
-/**
- *		_Checks if the array still contains numbers higher than provided one
- *		@param {int*}s : the stack or array we want to look in
- *		@param {int} n : the nb of elems we need to check
- *		@param {int} pivot : the pivot nb
- *		@return : false if no nb < pivot, true if yes
- **/
-int	check_higher_than_pivot(int *s, int n_elem, int pivot)
-{
-	int	i;
-
-	i = 0;
-	while (i <= n_elem)
+	if (STACK_A[s->n_elem_a] < pivot
+		|| (STACK_A[s->n_elem_a] == pivot && s->n_elem_a == s->chunk_size))
 	{
-		if (s[i] > pivot)
-			return (TRUE);
-		i++;
+		push_b(s);
+		next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
 	}
-	return (FALSE);
+	else if (next >= s->n_elem_a / 2)
+		rotate_a(s);
+	else
+		reverse_rotate_a(s);
 }
 
 /*
-**
 **  Recursively divides A and keeps the lower part from median, until
 **	the number of elems equals to chunk size
 **  @params {t_stacks*}s
@@ -63,24 +42,32 @@ void	divide_a(t_stacks *s)
 	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE
 		|| s->n_elem_a == s->chunk_size)
 	{
-		if (s->n_elem_a == s->chunk_size)
-		{
-			take_smallest(STACK_A, s->n_elem_a, &pivot);
-			next = find_index(pivot, STACK_A, s->n_elem_a);
-		}
-		if (STACK_A[s->n_elem_a] < pivot
-			|| (STACK_A[s->n_elem_a] == pivot && s->n_elem_a == s->chunk_size))
-		{
-			push_b(s);
-			next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
-		}
-		else if (next >= s->n_elem_a / 2)
-			rotate_a(s);
-		else
-			reverse_rotate_a(s);
+		push_or_rotate_a(s, pivot);
 	}
 	while (s->n_elem_a >= s->chunk_size)
 		divide_a(s);
+}
+
+void	push_or_rotate_b(t_stacks *s, int pivot)
+{
+	int	next;
+
+	next = 0;
+	if (s->n_elem_b == s->chunk_size)
+	{
+		take_biggest(STACK_B, s->n_elem_b, &pivot);
+		next = find_index(pivot, STACK_B, s->n_elem_b);
+	}
+	if (STACK_B[s->n_elem_b] > pivot || (STACK_B[s->n_elem_b] == pivot
+			&& s->n_elem_b == s->chunk_size))
+	{
+		push_a(s);
+		next = find_next(STACK_B, pivot, s->n_elem_b, 'B');
+	}
+	else if (next >= s->n_elem_b / 2)
+		rotate_b(s);
+	else if (next < s->n_elem_b / 2)
+		reverse_rotate_b(s);
 }
 
 /**
@@ -88,12 +75,11 @@ void	divide_a(t_stacks *s)
  *		_the number of elems equals to chunk size
  *		@params {t_stacks*}s
  **/
-void divide_b(t_stacks *s)
+void	divide_b(t_stacks *s)
 {
-	int pivot;
-	int next;
-
-	int to_push;
+	int	pivot;
+	int	next;
+	int	to_push;
 
 	if (s->n_elem_b < s->chunk_size)
 		return ;
@@ -103,22 +89,10 @@ void divide_b(t_stacks *s)
 		to_push = 0;
 	pivot = calculate_median(STACK_B, s->n_elem_b, to_push);
 	next = find_next(STACK_B, pivot, s->n_elem_b, 'B');
-	while (check_higher_than_pivot(STACK_B, s->n_elem_b, pivot) == TRUE || s->n_elem_b == s->chunk_size)
+	while (check_higher_than_pivot(STACK_B, s->n_elem_b, pivot) == TRUE
+		|| s->n_elem_b == s->chunk_size)
 	{
-		if (s->n_elem_b == s->chunk_size)
-		{
-			take_biggest(STACK_B, s->n_elem_b, &pivot);
-			next = find_index(pivot, STACK_B, s->n_elem_b);
-		}
-		if(STACK_B[s->n_elem_b] > pivot || (STACK_B[s->n_elem_b] == pivot && s->n_elem_b == s->chunk_size))
-		{
-			push_a(s);
-			next = find_next(STACK_B, pivot, s->n_elem_b, 'B');
-		}
-		else if (next >= s->n_elem_b / 2) 
-			rotate_b(s);
-		else if (next < s->n_elem_b / 2) 
-			reverse_rotate_b(s);
+		push_or_rotate_b(s, pivot);
 	}
 	while (s->n_elem_b >= s->chunk_size)
 		divide_b(s);

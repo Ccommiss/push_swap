@@ -15,7 +15,7 @@ void boucle_test(t_stacks *s)
 	VERBOSE = FALSE;
 	int i = 1;
 
-	s->chunk_size = 30;
+	s->chunk_size = 4;
 	while (!finish(s))
 	{
 

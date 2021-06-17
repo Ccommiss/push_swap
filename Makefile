@@ -6,7 +6,7 @@
 #    By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/21 15:59:42 by ccommiss          #+#    #+#              #
-#    Updated: 2021/06/16 18:27:56 by ccommiss         ###   ########.fr        #
+#    Updated: 2021/06/17 14:34:34 by ccommiss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS = main.c \
 	sort_three.c \
 	move_blocks.c \
 	$(WEIRD)divide_stacks.c \
+	$(WEIRD)check_pivot.c \
 	init.c \
 	sort_ten_twenty.c \
 	$(SORT_BACK)move_blocks_2.c \
