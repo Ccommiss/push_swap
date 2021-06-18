@@ -19,7 +19,6 @@ void boucle_test(t_stacks *s)
 	s->chunk_size = 10;
 	while (!finish(s))
 	{
-
 		printf(BWHT "\n\nTOUR %d \n\n" reset, i);
 		printf(BRED "DIVIDE A \n" reset);
 		divide_a(s);
@@ -53,8 +52,9 @@ void boucle_test(t_stacks *s)
 void algo_sort_and_back(t_stacks *s)
 {
 	int i = 0;
-	s->chunk_size = 10;
-	VERBOSE = TRUE;
+	s->chunk_size = 50; // 25 semble opti pour 100
+	// 60 pour 500 ? 
+	VERBOSE = FALSE;
 	while (!finish(s))
 	{
 		printf(BWHT "TOUR %d\n\n" reset, i);
@@ -85,8 +85,8 @@ void algo_sort_and_back(t_stacks *s)
 */
 void algo_two_stacks(t_stacks *s)
 {
-	VERBOSE = TRUE;
-	s->chunk_size = 3;
+	VERBOSE = FALSE;
+	s->chunk_size = 25;
 	divide_once(s);
 	sort_ten(s);
 	reverse_sort_ten(s);
@@ -96,20 +96,26 @@ void algo_two_stacks(t_stacks *s)
 	print_arrays(s);
 }
 
-
-int		ft_str_is_digit(char *str) //  ametrre dans libft
+void	choose_algo(t_stacks *s, int nb)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (str[i] != 0)
+	if (nb <=  5)
+		boucle_test(s);
+	if (nb <= 100)
 	{
-		if ((!isdigit(str[i]) && str[i] != '-') 
-			|| (i != 0 && str[i] == '-'))
-			return (0);
-		i++;
-	}
-	return (1);
+		i = 50;
+		while (i > 0 && nb % i != 0)
+		{	
+			printf ("nb modulo i = %d \n", nb % i);
+			i--;
+		}
+		s->chunk_size = i;
+		printf ("chosen chunk size = %d \n\n", s->chunk_size);
+		sleep(2);
+		algo_two_stacks(s);
+	}	
 }
 
 int main(int ac, char **argv)
@@ -121,20 +127,11 @@ int main(int ac, char **argv)
 	argv = argv + 1; //pour avoid le a.out
 	ac = ac - 2;	 //pour eviter le null + on enleve un car on a enleve un a argv
 	int tmp = ac;
-	while (ac >= 0)
-	{
-		s.n_elem_a++;
-		if (!ft_str_is_digit(argv[ac]))
-		{
-			printf ("Args must be numerics.\n");
-			exit(0);
-		}
-		s.stack_a[s.n_elem_a] = atoi(argv[ac]);
-		printf("%d : %s\n", s.n_elem_a, argv[ac]);
-		ac--;
-	}
+	fill_stack(&s, ac, argv);
 	check_errors(&s);
 	print_arrays(&s);
+
+	//choose_algo(&s, ac + 1);
 
 	char buf[10];
 	gets(buf);
@@ -160,7 +157,7 @@ int main(int ac, char **argv)
 			algo_two_stacks(&s);
 			print_arrays(&s);
 			printf("ARG = %d // NB OPERATIONS = %d \n", tmp + 1, s.op_count);
-			return 0;
+			return (0);
 		}
 		else if (strcmp(buf, "algo1") == 0)
 		{

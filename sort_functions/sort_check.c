@@ -7,6 +7,15 @@
 **	@param {int n} nb of items to check
 **	@return 0 if not reverse sorted, 1 if yes
 */
+
+int finish(t_stacks *s)
+{
+	if (s->n_elem_b == -1 && sorted_array(STACK_A, 
+		s->n_elem_a) == 1)
+		return (TRUE);
+	return (FALSE);
+}
+
 int	reverse_sorted_array(int *array, int n)
 {
 	while (n > 0)

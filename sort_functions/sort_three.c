@@ -116,7 +116,9 @@ void	reverse_sort_five(t_stacks *s)
 		&& STACK_A[s->n_elem_a] > STACK_A[s->n_elem_a - 1])
 		swap_a(s);
 	reverse_sort_three(s);
-	while (pushed_for_later-- > 0)
+	while (pushed_for_later-- > 0 
+		&& (!reverse_sorted_array(STACK_B, s->n_elem_b) //TEST
+		&& !sorted_array(STACK_A, s->n_elem_a))) //TEST
 		push_b(s);
 }
 

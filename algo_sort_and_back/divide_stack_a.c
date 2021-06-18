@@ -14,7 +14,11 @@ int	*find_extreme_numbers(int size, int *stack, int type, t_stacks *s)
 {
 	int	*array;
 
-	array = (int *)malloc(sizeof(int) * size);
+	if (!ft_malloc_int_pointer(size, &array))
+	{
+		free_stacks(s);
+		exit (0);
+	}
 	if (type == BIGGEST_VALUES)
 		find_biggest(s, &array, stack);
 	else if (type == SMALLEST_VALUES)
@@ -123,4 +127,5 @@ void	divide_stack_a(t_stacks *s)
 		else if (i == s->chunk_size && next == 3)
 			rotate_a(s);
 	}
+	free(min_array);
 }

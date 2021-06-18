@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 14:03:41 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/17 18:09:13 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/18 17:26:56 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ void	reverse_sort_ten(t_stacks *s)
 			reverse_rotate_b(s);
 	}
 	reverse_sort_five(s);
-	// if (reverse_sorted_array(STACK_B, s->n_elem_b)  
-	// 	&& sorted_array(STACK_A, s->n_elem_a))
-	// 	return ;
+	if (sorted_array(STACK_A, s->n_elem_a) 
+		&& reverse_sorted_array(STACK_B, s->n_elem_b) 
+		&& (STACK_B[s->n_elem_b] < STACK_A[s->n_elem_a]))
+		return ;
 	while (pushed_for_later-- > 0)
 		push_b(s);
 	s->low_chunk += s->n_elem_b + 1;

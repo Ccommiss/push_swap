@@ -6,13 +6,14 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/15 16:46:46 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/18 16:39:42 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 
+#include "libft/libft.h"
 #include <strings.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -90,7 +91,7 @@ enum type {
 */
 void 	print_array(char which_stack, int *stack, int top);
 void	print_arrays(t_stacks *s);
-void	check_errors(t_stacks *s);
+int		check_errors(t_stacks *s);
 void	print_stats(t_stacks *s);
 
 
@@ -184,5 +185,8 @@ int		is_sorted(t_stacks *s);
 int		is_reverse_sorted(t_stacks *s);
 int		finish(t_stacks *s);
 int		create_stacks(t_stacks *s, int elems);
+void	free_stacks(t_stacks *s);
+void	fill_stack(t_stacks *s, int ac, char **argv);
+
 #endif
 
