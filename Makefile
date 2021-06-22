@@ -6,7 +6,7 @@
 #    By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/21 15:59:42 by ccommiss          #+#    #+#              #
-#    Updated: 2021/06/18 12:36:42 by ccommiss         ###   ########.fr        #
+#    Updated: 2021/06/21 16:58:37 by ccommiss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,23 +37,23 @@ SRCS = main.c \
 	$(SORT_BACK)sort_b_on_a.c \
 	$(SORT_BACK)utils.c
 
-FLAGS =  -I. -Wall -Werror -Wextra -fsanitize=address 
+FLAGS =  -I. -Wall -Werror -Wextra -fsanitize=address
 OBJS = $(SRCS:.c=.o)
 CC = clang -g $(FLAGS)
 
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) 
-	make -C ./libft
-	$(CC) $(OBJS) -L./libft/ -lft -o $(NAME) 
+$(NAME) : $(OBJS)
+	make -C libft
+	$(CC) $(OBJS) -L./libft/ -lft -o $(NAME)
 
 clean :
-	make clean -C libft/
+	make clean -C libft
 	rm $(OBJS)
 
 fclean : clean
-	make fclean -C libft/
+	make fclean -C libft
 	rm $(NAME)
 
 re : fclean all

@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/18 16:39:42 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/21 18:22:01 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@
 #define BWHT "\e[1;37m"
 
 #define reset "\e[0m"
-
-//#define DEBUG(string) printf(BWHT"*** OPERATION == %s \n"reset, string);
-#define DEBUG(string) printf("");
-#define NOTENOUGH(string) printf(YEL"⚠ Not enough elems in %s \n\n"reset, string);
 #define STACK_B s->stack_b
 #define STACK_A s->stack_a
 #define VERBOSE s->verbose
@@ -92,7 +88,7 @@ enum type {
 void 	print_array(char which_stack, int *stack, int top);
 void	print_arrays(t_stacks *s);
 int		check_errors(t_stacks *s);
-void	print_stats(t_stacks *s);
+void	print_stats(t_stacks *s, int args);
 
 
 /*
@@ -171,7 +167,7 @@ int check_higher_than_pivot(int *s, int n_elem, int pivot);
 
 void divide_stack_a(t_stacks *s);
 
-//option 3 : 
+//option 3 :
 void 	divide_once(t_stacks *s);
 
 

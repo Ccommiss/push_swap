@@ -42,22 +42,30 @@ int	check_errors(t_stacks *s)
 
 void	fill_stack(t_stacks *s, int ac, char **argv)
 {
+	int	tmp;
+
+	tmp = ac;
 	while (ac >= 0)
 	{
-		s->n_elem_a++;
-		if (!ft_isdigit_str(argv[ac]))
+		if (ac == tmp && ft_strncmp(argv[ac], "-v", 3) == 0)
+			s->verbose = TRUE;
+		else if (!ft_isdigit_str(argv[ac]))
 		{
 			printf ("Args must be numerics.\n");
 			free_stacks(s);
 			exit(0);
 		}
-		s->stack_a[s->n_elem_a] = ft_atoi(argv[ac]);
+		else
+		{
+			s->n_elem_a++;
+			s->stack_a[s->n_elem_a] = ft_atoi(argv[ac]);
+		}
 		ac--;
 	}
 }
 
 /*
-**	Create stacks and init all structure items 
+**	Create stacks and init all structure items
 */
 int	create_stacks(t_stacks *s, int elems)
 {
@@ -74,6 +82,7 @@ int	create_stacks(t_stacks *s, int elems)
 	s->index_min = -1;
 	s->chunk_size = 0;
 	s->op_count = 0;
+	s->verbose = FALSE;
 	s->pa = 0;
 	s->pb = 0;
 	s->sa = 0;

@@ -36,7 +36,6 @@ void	sort_b_on_a(t_stacks *s)
 
 	if (s->n_elem_b < 1 || reverse_sorted_array(STACK_B, s->n_elem_b))
 	{
-		NOTENOUGH("B")
 		s->low_chunk += s->n_elem_b + 1;
 		return ;
 	}

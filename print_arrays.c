@@ -1,7 +1,7 @@
 #include "pushswap.h"
 #include <time.h>
 
-void	print_stats(t_stacks *s)
+void	print_stats(t_stacks *s, int arg)
 {
 	(void)s;
 	printf("\n\nSTATS :\n");
@@ -14,19 +14,12 @@ void	print_stats(t_stacks *s)
 	printf("RRA = %d\n", s->rra);
 	printf("RRB = %d\n", s->rrb);
 	printf(BWHT"\n\nTOTAL OPCOUNT => %d\n" reset, s->op_count);
+	printf ("*** for %d args, chunk of %d\n", arg, s->chunk_size);
 	printf("\n\n_____\n");
-	s->sa = 0;
-	s->sb = 0;
-	s->pa = 0;
-	s->pb = 0;
-	s->ra = 0;
-	s->rb = 0;
-	s->rra = 0;
-	s->rrb = 0;
 }
 
 void	print_array(char which_stack, int *stack, int top)
-{	
+{
 	int	n;
 
 	n = -1;
@@ -71,9 +64,9 @@ void	print_arrays(t_stacks *s)
 	if (s->verbose == FALSE)
 		return ;
 	if (s->n_elem_a >= s->n_elem_b)
-		n = s->n_elem_a;
+		n = s->n_elem_a + 1;
 	else
-		n = s->n_elem_b;
+		n = s->n_elem_b + 1;
 	printf ("%40c", 32);
 	printf("%-25s	%-25s", BRED"||       TOP A      ||",
 		BCYN"||      TOP B       ||\n");

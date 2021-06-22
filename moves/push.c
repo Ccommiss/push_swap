@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 11:16:04 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/16 17:58:45 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/21 20:05:53 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 */
 void	push_a(t_stacks *s)
 {
-	DEBUG("PUSH A");
 	if (s->n_elem_b == -1)
 	{
-		NOTENOUGH("B");
+		printf ("return \n");
 		return ;
 	}
 	s->n_elem_a++;
@@ -41,12 +40,8 @@ void	push_a(t_stacks *s)
 */
 void	push_b(t_stacks *s)
 {
-	DEBUG("PUSH B");
 	if (s->n_elem_a == -1)
-	{
-		NOTENOUGH("A");
 		return ;
-	}
 	s->n_elem_b++;
 	s->stack_b[s->n_elem_b] = s->stack_a[s->n_elem_a];
 	s->n_elem_a--;
@@ -65,12 +60,8 @@ void	swap_b(t_stacks *s)
 {
 	int	tmp;
 
-	DEBUG("SWAP B");
 	if (s->n_elem_b < 1)
-	{
-		NOTENOUGH("B");
 		return ;
-	}
 	tmp = s->stack_b[s->n_elem_b];
 	s->stack_b[s->n_elem_b] = s->stack_b[s->n_elem_b - 1];
 	s->stack_b[s->n_elem_b - 1] = tmp;
@@ -89,12 +80,8 @@ void	swap_a(t_stacks *s)
 {
 	int	tmp;
 
-	DEBUG("SWAP A");
 	if (s->n_elem_a < 1)
-	{
-		NOTENOUGH("A");
 		return ;
-	}
 	tmp = s->stack_a[s->n_elem_a];
 	s->stack_a[s->n_elem_a] = s->stack_a[s->n_elem_a - 1];
 	s->stack_a[s->n_elem_a - 1] = tmp;

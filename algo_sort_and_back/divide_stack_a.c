@@ -29,11 +29,11 @@ int	*find_extreme_numbers(int size, int *stack, int type, t_stacks *s)
 /*
 ** 	Choose move in function of the closest nb
 **
-**		> 1 : "lowest_index" array : finds all indexes e.g. 
+**		> 1 : "lowest_index" array : finds all indexes e.g.
 **			distance from the bottom
-**		> 2 : "highest index" array : finds "reverse indexes" 
+**		> 2 : "highest index" array : finds "reverse indexes"
 **			e.g. distance from the top
-**		> 3 : takes the 2 smallest index from both array, 
+**		> 3 : takes the 2 smallest index from both array,
 **			the smallest index says which one is better
 **		>> if lowest < biggest, RRA is more optimised ; vice-versa
 **
@@ -70,7 +70,6 @@ int	handle_exceptions(t_stacks *s, int to_push)
 	{
 		rotate_a(s);
 		s->low_chunk += 1;
-		sleep(3);
 		return (1);
 	}
 	return (0);
@@ -80,7 +79,7 @@ int	handle_exceptions(t_stacks *s, int to_push)
 **	Checks if the top of stack is equal to a number from minimal_numbers
 **	array, and pushes it on B if it is.
 **
-**	@return 1 if it is, 0 if it is not 
+**	@return 1 if it is, 0 if it is not
 */
 int	is_in_array(t_stacks *s, int nb_in_array, int *to_push)
 {
