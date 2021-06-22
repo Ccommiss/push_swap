@@ -13,7 +13,7 @@ void	print_stats(t_stacks *s, int arg)
 	printf("RB = %d\n", s->rb);
 	printf("RRA = %d\n", s->rra);
 	printf("RRB = %d\n", s->rrb);
-	printf(BWHT"\n\nTOTAL OPCOUNT => %d\n" reset, s->op_count);
+	printf(BWHT"\n\nTOTAL OPCOUNT => %d\n" RESET, s->op_count);
 	printf ("*** for %d args, chunk of %d\n", arg, s->chunk_size);
 	printf("\n\n_____\n");
 }
@@ -35,7 +35,7 @@ void	print_array(char which_stack, int *stack, int top)
 		if (n == top)
 			printf(" <-- top of stack \n||______________||");
 	}
-	printf("\n" reset);
+	printf("\n" RESET);
 }
 
 void	print_stacks(int n, t_stacks *s)
@@ -44,15 +44,15 @@ void	print_stacks(int n, t_stacks *s)
 	{
 		printf ("%40c", 32);
 		if (s->n_elem_a > n)
-			printf(BRED "||[%5d] => %5d  ||	", n, s->stack_a[n]);
+			printf(BRED "||[%5d] => %5d  ||	", n, s->a[n]);
 		else if (s->n_elem_a == n)
-			printf(BRED "||[> %3d] => %5d  ||	", n, s->stack_a[n]);
+			printf(BRED "||[> %3d] => %5d  ||	", n, s->a[n]);
 		else
 			printf("%20s	", " ");
 		if (s->n_elem_b > n)
-			printf(BCYN "||[%5d] => %5d  ||", n, s->stack_b[n]);
+			printf(BCYN "||[%5d] => %5d  ||", n, s->b[n]);
 		else if (s->n_elem_b == n)
-			printf(BCYN "||[> %3d] => %5d  ||", n, s->stack_b[n]);
+			printf(BCYN "||[> %3d] => %5d  ||", n, s->b[n]);
 		printf ("\n");
 	}
 }
@@ -79,8 +79,7 @@ void	print_arrays(t_stacks *s)
 		BCYN"||      STACK B     ||\n");
 	printf ("%40c", 32);
 	printf("%20s	%20s", BRED "||__________________||",
-		BCYN "||__________________||\n"reset);
-	printf ("%40c"reset, 32);
+		BCYN "||__________________||\n"RESET);
+	printf ("%40c"RESET, 32);
 	printf ("\n");
-	usleep(8000);
 }

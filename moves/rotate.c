@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 11:38:49 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/21 20:10:18 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/22 13:37:58 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	rotate_a(t_stacks *s)
 	i = s->n_elem_a;
 	if (i < 1)
 		return ;
-	tmp = s->stack_a[s->n_elem_a];
+	tmp = s->a[s->n_elem_a];
 	while (i > 0)
 	{
-		s->stack_a[i] = s->stack_a[i - 1];
+		s->a[i] = s->a[i - 1];
 		i--;
 	}
-	s->stack_a[0] = tmp;
+	s->a[0] = tmp;
 	print_arrays(s);
 	s->op_count++;
 	s->ra++;
@@ -55,13 +55,13 @@ void	rotate_b(t_stacks *s)
 	if (s->n_elem_b < 1)
 		return ;
 	i = s->n_elem_b;
-	tmp = s->stack_b[s->n_elem_b];
+	tmp = s->b[s->n_elem_b];
 	while (i > 0)
 	{
-		s->stack_b[i] = s->stack_b[i - 1];
+		s->b[i] = s->b[i - 1];
 		i--;
 	}
-	s->stack_b[0] = tmp;
+	s->b[0] = tmp;
 	print_arrays(s);
 	s->op_count++;
 	s->rb++;
@@ -81,13 +81,13 @@ void	reverse_rotate_a(t_stacks *s)
 	i = 0;
 	if (s->n_elem_a < 1)
 		return ;
-	tmp = s->stack_a[0];
+	tmp = s->a[0];
 	while (i < s->n_elem_a)
 	{
-		s->stack_a[i] = s->stack_a[i + 1];
+		s->a[i] = s->a[i + 1];
 		i++;
 	}
-	s->stack_a[s->n_elem_a] = tmp;
+	s->a[s->n_elem_a] = tmp;
 	print_arrays(s);
 	s->op_count++;
 	s->rra++;
@@ -107,13 +107,13 @@ void	reverse_rotate_b(t_stacks *s)
 	i = 0;
 	if (s->n_elem_b < 1)
 		return ;
-	tmp = s->stack_b[0];
+	tmp = s->b[0];
 	while (i < s->n_elem_b)
 	{
-		s->stack_b[i] = s->stack_b[i + 1];
+		s->b[i] = s->b[i + 1];
 		i++;
 	}
-	s->stack_b[s->n_elem_b] = tmp;
+	s->b[s->n_elem_b] = tmp;
 	print_arrays(s);
 	s->op_count++;
 	s->rrb++;

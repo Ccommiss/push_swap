@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_three.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/22 13:44:12 by ccommiss          #+#    #+#             */
+/*   Updated: 2021/06/22 13:44:14 by ccommiss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pushswap.h"
 
 int	sort_under_three(t_stacks *s, char stack)
@@ -8,18 +20,18 @@ int	sort_under_three(t_stacks *s, char stack)
 			return (1);
 		if (s->n_elem_a == 1)
 		{
-			if (s->stack_a[s->n_elem_a] > s->stack_a[0])
+			if (s->a[s->n_elem_a] > s->a[0])
 				swap_a(s);
 			return (1);
 		}
 	}
 	else
 	{
-		if (reverse_sorted_array(STACK_B, s->n_elem_b) || s->n_elem_b < 1)
+		if (reverse_sorted_array(s->b, s->n_elem_b) || s->n_elem_b < 1)
 			return (1);
 		if (s->n_elem_b == 1)
 		{
-			if (STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
+			if (s->b[s->n_elem_b] < s->b[s->n_elem_b - 1])
 				swap_b(s);
 			return (1);
 		}
@@ -39,23 +51,23 @@ void	reverse_sort_three(t_stacks *s)
 
 	if (sort_under_three(s, 'B'))
 		return ;
-	take_biggest(s->stack_b, s->n_elem_b, &max);
-	take_smallest(s->stack_b, s->n_elem_b, &min);
-	if (STACK_B[s->n_elem_b] == min && STACK_B[s->n_elem_b - 2] != max)
+	take_biggest(s->b, s->n_elem_b, &max);
+	take_smallest(s->b, s->n_elem_b, &min);
+	if (s->b[s->n_elem_b] == min && s->b[s->n_elem_b - 2] != max)
 		rotate_b(s);
-	else if (STACK_B[s->n_elem_b] == min && STACK_B[s->n_elem_b - 2] == max)
+	else if (s->b[s->n_elem_b] == min && s->b[s->n_elem_b - 2] == max)
 	{
 		swap_b(s);
 		reverse_rotate_b(s);
 	}
-	else if (STACK_B[s->n_elem_b] == max && STACK_B[s->n_elem_b - 2] != min)
+	else if (s->b[s->n_elem_b] == max && s->b[s->n_elem_b - 2] != min)
 	{
 		swap_b(s);
 		rotate_b(s);
 	}
-	else if (STACK_B[s->n_elem_b] != min && STACK_B[s->n_elem_b - 2] == max)
+	else if (s->b[s->n_elem_b] != min && s->b[s->n_elem_b - 2] == max)
 		reverse_rotate_b(s);
-	else if (STACK_B[s->n_elem_b] != max && STACK_B[s->n_elem_b - 2] == min)
+	else if (s->b[s->n_elem_b] != max && s->b[s->n_elem_b - 2] == min)
 		swap_b(s);
 }
 
@@ -71,23 +83,23 @@ void	sort_three(t_stacks *s)
 
 	if (sort_under_three(s, 'A'))
 		return ;
-	take_biggest(STACK_A, s->n_elem_a, &max);
-	take_smallest(STACK_A, s->n_elem_a, &min);
-	if (STACK_A[s->n_elem_a] == min && STACK_A[s->n_elem_a - 2] != max)
+	take_biggest(s->a, s->n_elem_a, &max);
+	take_smallest(s->a, s->n_elem_a, &min);
+	if (s->a[s->n_elem_a] == min && s->a[s->n_elem_a - 2] != max)
 	{
 		reverse_rotate_a(s);
 		swap_a(s);
 	}
-	else if (STACK_A[s->n_elem_a] == max && STACK_A[s->n_elem_a - 2] != min)
+	else if (s->a[s->n_elem_a] == max && s->a[s->n_elem_a - 2] != min)
 		rotate_a(s);
-	else if (STACK_A[s->n_elem_a] == max && STACK_A[s->n_elem_a - 2] == min)
+	else if (s->a[s->n_elem_a] == max && s->a[s->n_elem_a - 2] == min)
 	{
 		swap_a(s);
 		reverse_rotate_a(s);
 	}
-	else if (STACK_A[s->n_elem_a] != min && STACK_A[s->n_elem_a - 2] == max)
+	else if (s->a[s->n_elem_a] != min && s->a[s->n_elem_a - 2] == max)
 		swap_a(s);
-	else if (STACK_A[s->n_elem_a] != max && STACK_A[s->n_elem_a - 2] == min)
+	else if (s->a[s->n_elem_a] != max && s->a[s->n_elem_a - 2] == min)
 		reverse_rotate_a(s);
 }
 
@@ -97,28 +109,25 @@ void	reverse_sort_five(t_stacks *s)
 	int	pivot;
 
 	pushed_for_later = 0;
-	if (s->n_elem_b < 1 || reverse_sorted_array(STACK_B, s->n_elem_b))
+	if (s->n_elem_b < 1 || reverse_sorted_array(s->b, s->n_elem_b))
 		return ;
-	while (s->n_elem_b > 2 && !reverse_sorted_array(STACK_B, s->n_elem_b))
+	while (s->n_elem_b > 2 && !reverse_sorted_array(s->b, s->n_elem_b))
 	{
-		take_biggest(STACK_B, s->n_elem_b, &pivot);
-		if (STACK_B[s->n_elem_b] == pivot)
+		take_biggest(s->b, s->n_elem_b, &pivot);
+		if (s->b[s->n_elem_b] == pivot)
 		{
 			push_a(s);
 			pushed_for_later++;
 		}
-		else if (find_index(pivot, STACK_B, s->n_elem_b) >= s->n_elem_b / 2)
+		else if (find_index(pivot, s->b, s->n_elem_b) >= s->n_elem_b / 2)
 			rotate_b(s);
 		else
 			reverse_rotate_b(s);
 	}
-	if (pushed_for_later >= 2 && s->n_elem_a >= 1
-		&& STACK_A[s->n_elem_a] > STACK_A[s->n_elem_a - 1])
-		swap_a(s);
 	reverse_sort_three(s);
-	while (pushed_for_later-- > 0 
-		&& (!reverse_sorted_array(STACK_B, s->n_elem_b) //TEST
-		&& !sorted_array(STACK_A, s->n_elem_a))) //TEST
+	while (pushed_for_later-- > 0
+		&& (!reverse_sorted_array(s->b, s->n_elem_b)
+			&& !sorted_array(s->a, s->n_elem_a)))
 		push_b(s);
 }
 
@@ -128,23 +137,23 @@ void	sort_five(t_stacks *s)
 	int	pivot;
 
 	pushed_for_later = 0;
-	if (s->n_elem_a < 1 || sorted_array(STACK_A, s->n_elem_a))
+	if (s->n_elem_a < 1 || sorted_array(s->a, s->n_elem_a))
 		return ;
 	while (s->n_elem_a > 2)
 	{
-		take_smallest(STACK_A, s->n_elem_a, &pivot);
-		if (STACK_A[s->n_elem_a] == pivot)
+		take_smallest(s->a, s->n_elem_a, &pivot);
+		if (s->a[s->n_elem_a] == pivot)
 		{
 			push_b(s);
 			pushed_for_later++;
 		}
-		else if (find_index(pivot, STACK_A, s->n_elem_a) >= s->n_elem_a / 2)
+		else if (find_index(pivot, s->a, s->n_elem_a) >= s->n_elem_a / 2)
 			rotate_a(s);
 		else
 			reverse_rotate_a(s);
 	}
 	if (pushed_for_later >= 2 && s->n_elem_b >= 1
-		&& STACK_B[s->n_elem_b] < STACK_B[s->n_elem_b - 1])
+		&& s->b[s->n_elem_b] < s->b[s->n_elem_b - 1])
 		swap_b(s);
 	sort_three(s);
 	while (pushed_for_later-- > 0)

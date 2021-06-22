@@ -71,7 +71,7 @@ void 	take_biggest(int *s, int top, int *pivot)
 	int	i;
 
 	i = 0;
-	*pivot = INT32_MIN;
+	*pivot = INT_MIN;
 	while (i <= top)
 	{
 		if (s[i] > *pivot)
@@ -92,7 +92,7 @@ void 	take_smallest(int *s, int top, int *pivot)
 	int	i;
 
 	i = 0;
-	*pivot = INT32_MAX;
+	*pivot = INT_MAX;
 	while (i <= top)
 	{
 		if (s[i] < *pivot)

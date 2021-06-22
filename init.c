@@ -2,10 +2,10 @@
 
 void	free_stacks(t_stacks *s)
 {
-	if (STACK_A)
-		free(STACK_A);
-	if (STACK_B)
-		free(STACK_B);
+	if (s->a)
+		free(s->a);
+	if (s->b)
+		free(s->b);
 }
 
 /*
@@ -25,7 +25,7 @@ int	check_errors(t_stacks *s)
 	i = -1;
 	while (++i <= s->n_elem_a)
 	{
-		copy[i] = STACK_A[i];
+		copy[i] = s->a[i];
 		j = -1;
 		while (++j <= i)
 		{
@@ -58,7 +58,7 @@ void	fill_stack(t_stacks *s, int ac, char **argv)
 		else
 		{
 			s->n_elem_a++;
-			s->stack_a[s->n_elem_a] = ft_atoi(argv[ac]);
+			s->a[s->n_elem_a] = ft_atoi(argv[ac]);
 		}
 		ac--;
 	}
@@ -69,8 +69,8 @@ void	fill_stack(t_stacks *s, int ac, char **argv)
 */
 int	create_stacks(t_stacks *s, int elems)
 {
-	if (!ft_malloc_int_pointer(elems, &s->stack_a)
-		|| !ft_malloc_int_pointer(elems, &s->stack_b))
+	if (!ft_malloc_int_pointer(elems, &s->a)
+		|| !ft_malloc_int_pointer(elems, &s->b))
 	{
 		free_stacks(s);
 		exit (0);

@@ -6,11 +6,29 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 11:16:04 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/21 20:05:53 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/22 13:37:58 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
+/*
+**  When both stacks are sorted, add all B items on top of A 
+**  @param stack *s
+*/
+void	push_all(t_stacks *s)
+{
+	int	i;
+	int	tmp;
+
+	i = 0;
+	tmp = s->n_elem_b;
+	while (i <= tmp)
+	{
+		push_a(s);
+		i++;
+	}
+}
 
 /*
 **  Push top of A on top of B, or nothing if B is empty
@@ -25,7 +43,7 @@ void	push_a(t_stacks *s)
 		return ;
 	}
 	s->n_elem_a++;
-	s->stack_a[s->n_elem_a] = s->stack_b[s->n_elem_b];
+	s->a[s->n_elem_a] = s->b[s->n_elem_b];
 	s->n_elem_b--;
 	print_arrays(s);
 	s->op_count++;
@@ -43,7 +61,7 @@ void	push_b(t_stacks *s)
 	if (s->n_elem_a == -1)
 		return ;
 	s->n_elem_b++;
-	s->stack_b[s->n_elem_b] = s->stack_a[s->n_elem_a];
+	s->b[s->n_elem_b] = s->a[s->n_elem_a];
 	s->n_elem_a--;
 	print_arrays(s);
 	s->op_count++;
@@ -62,9 +80,9 @@ void	swap_b(t_stacks *s)
 
 	if (s->n_elem_b < 1)
 		return ;
-	tmp = s->stack_b[s->n_elem_b];
-	s->stack_b[s->n_elem_b] = s->stack_b[s->n_elem_b - 1];
-	s->stack_b[s->n_elem_b - 1] = tmp;
+	tmp = s->b[s->n_elem_b];
+	s->b[s->n_elem_b] = s->b[s->n_elem_b - 1];
+	s->b[s->n_elem_b - 1] = tmp;
 	print_arrays(s);
 	s->op_count++;
 	s->sb++;
@@ -82,9 +100,9 @@ void	swap_a(t_stacks *s)
 
 	if (s->n_elem_a < 1)
 		return ;
-	tmp = s->stack_a[s->n_elem_a];
-	s->stack_a[s->n_elem_a] = s->stack_a[s->n_elem_a - 1];
-	s->stack_a[s->n_elem_a - 1] = tmp;
+	tmp = s->a[s->n_elem_a];
+	s->a[s->n_elem_a] = s->a[s->n_elem_a - 1];
+	s->a[s->n_elem_a - 1] = tmp;
 	print_arrays(s);
 	s->op_count++;
 	s->sa++;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   divide_stacks.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/22 13:43:25 by ccommiss          #+#    #+#             */
+/*   Updated: 2021/06/22 13:43:26 by ccommiss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pushswap.h"
 
 void	push_or_rotate_a(t_stacks *s, int pivot)
@@ -7,14 +19,14 @@ void	push_or_rotate_a(t_stacks *s, int pivot)
 	next = 0;
 	if (s->n_elem_a == s->chunk_size)
 	{
-		take_smallest(STACK_A, s->n_elem_a, &pivot);
-		next = find_index(pivot, STACK_A, s->n_elem_a);
+		take_smallest(s->a, s->n_elem_a, &pivot);
+		next = find_index(pivot, s->a, s->n_elem_a);
 	}
-	if (STACK_A[s->n_elem_a] < pivot
-		|| (STACK_A[s->n_elem_a] == pivot && s->n_elem_a == s->chunk_size))
+	if (s->a[s->n_elem_a] < pivot
+		|| (s->a[s->n_elem_a] == pivot && s->n_elem_a == s->chunk_size))
 	{
 		push_b(s);
-		next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
+		next = find_next(s->a, pivot, s->n_elem_a, 'A');
 	}
 	else if (next >= s->n_elem_a / 2)
 		rotate_a(s);
@@ -37,9 +49,9 @@ void	divide_a(t_stacks *s)
 		to_push = s->n_elem_a - s->chunk_size;
 	else
 		to_push = 0;
-	pivot = calculate_median(STACK_A, s->n_elem_a, to_push);
-	next = find_next(STACK_A, pivot, s->n_elem_a, 'A');
-	while (check_lower_than_pivot(STACK_A, s->n_elem_a, pivot) == TRUE
+	pivot = calculate_median(s->a, s->n_elem_a, to_push);
+	next = find_next(s->a, pivot, s->n_elem_a, 'A');
+	while (check_lower_than_pivot(s->a, s->n_elem_a, pivot) == TRUE
 		|| s->n_elem_a == s->chunk_size)
 	{
 		push_or_rotate_a(s, pivot);
@@ -55,14 +67,14 @@ void	push_or_rotate_b(t_stacks *s, int pivot)
 	next = 0;
 	if (s->n_elem_b == s->chunk_size)
 	{
-		take_biggest(STACK_B, s->n_elem_b, &pivot);
-		next = find_index(pivot, STACK_B, s->n_elem_b);
+		take_biggest(s->b, s->n_elem_b, &pivot);
+		next = find_index(pivot, s->b, s->n_elem_b);
 	}
-	if (STACK_B[s->n_elem_b] > pivot || (STACK_B[s->n_elem_b] == pivot
+	if (s->b[s->n_elem_b] > pivot || (s->b[s->n_elem_b] == pivot
 			&& s->n_elem_b == s->chunk_size))
 	{
 		push_a(s);
-		next = find_next(STACK_B, pivot, s->n_elem_b, 'B');
+		next = find_next(s->b, pivot, s->n_elem_b, 'B');
 	}
 	else if (next >= s->n_elem_b / 2)
 		rotate_b(s);
@@ -87,9 +99,9 @@ void	divide_b(t_stacks *s)
 		to_push = s->chunk_size;
 	else
 		to_push = 0;
-	pivot = calculate_median(STACK_B, s->n_elem_b, to_push);
-	next = find_next(STACK_B, pivot, s->n_elem_b, 'B');
-	while (check_higher_than_pivot(STACK_B, s->n_elem_b, pivot) == TRUE
+	pivot = calculate_median(s->b, s->n_elem_b, to_push);
+	next = find_next(s->b, pivot, s->n_elem_b, 'B');
+	while (check_higher_than_pivot(s->b, s->n_elem_b, pivot) == TRUE
 		|| s->n_elem_b == s->chunk_size)
 	{
 		push_or_rotate_b(s, pivot);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   divide_stack_a.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/22 13:42:21 by ccommiss          #+#    #+#             */
+/*   Updated: 2021/06/22 13:42:22 by ccommiss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pushswap.h"
 
 /*
@@ -48,11 +60,11 @@ int	choose_move(t_stacks *s, int *array, int to_push)
 	int	cur_index;
 
 	i = -1;
-	lowest = INT32_MAX;
-	biggest = INT32_MAX;
+	lowest = INT_MAX;
+	biggest = INT_MAX;
 	while (++i < to_push)
 	{
-		cur_index = find_index(array[i], STACK_A, s->n_elem_a);
+		cur_index = find_index(array[i], s->a, s->n_elem_a);
 		if (cur_index < lowest && cur_index != -1)
 			lowest = cur_index;
 		if (s->n_elem_a - cur_index < biggest && cur_index != -1)
@@ -83,7 +95,7 @@ int	handle_exceptions(t_stacks *s, int to_push)
 */
 int	is_in_array(t_stacks *s, int nb_in_array, int *to_push)
 {
-	if (STACK_A[s->n_elem_a] == nb_in_array)
+	if (s->a[s->n_elem_a] == nb_in_array)
 	{
 		push_b(s);
 		*to_push -= 1;
@@ -112,7 +124,7 @@ void	divide_stack_a(t_stacks *s)
 		return ;
 	if (to_push > s->chunk_size)
 		to_push = s->chunk_size;
-	min_array = find_extreme_numbers (s->chunk_size, STACK_A,
+	min_array = find_extreme_numbers (s->chunk_size, s->a,
 			SMALLEST_VALUES, s);
 	while (to_push > 0)
 	{

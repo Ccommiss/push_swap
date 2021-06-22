@@ -2,20 +2,6 @@
 #include <ctype.h>
 #include "pushswap.h"
 
-void	push_all(t_stacks *s)
-{
-	int	i;
-	int	tmp;
-
-	i = 0;
-	tmp = s->n_elem_b;
-	while (i <= tmp)
-	{
-		push_a(s);
-		i++;
-	}
-}
-
 void	boucle_test(t_stacks *s)
 {
 	int	i;
@@ -26,6 +12,8 @@ void	boucle_test(t_stacks *s)
 	{
 		divide_a(s);
 		sort_ten(s);
+		if (finish(s))
+			break ;
 		insert_blocks_on_a(s);
 		if (finish(s))
 			break ;
@@ -55,8 +43,8 @@ void	algo_sort_and_back(t_stacks *s)
 			pushback_on_a(s);
 		else
 			sort_ten(s);
-		if (sorted_array(STACK_A, s->n_elem_a)
-			&& reverse_sorted_array(STACK_B, s->n_elem_b))
+		if (sorted_array(s->a, s->n_elem_a)
+			&& reverse_sorted_array(s->b, s->n_elem_b))
 			push_all(s);
 		i++;
 	}
@@ -69,27 +57,31 @@ void	algo_sort_and_back(t_stacks *s)
 **	"Insertion sort" like algorithm to sort stack A, then stack B
 **	Pushes back lowest reversed sort numbers from stack B on stack A
 */
-void algo_two_stacks(t_stacks *s)
+void	algo_two_stacks(t_stacks *s)
 {
 	divide_once(s);
 	sort_ten(s);
 	reverse_sort_ten(s);
-	if (sorted_array(STACK_A, s->n_elem_a)
-		&& reverse_sorted_array(STACK_B, s->n_elem_b))
+	if (sorted_array(s->a, s->n_elem_a)
+		&& reverse_sorted_array(s->b, s->n_elem_b))
 		push_all(s);
 	print_arrays(s);
 }
 
+/*
+**	Choose the most efficient algorithm in function of 
+**	numbers of numbers
+*/
 void	choose_algo(t_stacks *s, int nb)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (nb <=  5)
+	if (nb <= 5)
 		boucle_test(s);
-	if (nb < 80)
+	else if (nb < 80)
 		algo_two_stacks(s);
-	if (nb >= 80)
+	else if (nb >= 80)
 	{
 		if (nb <= 150)
 			s->chunk_size = 25;
@@ -101,9 +93,9 @@ void	choose_algo(t_stacks *s, int nb)
 	}
 }
 
-int main(int ac, char **argv)
+int	main(int ac, char **argv)
 {
-	t_stacks s;
+	t_stacks	s;
 
 	create_stacks(&s, ac);
 	s.verbose = FALSE;
@@ -112,40 +104,5 @@ int main(int ac, char **argv)
 	fill_stack(&s, ac, argv);
 	check_errors(&s);
 	choose_algo(&s, ac + 1);
-
-	// char buf[10];
-	// gets(buf);
-	// while (1)
-	// {
-	// 	if (strcmp(buf, "show") == 0)
-	// 		print_arrays(&s);
-	// 	else if (strcmp(buf, "show -a") == 0)
-	// 		print_array('A', s.stack_a, s.n_elem_a);
-	// 	else if (strcmp(buf, "show -b") == 0)
-	// 		print_array('B', s.stack_b, s.n_elem_b);
-	// 	else if (strcmp(buf, "-v") == 0)
-	// 		s.verbose = TRUE;
-	// 	else if (strcmp(buf, "while") == 0)
-	// 	{
-	// 		boucle_test(&s);
-	// 		print_arrays(&s);
-	// 		printf("ARG = %d // NB OPERATIONS = %d \n", tmp + 1, s.op_count);
-	// 		return (0);
-	// 	}
-	// 	else if (strcmp(buf, "algo2") == 0)
-	// 	{
-	// 		algo_two_stacks(&s);
-	// 		print_arrays(&s);
-	// 		printf("ALGO 1 : ARG = %d //CHUNK SIZE = %d NB OPERATIONS = %d \n", tmp + 1, s.chunk_size, s.op_count);
-	// 		return (0);
-	// 	}
-	// 	else if (strcmp(buf, "algo1") == 0)
-	// 	{
-	// 		printf("yo\n");
-	// 		algo_sort_and_back(&s);
-	// 		print_arrays(&s);
-	// 		printf("ARG = %d //CHUNK SIZE = %d NB OPERATIONS = %d \n", tmp + 1, s.chunk_size, s.op_count);
-	// 		return (0);
-	// 	}
-	// }
+	free_stacks(&s);
 }

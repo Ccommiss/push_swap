@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_check.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/22 13:43:41 by ccommiss          #+#    #+#             */
+/*   Updated: 2021/06/22 13:44:01 by ccommiss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pushswap.h"
 
 /*
@@ -8,10 +20,10 @@
 **	@return 0 if not reverse sorted, 1 if yes
 */
 
-int finish(t_stacks *s)
+int	finish(t_stacks *s)
 {
-	if (s->n_elem_b == -1 && sorted_array(STACK_A, 
-		s->n_elem_a) == 1)
+	if (s->n_elem_b == -1 && sorted_array(s->a,
+			s->n_elem_a) == 1)
 		return (TRUE);
 	return (FALSE);
 }

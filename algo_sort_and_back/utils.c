@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/22 13:42:58 by ccommiss          #+#    #+#             */
+/*   Updated: 2021/06/22 13:43:06 by ccommiss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pushswap.h"
 
 /*
-** Checks if already here
+** Checks if an number is already here in array
 */
 int	checks_if_exists(t_stacks *s, int **array, int nb_to_check)
 {
@@ -42,7 +54,7 @@ void	find_biggest(t_stacks *s, int **array, int *stack)
 
 	k = -1;
 	while (++k < s->chunk_size)
-		array[0][k] = INT32_MIN;
+		array[0][k] = INT_MIN;
 	k = -1;
 	while (++k < s->chunk_size)
 	{
@@ -73,7 +85,7 @@ void	find_smallest(t_stacks *s, int **array, int *stack)
 
 	k = -1;
 	while (++k < s->chunk_size)
-		array[0][k] = INT32_MAX;
+		array[0][k] = INT_MAX;
 	k = -1;
 	while (++k < s->chunk_size)
 	{
