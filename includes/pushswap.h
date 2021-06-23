@@ -6,15 +6,15 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:58:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/22 13:38:17 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/23 11:01:31 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 
-# include "libft/libft.h"
 # include "color.h"
+# include "libft.h"
 # include <strings.h>
 # include <stdio.h>
 # include <stdlib.h>

@@ -31,7 +31,7 @@ int	check_errors(t_stacks *s)
 		{
 			if (j != i && copy[j] == copy[i])
 			{
-				printf("Twice the same number (%d)", copy[j]);
+				printf("Error\nTwice the same number (%d)\n", copy[j]);
 				exit (0);
 			}
 		}
@@ -49,9 +49,12 @@ void	fill_stack(t_stacks *s, int ac, char **argv)
 	{
 		if (ac == tmp && ft_strncmp(argv[ac], "-v", 3) == 0)
 			s->verbose = TRUE;
-		else if (!ft_isdigit_str(argv[ac]))
+		else if (!ft_isdigit_str(argv[ac]) || (!ft_atoi_check_limits(argv[ac])))
 		{
-			printf ("Args must be numerics.\n");
+			if (!ft_isdigit_str(argv[ac]))
+				printf ("Error\nArgs must be numerics.\n");
+			if (!ft_atoi_check_limits(argv[ac]))
+				printf ("Error\nArgs must be between INT_MIN / INT_MAX.\n");
 			free_stacks(s);
 			exit(0);
 		}

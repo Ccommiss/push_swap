@@ -6,7 +6,7 @@
 #    By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 15:08:11 by ccommiss          #+#    #+#              #
-#    Updated: 2021/06/18 15:25:44 by ccommiss         ###   ########.fr        #
+#    Updated: 2021/06/23 10:36:41 by ccommiss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,9 +77,8 @@ BONUS = ft_lstnew.c \
 	ft_lstclear.c \
 	ft_lstiter.c \
 	ft_lstmap.c \
-	get_next_line.c \
-	get_next_line_utils.c \
-	ft_is_in_str.c
+	ft_is_in_str.c \
+	ft_atoi_check_limits.c 
 
 FLAGS = -Wall -Werror -Wextra
 OBJS = $(SRCS:.c=.o) $(CUSTOM:.c=.o) $(BONUS:.c=.o)

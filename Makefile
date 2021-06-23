@@ -6,19 +6,20 @@
 #    By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/21 15:59:42 by ccommiss          #+#    #+#              #
-#    Updated: 2021/06/22 13:52:03 by ccommiss         ###   ########.fr        #
+#    Updated: 2021/06/23 11:05:18 by ccommiss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 
 
-MOVES = moves/
-SORT_BACK = algo_sort_and_back/
-TWO_STACKS = algo_two_stacks/
-WEIRD = algo_weird/
-SORT_FUNC = sort_functions/
-UTILS = utils/
+SRC_FOLD = ./srcs/
+MOVES = $(SRC_FOLD)moves/
+SORT_BACK = $(SRC_FOLD)algo_sort_and_back/
+TWO_STACKS = $(SRC_FOLD)algo_two_stacks/
+WEIRD = $(SRC_FOLD)algo_weird/
+SORT_FUNC = $(SRC_FOLD)sort_functions/
+UTILS = $(SRC_FOLD)utils/
 
 SRCS = main.c \
 	$(MOVES)rotate.c \
@@ -38,7 +39,9 @@ SRCS = main.c \
 	$(SORT_BACK)sort_b_on_a.c \
 	$(SORT_BACK)utils.c
 
-FLAGS =  -I. -Wall -Werror -Wextra -fsanitize=address
+LIB = $(SRC_FOLD)libft
+INCLUDES = /includes/
+FLAGS = -I.$(INCLUDES) -I$(LIB) -Wall -Werror -Wextra
 OBJS = $(SRCS:.c=.o)
 CC = clang -g $(FLAGS)
 
@@ -46,15 +49,15 @@ CC = clang -g $(FLAGS)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	make -C libft
-	$(CC) $(OBJS) -L./libft/ -lft -o $(NAME)
+	make -C $(LIB)
+	$(CC) $(OBJS) -L$(LIB) -lft -o $(NAME)
 
 clean :
-	make clean -C libft
+	make clean -C $(LIB)
 	rm $(OBJS)
 
 fclean : clean
-	make fclean -C libft
+	make fclean -C $(LIB)
 	rm $(NAME)
 
 re : fclean all

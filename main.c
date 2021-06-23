@@ -103,6 +103,7 @@ int	main(int ac, char **argv)
 	ac = ac - 2;
 	fill_stack(&s, ac, argv);
 	check_errors(&s);
-	choose_algo(&s, ac + 1);
+	if (!finish(&s))
+		choose_algo(&s, ac + 1);
 	free_stacks(&s);
 }
