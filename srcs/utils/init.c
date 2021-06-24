@@ -49,9 +49,10 @@ void	fill_stack(t_stacks *s, int ac, char **argv)
 	{
 		if (ac == tmp && ft_strncmp(argv[ac], "-v", 3) == 0)
 			s->verbose = TRUE;
-		else if (!ft_isdigit_str(argv[ac]) || (!ft_atoi_check_limits(argv[ac])))
+		else if (!ft_isdigit_str(argv[ac]) || (!ft_atoi_check_limits(argv[ac])
+				|| ft_strlen(argv[ac]) == 0))
 		{
-			if (!ft_isdigit_str(argv[ac]))
+			if (!ft_isdigit_str(argv[ac]) || ft_strlen(argv[ac]) == 0)
 				printf ("Error\nArgs must be numerics.\n");
 			if (!ft_atoi_check_limits(argv[ac]))
 				printf ("Error\nArgs must be between INT_MIN / INT_MAX.\n");

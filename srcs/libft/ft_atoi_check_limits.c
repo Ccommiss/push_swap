@@ -6,7 +6,7 @@
 /*   By: ccommiss <ccommiss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 10:31:33 by ccommiss          #+#    #+#             */
-/*   Updated: 2021/06/23 10:55:08 by ccommiss         ###   ########.fr       */
+/*   Updated: 2021/06/24 15:55:24 by ccommiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_atoi_check_limits(char *nptr)
 	int			neg;
 
 	nbr = 0;
+	neg = 0;
 	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\r' || *nptr == '\v'
 		|| *nptr == '\f' || *nptr == '\n')
 		nptr++;
